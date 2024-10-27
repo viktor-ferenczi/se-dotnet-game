@@ -1,0 +1,3123 @@
+Subject: [PATCH] Manual fixes
+---
+Index: Sandbox.Common/Sandbox/ModAPI/Ingame/MyGridProgram.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Common/Sandbox/ModAPI/Ingame/MyGridProgram.cs b/Sandbox.Common/Sandbox/ModAPI/Ingame/MyGridProgram.cs
+--- a/Sandbox.Common/Sandbox/ModAPI/Ingame/MyGridProgram.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Common/Sandbox/ModAPI/Ingame/MyGridProgram.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1,5 +1,6 @@
+ using System;
+ using System.Reflection;
++using MethodInfoExtensions = System.MethodInfoExtensions;
+ 
+ namespace Sandbox.ModAPI.Ingame;
+ 
+Index: Sandbox.Common/Sandbox/ModAPI/Ingame/MyInventoryItemFilter.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Common/Sandbox/ModAPI/Ingame/MyInventoryItemFilter.cs b/Sandbox.Common/Sandbox/ModAPI/Ingame/MyInventoryItemFilter.cs
+--- a/Sandbox.Common/Sandbox/ModAPI/Ingame/MyInventoryItemFilter.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Common/Sandbox/ModAPI/Ingame/MyInventoryItemFilter.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -45,12 +45,12 @@
+ 	/// <summary>
+ 	/// Determines whether all subtypes of the given item ID should pass this filter check.
+ 	/// </summary>
+-	public readonly bool AllSubTypes;
++	public bool AllSubTypes;
+ 
+ 	/// <summary>
+ 	/// Specifies an item to filter. Set <see cref="F:Sandbox.ModAPI.Ingame.MyInventoryItemFilter.AllSubTypes" /> to true to only check the main type part of this ID.
+ 	/// </summary>
+-	public readonly MyDefinitionId ItemId;
++	public MyDefinitionId ItemId;
+ 
+ 	/// <summary>
+ 	///
+Index: Sandbox.Game/Sandbox.Game.csproj
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox.Game.csproj b/Sandbox.Game/Sandbox.Game.csproj
+--- a/Sandbox.Game/Sandbox.Game.csproj	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox.Game.csproj	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -44,5 +44,6 @@
+     </Reference>
+     <PackageReference Include="System.Buffers" Version="4.5.1" />
+     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
++    <PackageReference Include="System.Management" Version="4.5.0" />
+   </ItemGroup>
+ </Project>
+\ No newline at end of file
+Index: Sandbox.Game/Sandbox/Engine/Analytics/MySpaceAnalytics.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Engine/Analytics/MySpaceAnalytics.cs b/Sandbox.Game/Sandbox/Engine/Analytics/MySpaceAnalytics.cs
+--- a/Sandbox.Game/Sandbox/Engine/Analytics/MySpaceAnalytics.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Engine/Analytics/MySpaceAnalytics.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -403,6 +403,9 @@
+ 
+ 	private void StartSession(bool firstTimeRun)
+ 	{
++		// DISABLED ANALYTICS
++		return;
++		
+ 		if (!m_isSessionStarted)
+ 		{
+ 			if (m_hashedUserID == null)
+Index: Sandbox.Game/Sandbox/Engine/Multiplayer/MyClientDebugCommands.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Engine/Multiplayer/MyClientDebugCommands.cs b/Sandbox.Game/Sandbox/Engine/Multiplayer/MyClientDebugCommands.cs
+--- a/Sandbox.Game/Sandbox/Engine/Multiplayer/MyClientDebugCommands.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Engine/Multiplayer/MyClientDebugCommands.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -5,6 +5,7 @@
+ using System.Reflection;
+ using Sandbox.Game.World;
+ using VRage.Network;
++using MethodInfoExtensions = System.MethodInfoExtensions;
+ 
+ namespace Sandbox.Engine.Multiplayer;
+ 
+Index: Sandbox.Game/Sandbox/Engine/Multiplayer/MyServerDebugCommands.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Engine/Multiplayer/MyServerDebugCommands.cs b/Sandbox.Game/Sandbox/Engine/Multiplayer/MyServerDebugCommands.cs
+--- a/Sandbox.Game/Sandbox/Engine/Multiplayer/MyServerDebugCommands.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Engine/Multiplayer/MyServerDebugCommands.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -10,6 +10,7 @@
+ using VRage.Game.Entity;
+ using VRage.Network;
+ using VRageMath;
++using MethodInfoExtensions = System.MethodInfoExtensions;
+ 
+ namespace Sandbox.Engine.Multiplayer;
+ 
+Index: Sandbox.Game/Sandbox/Engine/Utils/MyConfig.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Engine/Utils/MyConfig.cs b/Sandbox.Game/Sandbox/Engine/Utils/MyConfig.cs
+--- a/Sandbox.Game/Sandbox/Engine/Utils/MyConfig.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Engine/Utils/MyConfig.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1,3 +1,6 @@
++// See https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide
++#pragma warning disable SYSLIB0011
++
+ using System;
+ using System.Collections.Generic;
+ using System.IO;
+@@ -2242,3 +2245,5 @@
+ 		MyNewGameScreenABTestHelper.Instance.ActivateTest();
+ 	}
+ }
++
++#pragma warning restore SYSLIB0011
+\ No newline at end of file
+Index: Sandbox.Game/Sandbox/Engine/Utils/MyFakes.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Engine/Utils/MyFakes.cs b/Sandbox.Game/Sandbox/Engine/Utils/MyFakes.cs
+--- a/Sandbox.Game/Sandbox/Engine/Utils/MyFakes.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Engine/Utils/MyFakes.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1323,7 +1323,11 @@
+ 		ENABLE_WAIT_UNTIL_MULTIPLAYER_READY = true;
+ 		ENABLE_PRELOAD_CHARACTER_ANIMATIONS = true;
+ 		LOADING_STREAMING_TIMEOUT_ENABLED = true;
++#if DEBUG		
++		ENABLE_MINIDUMP_SENDING = false;
++#else
+ 		ENABLE_MINIDUMP_SENDING = true;
++#endif
+ 		COLLECT_SUSPEND_DUMPS = false;
+ 		USE_GPS_AS_FRIENDLY_SPAWN_LOCATIONS = false;
+ 		I_AM_READY_FOR_NEW_BLUEPRINT_SCREEN = true;
+Index: Sandbox.Game/Sandbox/Game/Components/MyEntityStatComponent.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Components/MyEntityStatComponent.cs b/Sandbox.Game/Sandbox/Game/Components/MyEntityStatComponent.cs
+--- a/Sandbox.Game/Sandbox/Game/Components/MyEntityStatComponent.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Components/MyEntityStatComponent.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -27,7 +27,7 @@
+ public class MyEntityStatComponent : MyEntityComponentBase
+ {
+ 	[Serializable]
+-	private struct StatInfo
++	protected struct StatInfo
+ 	{
+ 		private class Sandbox_Game_Components_MyEntityStatComponent_003C_003EStatInfo_003C_003EStatId_003C_003EAccessor : IMemberAccessor<StatInfo, MyStringHash>
+ 		{
+Index: Sandbox.Game/Sandbox/Game/Entities/Blocks/MyContractBlock.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyContractBlock.cs b/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyContractBlock.cs
+--- a/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyContractBlock.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyContractBlock.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -143,7 +143,7 @@
+ 	}
+ 
+ 	[Serializable]
+-	private struct MyContractCreationDataWrapper_Deliver
++	protected struct MyContractCreationDataWrapper_Deliver
+ 	{
+ 		private class Sandbox_Game_Entities_Blocks_MyContractBlock_003C_003EMyContractCreationDataWrapper_Deliver_003C_003ERewardMoney_003C_003EAccessor : IMemberAccessor<MyContractCreationDataWrapper_Deliver, int>
+ 		{
+@@ -215,7 +215,7 @@
+ 	}
+ 
+ 	[Serializable]
+-	private struct MyContractCreationDataWrapper_ObtainAndDeliver
++	protected struct MyContractCreationDataWrapper_ObtainAndDeliver
+ 	{
+ 		private class Sandbox_Game_Entities_Blocks_MyContractBlock_003C_003EMyContractCreationDataWrapper_ObtainAndDeliver_003C_003ERewardMoney_003C_003EAccessor : IMemberAccessor<MyContractCreationDataWrapper_ObtainAndDeliver, int>
+ 		{
+@@ -321,7 +321,7 @@
+ 	}
+ 
+ 	[Serializable]
+-	private struct MyContractCreationDataWrapper_Find
++	protected struct MyContractCreationDataWrapper_Find
+ 	{
+ 		private class Sandbox_Game_Entities_Blocks_MyContractBlock_003C_003EMyContractCreationDataWrapper_Find_003C_003ERewardMoney_003C_003EAccessor : IMemberAccessor<MyContractCreationDataWrapper_Find, int>
+ 		{
+@@ -410,7 +410,7 @@
+ 	}
+ 
+ 	[Serializable]
+-	private struct MyContractCreationDataWrapper_Repair
++	protected struct MyContractCreationDataWrapper_Repair
+ 	{
+ 		private class Sandbox_Game_Entities_Blocks_MyContractBlock_003C_003EMyContractCreationDataWrapper_Repair_003C_003ERewardMoney_003C_003EAccessor : IMemberAccessor<MyContractCreationDataWrapper_Repair, int>
+ 		{
+Index: Sandbox.Game/Sandbox/Game/Entities/Blocks/MyTargetDummyBlock.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyTargetDummyBlock.cs b/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyTargetDummyBlock.cs
+--- a/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyTargetDummyBlock.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyTargetDummyBlock.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1035,15 +1035,7 @@
+ 		return null;
+ 	}
+ 
+-	[SpecialName]
+-	int IMyInventoryOwner.get_InventoryCount()
+-	{
+-		return base.InventoryCount;
+-	}
++	[SpecialName] int IMyInventoryOwner.InventoryCount => base.InventoryCount;
+ 
+-	[SpecialName]
+-	bool IMyInventoryOwner.get_HasInventory()
+-	{
+-		return base.HasInventory;
+-	}
++	[SpecialName] bool IMyInventoryOwner.HasInventory => base.HasInventory;
+ }
+Index: Sandbox.Game/Sandbox/Game/Entities/Character/MyCharacter.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Entities/Character/MyCharacter.cs b/Sandbox.Game/Sandbox/Game/Entities/Character/MyCharacter.cs
+--- a/Sandbox.Game/Sandbox/Game/Entities/Character/MyCharacter.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Entities/Character/MyCharacter.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -8093,7 +8093,7 @@
+ 			{
+ 				MyGuiScreenGamePlay.ActiveGameplayScreen.CloseScreen();
+ 			}
+-			MyCubeBuilder.Static.Deactivate();
++			MyCubeBuilder.Static?.Deactivate();
+ 			if (!base.Closed)
+ 			{
+ 				RadioReceiver.Clear();
+Index: Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridShape.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridShape.cs b/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridShape.cs
+--- a/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridShape.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridShape.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -175,13 +175,15 @@
+ 
+ 	private void AddShapesFromCollector()
+ 	{
++		var shapes = new HkShape[255];
++		
+ 		int num = 0;
+ 		for (int i = 0; i < m_blockCollector.ShapeInfos.Count; i++)
+ 		{
+ 			MyCubeBlockCollector.ShapeInfo shapeInfo = m_blockCollector.ShapeInfos[i];
+ 			HkShape[] obj = null;
+ 			Span<HkShape> span = default(Span<HkShape>);
+-			span = ((shapeInfo.Count >= 256) ? ((Span<HkShape>)(obj = new HkShape[shapeInfo.Count])) : stackalloc HkShape[shapeInfo.Count]);
++			span = shapeInfo.Count >= 256 ? (Span<HkShape>)(obj = new HkShape[shapeInfo.Count]) : shapes.AsSpan(0, shapeInfo.Count);
+ 			for (int j = 0; j < shapeInfo.Count; j++)
+ 			{
+ 				span[j] = m_blockCollector.Shapes[num + j];
+Index: Sandbox.Game/Sandbox/Game/Entities/Cube/MySlimBlock.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Entities/Cube/MySlimBlock.cs b/Sandbox.Game/Sandbox/Game/Entities/Cube/MySlimBlock.cs
+--- a/Sandbox.Game/Sandbox/Game/Entities/Cube/MySlimBlock.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Entities/Cube/MySlimBlock.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -778,13 +778,13 @@
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+ 		public virtual void Set(ref MySlimBlock owner, in float value)
+ 		{
+-			owner.VRage_002EGame_002EModAPI_002EIMySlimBlock_002EDithering = value;
++			owner.Dithering = value;
+ 		}
+ 
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+ 		public virtual void Get(ref MySlimBlock owner, out float value)
+ 		{
+-			value = owner.VRage_002EGame_002EModAPI_002EIMySlimBlock_002EDithering;
++			value = owner.Dithering;
+ 		}
+ 	}
+ 
+@@ -793,13 +793,13 @@
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+ 		public virtual void Set(ref MySlimBlock owner, in float value)
+ 		{
+-			owner.VRage_002EGame_002EModAPI_002EIMySlimBlock_002EBlockGeneralDamageModifier = value;
++			owner.BlockGeneralDamageModifier = value;
+ 		}
+ 
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+ 		public virtual void Get(ref MySlimBlock owner, out float value)
+ 		{
+-			value = owner.VRage_002EGame_002EModAPI_002EIMySlimBlock_002EBlockGeneralDamageModifier;
++			value = owner.BlockGeneralDamageModifier;
+ 		}
+ 	}
+ 
+Index: Sandbox.Game/Sandbox/Game/Entities/MyCubeBuilder.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Entities/MyCubeBuilder.cs b/Sandbox.Game/Sandbox/Game/Entities/MyCubeBuilder.cs
+--- a/Sandbox.Game/Sandbox/Game/Entities/MyCubeBuilder.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Entities/MyCubeBuilder.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -62,7 +62,7 @@
+ public class MyCubeBuilder : MyBlockBuilderBase, IMyFocusHolder, IMyCubeBuilder
+ {
+ 	[Serializable]
+-	private struct BuildData
++	protected struct BuildData
+ 	{
+ 		private class Sandbox_Game_Entities_MyCubeBuilder_003C_003EBuildData_003C_003EPosition_003C_003EAccessor : IMemberAccessor<BuildData, Vector3D>
+ 		{
+@@ -145,7 +145,7 @@
+ 	}
+ 
+ 	[Serializable]
+-	private struct Author
++	protected struct Author
+ 	{
+ 		private class Sandbox_Game_Entities_MyCubeBuilder_003C_003EAuthor_003C_003EEntityId_003C_003EAccessor : IMemberAccessor<Author, long>
+ 		{
+@@ -189,7 +189,7 @@
+ 	}
+ 
+ 	[Serializable]
+-	private struct GridSpawnRequestData
++	protected struct GridSpawnRequestData
+ 	{
+ 		private class Sandbox_Game_Entities_MyCubeBuilder_003C_003EGridSpawnRequestData_003C_003EAuthor_003C_003EAccessor : IMemberAccessor<GridSpawnRequestData, Author>
+ 		{
+Index: Sandbox.Game/Sandbox/Game/Entities/MyCubeGrid.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Entities/MyCubeGrid.cs b/Sandbox.Game/Sandbox/Game/Entities/MyCubeGrid.cs
+--- a/Sandbox.Game/Sandbox/Game/Entities/MyCubeGrid.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Entities/MyCubeGrid.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -127,7 +127,7 @@
+ 		SplitBlock
+ 	}
+ 
+-	internal enum MyTestDynamicReason
++	protected internal enum MyTestDynamicReason
+ 	{
+ 		NoReason,
+ 		GridCopied,
+Index: Sandbox.Game/Sandbox/Game/Entities/MyReactor.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Entities/MyReactor.cs b/Sandbox.Game/Sandbox/Game/Entities/MyReactor.cs
+--- a/Sandbox.Game/Sandbox/Game/Entities/MyReactor.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Entities/MyReactor.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -410,15 +410,7 @@
+ 		};
+ 	}
+ 
+-	[SpecialName]
+-	int IMyInventoryOwner.get_InventoryCount()
+-	{
+-		return base.InventoryCount;
+-	}
++	[SpecialName] int IMyInventoryOwner.InventoryCount => base.InventoryCount;
+ 
+-	[SpecialName]
+-	bool IMyInventoryOwner.get_HasInventory()
+-	{
+-		return base.HasInventory;
+-	}
++	[SpecialName] bool IMyInventoryOwner.HasInventory => base.HasInventory;
+ }
+Index: Sandbox.Game/Sandbox/Game/Entities/MySphericalNaturalGravityComponent.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Entities/MySphericalNaturalGravityComponent.cs b/Sandbox.Game/Sandbox/Game/Entities/MySphericalNaturalGravityComponent.cs
+--- a/Sandbox.Game/Sandbox/Game/Entities/MySphericalNaturalGravityComponent.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Entities/MySphericalNaturalGravityComponent.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -24,7 +24,7 @@
+ 
+ 	private float m_gravityLimitSq;
+ 
+-	public Vector3D Position { get; private set; }
++	public Vector3D Position { get; internal set; }
+ 
+ 	Vector3D IMyNaturalGravityComponent.Position
+ 	{
+Index: Sandbox.Game/Sandbox/Game/Entities/MyVoxelBase.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Entities/MyVoxelBase.cs b/Sandbox.Game/Sandbox/Game/Entities/MyVoxelBase.cs
+--- a/Sandbox.Game/Sandbox/Game/Entities/MyVoxelBase.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Entities/MyVoxelBase.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -33,7 +33,7 @@
+ public abstract class MyVoxelBase : MyEntity, IMyVoxelDrawable, IMyVoxelBase, VRage.ModAPI.IMyEntity, VRage.Game.ModAPI.Ingame.IMyEntity, IMyDecalProxy, IMyEventProxy, IMyEventOwner
+ {
+ 	[Serializable]
+-	private struct MyRampShapeParams
++	protected struct MyRampShapeParams
+ 	{
+ 		private class Sandbox_Game_Entities_MyVoxelBase_003C_003EMyRampShapeParams_003C_003EBox_003C_003EAccessor : IMemberAccessor<MyRampShapeParams, BoundingBoxD>
+ 		{
+@@ -122,7 +122,7 @@
+ 	}
+ 
+ 	[Serializable]
+-	private struct MyCapsuleShapeParams
++	protected struct MyCapsuleShapeParams
+ 	{
+ 		private class Sandbox_Game_Entities_MyVoxelBase_003C_003EMyCapsuleShapeParams_003C_003EA_003C_003EAccessor : IMemberAccessor<MyCapsuleShapeParams, Vector3D>
+ 		{
+Index: Sandbox.Game/Sandbox/Game/GameSystems/Chat/MyChatCommandSystem.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/GameSystems/Chat/MyChatCommandSystem.cs b/Sandbox.Game/Sandbox/Game/GameSystems/Chat/MyChatCommandSystem.cs
+--- a/Sandbox.Game/Sandbox/Game/GameSystems/Chat/MyChatCommandSystem.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/GameSystems/Chat/MyChatCommandSystem.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -4,6 +4,7 @@
+ using System.Reflection;
+ using System.Text.RegularExpressions;
+ using VRage.Utils;
++using MethodInfoExtensions = System.MethodInfoExtensions;
+ 
+ namespace Sandbox.Game.GameSystems.Chat;
+ 
+Index: Sandbox.Game/Sandbox/Game/GameSystems/CoordinateSystem/MyCoordinateSystem.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/GameSystems/CoordinateSystem/MyCoordinateSystem.cs b/Sandbox.Game/Sandbox/Game/GameSystems/CoordinateSystem/MyCoordinateSystem.cs
+--- a/Sandbox.Game/Sandbox/Game/GameSystems/CoordinateSystem/MyCoordinateSystem.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/GameSystems/CoordinateSystem/MyCoordinateSystem.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -25,7 +25,7 @@
+ 	/// Used for transporting information about coord system to clients.
+ 	/// </summary>
+ 	[Serializable]
+-	private struct MyCreateCoordSysBuffer
++	protected struct MyCreateCoordSysBuffer
+ 	{
+ 		private class Sandbox_Game_GameSystems_CoordinateSystem_MyCoordinateSystem_003C_003EMyCreateCoordSysBuffer_003C_003EId_003C_003EAccessor : IMemberAccessor<MyCreateCoordSysBuffer, long>
+ 		{
+Index: Sandbox.Game/Sandbox/Game/GameSystems/MyHeightMapLoadingSystem.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/GameSystems/MyHeightMapLoadingSystem.cs b/Sandbox.Game/Sandbox/Game/GameSystems/MyHeightMapLoadingSystem.cs
+--- a/Sandbox.Game/Sandbox/Game/GameSystems/MyHeightMapLoadingSystem.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/GameSystems/MyHeightMapLoadingSystem.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -76,6 +76,10 @@
+ 
+ 	private void Release<T>(string path, Dictionary<string, int> counter, ConcurrentDictionary<string, T> maps, Action<T> dispose)
+ 	{
++		// The maps can already be set to null during unload
++		if (maps == null)
++			return;
++		
+ 		lock (counter)
+ 		{
+ 			counter.TryGetValue(path, out var value);
+Index: Sandbox.Game/Sandbox/Game/GameSystems/MyShipMiningSystem.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/GameSystems/MyShipMiningSystem.cs b/Sandbox.Game/Sandbox/Game/GameSystems/MyShipMiningSystem.cs
+--- a/Sandbox.Game/Sandbox/Game/GameSystems/MyShipMiningSystem.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/GameSystems/MyShipMiningSystem.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -399,7 +399,9 @@
+ 			IsClient = false;
+ 			m_storage = target.Storage;
+ 			m_targetVoxel = target;
+-			MatrixD.Multiply(ref Unsafe.AsRef(in system.Grid.PositionComp.WorldMatrixRef), ref Unsafe.AsRef(in target.PositionComp.WorldMatrixInvScaled), out var result);
++			var systemWorldMatrix = system.Grid.PositionComp.WorldMatrixRef;
++			var targetWorldMatrixInvScaled = target.PositionComp.WorldMatrixInvScaled;
++			MatrixD.Multiply(ref systemWorldMatrix, ref targetWorldMatrixInvScaled, out var result);
+ 			result.Translation += target.StorageMin + target.SizeInMetresHalf;
+ 			Vector3 center = cluster.Bounds.Center;
+ 			m_storageOffset = Vector3I.Floor(Vector3D.Transform(center, ref result));
+Index: Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenAdminMenu.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenAdminMenu.cs b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenAdminMenu.cs
+--- a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenAdminMenu.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenAdminMenu.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -82,7 +82,7 @@
+ 	}
+ 
+ 	[Serializable]
+-	internal struct AdminSettings
++	protected internal struct AdminSettings
+ 	{
+ 		private class Sandbox_Game_Gui_MyGuiScreenAdminMenu_003C_003EAdminSettings_003C_003EFlags_003C_003EAccessor : IMemberAccessor<AdminSettings, MyTrashRemovalFlags>
+ 		{
+Index: Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugNetwork.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugNetwork.cs b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugNetwork.cs
+--- a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugNetwork.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugNetwork.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -58,7 +58,7 @@
+ 	}
+ 
+ 	[Serializable]
+-	private struct Layer
++	protected struct Layer
+ 	{
+ 		[Serializable]
+ 		public struct Entity
+Index: Sandbox.Game/Sandbox/Game/Gui/MyTerminalInfoController.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Gui/MyTerminalInfoController.cs b/Sandbox.Game/Sandbox/Game/Gui/MyTerminalInfoController.cs
+--- a/Sandbox.Game/Sandbox/Game/Gui/MyTerminalInfoController.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Gui/MyTerminalInfoController.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -35,7 +35,7 @@
+ internal class MyTerminalInfoController : MyTerminalController
+ {
+ 	[Serializable]
+-	private struct GridBuiltByIdInfo
++	protected struct GridBuiltByIdInfo
+ 	{
+ 		private class Sandbox_Game_Gui_MyTerminalInfoController_003C_003EGridBuiltByIdInfo_003C_003EGridName_003C_003EAccessor : IMemberAccessor<GridBuiltByIdInfo, string>
+ 		{
+Index: Sandbox.Game/Sandbox/Game/Multiplayer/MyGpsCollection.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Multiplayer/MyGpsCollection.cs b/Sandbox.Game/Sandbox/Game/Multiplayer/MyGpsCollection.cs
+--- a/Sandbox.Game/Sandbox/Game/Multiplayer/MyGpsCollection.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Multiplayer/MyGpsCollection.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -30,7 +30,7 @@
+ public class MyGpsCollection : IMyGpsCollection
+ {
+ 	[Serializable]
+-	private struct AddMsg
++	protected struct AddMsg
+ 	{
+ 		private class Sandbox_Game_Multiplayer_MyGpsCollection_003C_003EAddMsg_003C_003EIdentityId_003C_003EAccessor : IMemberAccessor<AddMsg, long>
+ 		{
+@@ -292,7 +292,7 @@
+ 	}
+ 
+ 	[Serializable]
+-	private struct ModifyMsg
++	protected struct ModifyMsg
+ 	{
+ 		private class Sandbox_Game_Multiplayer_MyGpsCollection_003C_003EModifyMsg_003C_003EIdentityId_003C_003EAccessor : IMemberAccessor<ModifyMsg, long>
+ 		{
+Index: Sandbox.Game/Sandbox/Game/Replication/StateGroups/MyPropertySyncStateGroup.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Replication/StateGroups/MyPropertySyncStateGroup.cs b/Sandbox.Game/Sandbox/Game/Replication/StateGroups/MyPropertySyncStateGroup.cs
+--- a/Sandbox.Game/Sandbox/Game/Replication/StateGroups/MyPropertySyncStateGroup.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Replication/StateGroups/MyPropertySyncStateGroup.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -131,7 +131,7 @@
+ 		syncType.PropertyCountChanged += OnPropertyCountChanged;
+ 		m_properties = syncType.Properties;
+ 		m_propertyTimestamps = new List<MyTimeSpan>(m_properties.Count);
+-		if (Sync.IsServer)
++		if (Sync.IsServer && MyMultiplayer.Static != null)
+ 		{
+ 			for (int i = 0; i < m_properties.Count; i++)
+ 			{
+Index: Sandbox.Game/Sandbox/Game/Screens/MyFilterBool.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Screens/MyFilterBool.cs b/Sandbox.Game/Sandbox/Game/Screens/MyFilterBool.cs
+--- a/Sandbox.Game/Sandbox/Game/Screens/MyFilterBool.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Screens/MyFilterBool.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -16,7 +16,6 @@
+ 				true => CheckStateEnum.Checked, 
+ 				false => CheckStateEnum.Unchecked, 
+ 				null => CheckStateEnum.Indeterminate, 
+-				_ => throw new InvalidBranchException(), 
+ 			};
+ 		}
+ 		set
+@@ -43,7 +42,6 @@
+ 		false => "0", 
+ 		true => "1", 
+ 		null => "2", 
+-		_ => throw new InvalidBranchException(), 
+ 	};
+ 
+ 	public MyFilterBool(bool? value = null)
+Index: Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenMainMenuBase.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenMainMenuBase.cs b/Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenMainMenuBase.cs
+--- a/Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenMainMenuBase.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenMainMenuBase.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -2,6 +2,7 @@
+ using System.Collections.Generic;
+ using System.Globalization;
+ using System.Net;
++using System.Runtime.InteropServices;
+ using System.Text;
+ using Sandbox.Engine.Analytics;
+ using Sandbox.Engine.Networking;
+@@ -273,7 +274,7 @@
+ 			MyGuiManager.DrawString("BuildInfoHighlight", BranchName.ToString(), normalizedCoord, 0.6f, new Color(MyGuiConstants.LABEL_TEXT_COLOR * m_transitionAlpha, 0.6f), MyGuiDrawAlignEnum.HORISONTAL_RIGHT_AND_VERTICAL_BOTTOM);
+ 			normalizedCoord.X -= zero.X;
+ 		}
+-		string text = MyFinalBuildConstants.APP_VERSION_STRING_DOTS.ToString() + $" b{MyPerGameSettings.BasicGameInfo.ClientBuildNumber}";
++		string text = MyFinalBuildConstants.APP_VERSION_STRING_DOTS.ToString() + $" b{MyPerGameSettings.BasicGameInfo.ClientBuildNumber} on {RuntimeInformation.FrameworkDescription}";
+ 		MyGuiManager.DrawString("BuildInfo", text, normalizedCoord, 0.6f, new Color(MyGuiConstants.LABEL_TEXT_COLOR * m_transitionAlpha, 0.6f), MyGuiDrawAlignEnum.HORISONTAL_RIGHT_AND_VERTICAL_BOTTOM);
+ 	}
+ 
+Index: Sandbox.Game/Sandbox/Game/SessionComponents/MyHighlightSystem.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/SessionComponents/MyHighlightSystem.cs b/Sandbox.Game/Sandbox/Game/SessionComponents/MyHighlightSystem.cs
+--- a/Sandbox.Game/Sandbox/Game/SessionComponents/MyHighlightSystem.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/SessionComponents/MyHighlightSystem.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -54,12 +54,15 @@
+ 
+ 		public override int GetHashCode()
+ 		{
+-			return (-1285426570 * -1521134295 + EntityId.GetHashCode()) * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SectionName);
++			unchecked
++			{
++				return (-1285426570 * -1521134295 + EntityId.GetHashCode()) * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SectionName);
++			}
+ 		}
+ 	}
+ 
+ 	[Serializable]
+-	private struct HighlightMsg
++	protected struct HighlightMsg
+ 	{
+ 		private class Sandbox_Game_SessionComponents_MyHighlightSystem_003C_003EHighlightMsg_003C_003EData_003C_003EAccessor : IMemberAccessor<HighlightMsg, MyHighlightData>
+ 		{
+Index: Sandbox.Game/Sandbox/Game/Weapons/MyShipDrill.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/Weapons/MyShipDrill.cs b/Sandbox.Game/Sandbox/Game/Weapons/MyShipDrill.cs
+--- a/Sandbox.Game/Sandbox/Game/Weapons/MyShipDrill.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/Weapons/MyShipDrill.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -935,15 +935,7 @@
+ 		return true;
+ 	}
+ 
+-	[SpecialName]
+-	int IMyInventoryOwner.get_InventoryCount()
+-	{
+-		return base.InventoryCount;
+-	}
+-
+-	[SpecialName]
+-	bool IMyInventoryOwner.get_HasInventory()
+-	{
+-		return base.HasInventory;
+-	}
++	[SpecialName] int IMyInventoryOwner.InventoryCount => base.InventoryCount;
++	
++	[SpecialName] bool IMyInventoryOwner.HasInventory => base.HasInventory;
+ }
+Index: Sandbox.Game/Sandbox/Game/World/MyBlockLimits.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/Game/World/MyBlockLimits.cs b/Sandbox.Game/Sandbox/Game/World/MyBlockLimits.cs
+--- a/Sandbox.Game/Sandbox/Game/World/MyBlockLimits.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/Game/World/MyBlockLimits.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -191,7 +191,7 @@
+ 	}
+ 
+ 	[Serializable]
+-	private struct TransferMessageData
++	protected struct TransferMessageData
+ 	{
+ 		private class Sandbox_Game_World_MyBlockLimits_003C_003ETransferMessageData_003C_003EEntityId_003C_003EAccessor : IMemberAccessor<TransferMessageData, long>
+ 		{
+Index: Sandbox.Game/Sandbox/MyCommonProgramStartup.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/MyCommonProgramStartup.cs b/Sandbox.Game/Sandbox/MyCommonProgramStartup.cs
+--- a/Sandbox.Game/Sandbox/MyCommonProgramStartup.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/MyCommonProgramStartup.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -20,6 +20,7 @@
+ using VRage.Library.Utils;
+ using VRage.Utils;
+ using VRageMath;
++using AssemblyExtensions = VRage.AssemblyExtensions;
+ 
+ namespace Sandbox;
+ 
+Index: Sandbox.Game/Sandbox/MyInitializer.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/MyInitializer.cs b/Sandbox.Game/Sandbox/MyInitializer.cs
+--- a/Sandbox.Game/Sandbox/MyInitializer.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/MyInitializer.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -102,6 +102,15 @@
+ 	public static void InvokeBeforeRun(uint appId, string appName, string rootPath, string userDataPath, bool addDateToLog = false, int maxLogAge = -1, Action onConfigChangedCallback = null, string modsCachePath = null)
+ 	{
+ 		m_appName = appName;
++
++		// During development use the data files of the Space Engineers installation.
++		// Define the SPACE_ENGINEERS_ROOT environment variable to point to there.
++		// Usual value: C:\Program Files (x86)\Steam\steamapps\common\SpaceEngineers
++		if (string.IsNullOrEmpty(rootPath))
++		{
++			rootPath = Environment.GetEnvironmentVariable("SPACE_ENGINEERS_ROOT");
++		}
++		
+ 		if (!string.IsNullOrEmpty(rootPath))
+ 		{
+ 			MyFileSystem.RootPath = rootPath;
+@@ -157,6 +166,8 @@
+ 		{
+ 			Thread.CurrentThread.Name = "Main thread";
+ 		}
++		
++#if !DEBUG
+ 		IMySimplifiedErrorReporter simplifiedErrorReporter = ErrorPlatform.TryToCreateSimplifiedErrorReporter(MyLog.Default);
+ 		if (simplifiedErrorReporter != null)
+ 		{
+@@ -168,8 +179,11 @@
+ 		{
+ 			ProcessUnhandledException(new MyNativeException(), x);
+ 		});
++#endif
++
+ 		Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+ 		Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
++		
+ 		if (MyFakes.ENABLE_MINIDUMP_SENDING && MyFileSystem.IsInitialized)
+ 		{
+ 			if (MyFakes.COLLECT_SUSPEND_DUMPS)
+@@ -178,6 +192,8 @@
+ 			}
+ 			MyMiniDump.CleanupOldDumps();
+ 		}
++		
++#if !DEBUG
+ 		ErrorPlatform.CleanupCrashAnalytics();
+ 		MyErrorReporter.UpdateHangAnalytics();
+ 		void UnhandledManagedException(object sender, UnhandledExceptionEventArgs args)
+@@ -193,6 +209,7 @@
+ 				}
+ 			}
+ 		}
++#endif
+ 	}
+ 
+ 	public static void InvokeAfterRun()
+Index: Sandbox.Game/Sandbox/MySandboxGame.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sandbox.Game/Sandbox/MySandboxGame.cs b/Sandbox.Game/Sandbox/MySandboxGame.cs
+--- a/Sandbox.Game/Sandbox/MySandboxGame.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/Sandbox.Game/Sandbox/MySandboxGame.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1792,6 +1792,7 @@
+ 	{
+ 		bool flag = true;
+ 		Log.WriteLine("MySandboxGame.Initialize() - START");
++		ReplicatedTypes.Load();
+ 		Log.IncreaseIndent();
+ 		Log.WriteLine("Installed DLCs: ");
+ 		Log.IncreaseIndent();
+@@ -2315,24 +2316,29 @@
+ 
+ 	private void InitModAPI()
+ 	{
++#if !DEBUG
+ 		try
+ 		{
++#endif
+ 			if (MyVRage.Platform.Scripting.IsRuntimeCompilationSupported)
+ 			{
+ 				InitIlCompiler();
+ 				InitIlChecker();
+ 			}
++#if !DEBUG
+ 		}
+ 		catch (Exception ex)
+ 		{
+ 			Log.Error("Error during ModAPI initialization: {0}", ex.Message);
+ 			ShowHotfixPopup = true;
+ 		}
++#endif
+ 	}
+ 
+ 	private static void OnDotNetHotfixPopupClosed(MyGuiScreenMessageBox.ResultEnum result)
+ 	{
+-		Process.Start("https://support.microsoft.com/kb/3120241");
++		// This would fail with System.ComponentModel.Win32Exception: The system cannot find the file specified
++		//Process.Start("https://support.microsoft.com/kb/3120241");
+ 		ClosePopup(result);
+ 	}
+ 
+Index: SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/MainMenu.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/MainMenu.cs b/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/MainMenu.cs
+--- a/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/MainMenu.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/MainMenu.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -102,7 +102,7 @@
+ 		brushTest.Name = "brushTest";
+ 		brushTest.Height = 50f;
+ 		brushTest.Width = 100f;
+-		EventTrigger eventTrigger = new EventTrigger(UIElement.Loaded, brushTest);
++		EventTrigger eventTrigger = new EventTrigger(LoadedEvent, brushTest);
+ 		brushTest.Triggers.Add(eventTrigger);
+ 		BeginStoryboard beginStoryboard = new BeginStoryboard();
+ 		beginStoryboard.Name = "brushTest_ET_0_AC_0";
+@@ -163,7 +163,7 @@
+ 		e_2.Children.Add(progressBar);
+ 		progressBar.Name = "progressBar";
+ 		progressBar.Height = 30f;
+-		EventTrigger eventTrigger2 = new EventTrigger(UIElement.Loaded, progressBar);
++		EventTrigger eventTrigger2 = new EventTrigger(LoadedEvent, progressBar);
+ 		progressBar.Triggers.Add(eventTrigger2);
+ 		BeginStoryboard beginStoryboard2 = new BeginStoryboard();
+ 		beginStoryboard2.Name = "progressBar_ET_0_AC_0";
+Index: SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/StoreBlockView.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/StoreBlockView.cs b/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/StoreBlockView.cs
+--- a/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/StoreBlockView.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/StoreBlockView.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1522,7 +1522,7 @@
+ 	{
+ 		object obj = elem.Resources[typeof(DataGridRow)];
+ 		Style style = new Style(typeof(DataGridRow), obj as Style);
+-		EventTrigger eventTrigger = new EventTrigger(Control.MouseDoubleClick);
++		EventTrigger eventTrigger = new EventTrigger(MouseDoubleClickEvent);
+ 		style.Triggers.Add(eventTrigger);
+ 		Binding binding = new Binding("ViewModel.OnBuyItemDoubleClickCommand");
+ 		binding.Source = new MyStoreBlockViewModelLocator(isDesignMode: false);
+Index: SpaceEngineers.Game/SpaceEngineers.Game.csproj
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SpaceEngineers.Game/SpaceEngineers.Game.csproj b/SpaceEngineers.Game/SpaceEngineers.Game.csproj
+--- a/SpaceEngineers.Game/SpaceEngineers.Game.csproj	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/SpaceEngineers.Game/SpaceEngineers.Game.csproj	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -12,6 +12,12 @@
+   <PropertyGroup />
+   <ItemGroup />
+   <ItemGroup>
++    <ProjectReference Include="..\Sandbox.Game.XmlSerializers\Sandbox.Game.XmlSerializers.csproj" />
++    <ProjectReference Include="..\SpaceEngineers.ObjectBuilders.XmlSerializers\SpaceEngineers.ObjectBuilders.XmlSerializers.csproj" />
++    <ProjectReference Include="..\VRage.EOS.XmlSerializers\VRage.EOS.XmlSerializers.csproj" />
++    <ProjectReference Include="..\VRage.Game.XmlSerializers\VRage.Game.XmlSerializers.csproj" />
++    <ProjectReference Include="..\VRage.Math.XmlSerializers\VRage.Math.XmlSerializers.csproj" />
++    <ProjectReference Include="..\VRage.XmlSerializers\VRage.XmlSerializers.csproj" />
+     <ProjectReference Include="..\Sandbox.Game\Sandbox.Game.csproj" />
+     <ProjectReference Include="..\VRage.Game\VRage.Game.csproj" />
+     <ProjectReference Include="..\SpaceEngineers.ObjectBuilders\SpaceEngineers.ObjectBuilders.csproj" />
+Index: SpaceEngineers.Game/SpaceEngineers/Game/Entities/Blocks/MyFlightMovementBlock.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SpaceEngineers.Game/SpaceEngineers/Game/Entities/Blocks/MyFlightMovementBlock.cs b/SpaceEngineers.Game/SpaceEngineers/Game/Entities/Blocks/MyFlightMovementBlock.cs
+--- a/SpaceEngineers.Game/SpaceEngineers/Game/Entities/Blocks/MyFlightMovementBlock.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/SpaceEngineers.Game/SpaceEngineers/Game/Entities/Blocks/MyFlightMovementBlock.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1559,9 +1559,5 @@
+ 		UpdateDetailedInfo();
+ 	}
+ 
+-	[SpecialName]
+-	MyCubeGrid IMyShipControl.get_CubeGrid()
+-	{
+-		return base.CubeGrid;
+-	}
++	[SpecialName] MyCubeGrid IMyShipControl.CubeGrid => base.CubeGrid;
+ }
+Index: SpaceEngineers.Game/SpaceEngineers/Game/GUI/MyGuiScreenMedicals.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SpaceEngineers.Game/SpaceEngineers/Game/GUI/MyGuiScreenMedicals.cs b/SpaceEngineers.Game/SpaceEngineers/Game/GUI/MyGuiScreenMedicals.cs
+--- a/SpaceEngineers.Game/SpaceEngineers/Game/GUI/MyGuiScreenMedicals.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/SpaceEngineers.Game/SpaceEngineers/Game/GUI/MyGuiScreenMedicals.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -44,7 +44,7 @@
+ public class MyGuiScreenMedicals : MyGuiScreenBase
+ {
+ 	[Serializable]
+-	private class MyPlanetInfo
++	protected class MyPlanetInfo
+ 	{
+ 		protected class SpaceEngineers_Game_GUI_MyGuiScreenMedicals_003C_003EMyPlanetInfo_003C_003EPlanetId_003C_003EAccessor : IMemberAccessor<MyPlanetInfo, long>
+ 		{
+Index: SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameCustomInitialization.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameCustomInitialization.cs b/SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameCustomInitialization.cs
+--- a/SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameCustomInitialization.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameCustomInitialization.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -4,6 +4,7 @@
+ using System.IO;
+ using System.Reflection;
+ using System.Text.RegularExpressions;
++using System.Xml;
+ using Sandbox;
+ using Sandbox.Engine.Networking;
+ using Sandbox.Engine.Utils;
+@@ -11,7 +12,6 @@
+ using Sandbox.ModAPI.Ingame;
+ using Sandbox.ModAPI.Interfaces;
+ using SpaceEngineers.Game.Definitions.SafeZone;
+-using SpaceEngineers.Game.ModAPI;
+ using SpaceEngineers.Game.ModAPI.Ingame;
+ using VRage;
+ using VRage.Collections;
+@@ -38,32 +38,33 @@
+ 
+ 	public void InitIlCompiler()
+ 	{
+-		List<string> list = new List<string>();
+-		list.Add(Path.Combine(Assembly.Load("netstandard").Location));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "Sandbox.Game.dll"));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "Sandbox.Common.dll"));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "Sandbox.Graphics.dll"));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "VRage.dll"));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Library.dll"));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Math.dll"));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Game.dll"));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Render.dll"));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Input.dll"));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "SpaceEngineers.ObjectBuilders.dll"));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "SpaceEngineers.Game.dll"));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "System.Collections.Immutable.dll"));
+-		list.Add(Path.Combine(MyFileSystem.ExePath, "ProtoBuf.Net.Core.dll"));
+-		List<string> list2 = list;
++		List<string> assemblyPaths = new List<string>();
++		assemblyPaths.Add(Path.Combine(Assembly.Load("netstandard").Location));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "Sandbox.Game.dll"));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "Sandbox.Common.dll"));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "Sandbox.Graphics.dll"));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "VRage.dll"));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Library.dll"));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Math.dll"));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Game.dll"));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Render.dll"));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Input.dll"));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "SpaceEngineers.ObjectBuilders.dll"));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "SpaceEngineers.Game.dll"));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "protobuf-net.Core.dll"));
++		List<string> assemblyLocations = assemblyPaths;
++		
+ 		Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+ 		foreach (Assembly assembly in assemblies)
+ 		{
+ 			string name = assembly.GetName().Name;
+-			if (name == "System.Runtime" || name == "System.Collections")
++			if (name.StartsWith("System."))
+ 			{
+-				list2.Add(assembly.Location);
++				assemblyLocations.Add(assembly.Location);
+ 			}
+ 		}
+-		MyVRage.Platform.Scripting.Initialize(MySandboxGame.Static.UpdateThread, list2, new Type[14]
++		
++		MyVRage.Platform.Scripting.Initialize(MySandboxGame.Static.UpdateThread, assemblyLocations, new Type[]
+ 		{
+ 			typeof(MyTuple),
+ 			typeof(Vector2),
+@@ -78,7 +79,16 @@
+ 			typeof(MyIni),
+ 			typeof(ImmutableArray),
+ 			typeof(SpaceEngineers.Game.ModAPI.Ingame.IMyAirVent),
+-			typeof(MySprite)
++			typeof(MySprite),
++			
++			// Items moved from MyScriptCompiler's constructor
++			GetType(),
++			typeof(int),
++			typeof(XmlEntity), 
++			typeof(HashSet<>), 
++			typeof(Dictionary<, >),
++			typeof(Uri)
++			
+ 		}, new string[6]
+ 		{
+ 			GetPrefixedBranchName(),
+Index: SpaceEngineers.Game/SpaceEngineers/Game/SpaceEngineersGame.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SpaceEngineers.Game/SpaceEngineers/Game/SpaceEngineersGame.cs b/SpaceEngineers.Game/SpaceEngineers/Game/SpaceEngineersGame.cs
+--- a/SpaceEngineers.Game/SpaceEngineers/Game/SpaceEngineersGame.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/SpaceEngineers.Game/SpaceEngineers/Game/SpaceEngineersGame.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -595,7 +595,11 @@
+ 	{
+ 		MyLog.Default.WriteLine("SpaceEngineersGame.SetupAnalytics - START");
+ 		string projectId = "27bae5ba5219bcd64ddbf83113eabb30:d04e0431f97f90fae73b9d6ea99fc9746695bd11";
++#if DISABLED_ANALYTICS
+ 		IMyAnalytics myAnalytics = MyVRage.Platform.InitAnalytics(projectId, 1205026.ToString());
++#else
++        IMyAnalytics myAnalytics = null;
++#endif
+ 		if (myAnalytics != null)
+ 		{
+ 			MySpaceAnalytics.Instance.RegisterAnalyticsTracker(myAnalytics);
+Index: SpaceEngineers.Game/SpaceEngineers/Game/World/MySpaceRespawnComponent.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SpaceEngineers.Game/SpaceEngineers/Game/World/MySpaceRespawnComponent.cs b/SpaceEngineers.Game/SpaceEngineers/Game/World/MySpaceRespawnComponent.cs
+--- a/SpaceEngineers.Game/SpaceEngineers/Game/World/MySpaceRespawnComponent.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/SpaceEngineers.Game/SpaceEngineers/Game/World/MySpaceRespawnComponent.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -50,7 +50,7 @@
+ public class MySpaceRespawnComponent : MyRespawnComponentBase
+ {
+ 	[Serializable]
+-	private struct RespawnCooldownEntry
++	protected struct RespawnCooldownEntry
+ 	{
+ 		private class SpaceEngineers_Game_World_MySpaceRespawnComponent_003C_003ERespawnCooldownEntry_003C_003EControllerId_003C_003EAccessor : IMemberAccessor<RespawnCooldownEntry, int>
+ 		{
+Index: SpaceEngineers.ObjectBuilders/Sandbox/Common/ObjectBuilders/MyObjectBuilder_AutomaticRifle.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SpaceEngineers.ObjectBuilders/Sandbox/Common/ObjectBuilders/MyObjectBuilder_AutomaticRifle.cs b/SpaceEngineers.ObjectBuilders/Sandbox/Common/ObjectBuilders/MyObjectBuilder_AutomaticRifle.cs
+--- a/SpaceEngineers.ObjectBuilders/Sandbox/Common/ObjectBuilders/MyObjectBuilder_AutomaticRifle.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/SpaceEngineers.ObjectBuilders/Sandbox/Common/ObjectBuilders/MyObjectBuilder_AutomaticRifle.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -187,13 +187,13 @@
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+ 		public virtual void Set(ref MyObjectBuilder_AutomaticRifle owner, in MyObjectBuilder_DeviceBase value)
+ 		{
+-			owner.VRage_002EGame_002EObjectBuilders_002EIMyObjectBuilder_GunObject_003CVRage_002EGame_002EMyObjectBuilder_GunBase_003E_002EDeviceBase = value;
++			((IMyObjectBuilder_GunObject<MyObjectBuilder_GunBase>)owner).DeviceBase = value;
+ 		}
+ 
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+ 		public virtual void Get(ref MyObjectBuilder_AutomaticRifle owner, out MyObjectBuilder_DeviceBase value)
+ 		{
+-			value = owner.VRage_002EGame_002EObjectBuilders_002EIMyObjectBuilder_GunObject_003CVRage_002EGame_002EMyObjectBuilder_GunBase_003E_002EDeviceBase;
++			value = ((IMyObjectBuilder_GunObject<MyObjectBuilder_GunBase>)owner).DeviceBase;
+ 		}
+ 	}
+ 
+Index: SpaceEngineers/SpaceEngineers.csproj
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SpaceEngineers/SpaceEngineers.csproj b/SpaceEngineers/SpaceEngineers.csproj
+--- a/SpaceEngineers/SpaceEngineers.csproj	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/SpaceEngineers/SpaceEngineers.csproj	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -38,4 +38,13 @@
+     <ProjectReference Include="..\VRage.Steam\VRage.Steam.csproj" />
+     <ProjectReference Include="..\VRage.EOS\VRage.EOS.csproj" />
+   </ItemGroup>
++  <ItemGroup>
++    <None Remove="steam_appid.txt" />
++    <Content Include="steam_appid.txt">
++      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
++    </Content>
++  </ItemGroup>
++  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
++    <Exec Command="cd &quot;$(SolutionDir)&quot;&#xA;CopyBinaryDependencies.bat &quot;$(TargetDir)&quot;" />
++  </Target>
+ </Project>
+\ No newline at end of file
+Index: SpaceEngineers/SpaceEngineers/MyProgram.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SpaceEngineers/SpaceEngineers/MyProgram.cs b/SpaceEngineers/SpaceEngineers/MyProgram.cs
+--- a/SpaceEngineers/SpaceEngineers/MyProgram.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/SpaceEngineers/SpaceEngineers/MyProgram.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -26,6 +26,10 @@
+ using VRage.Utils;
+ using VRageRender;
+ 
++// Enabling BinaryFormatter. It will not work on .Net 9
++// See https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide
++using System.Runtime.Serialization.Formatters.Binary;
++
+ namespace SpaceEngineers;
+ 
+ public static class MyProgram
+@@ -36,6 +40,10 @@
+ 
+ 	public static void Main(string[] args)
+ 	{
++		// Enabling BinaryFormatter. It will not work on .Net 9
++		// See https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide
++		AppContext.SetSwitch("System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization", true);
++		
+ 		Exception ex = null;
+ 		try
+ 		{
+@@ -133,11 +141,13 @@
+ 		{
+ 			spaceEngineersGame.Run(customRenderLoop: false, m_startup.DisposeSplashScreen);
+ 		}
++#if !DEBUG
+ 		catch (Exception exception)
+ 		{
+ 			MyDefaultLogInject.WriteLine(exception);
+ 			throw;
+ 		}
++#endif
+ 		finally
+ 		{
+ 			spaceEngineersGame.Dispose();
+Index: SpaceEngineers/steam_appid.txt
+===================================================================
+diff --git a/SpaceEngineers/steam_appid.txt b/SpaceEngineers/steam_appid.txt
+new file mode 100644
+--- /dev/null	(revision deae3e993f919eff441043c53cd8247974e501d4)
++++ b/SpaceEngineers/steam_appid.txt	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -0,0 +1,1 @@
++244850
+\ No newline at end of file
+Index: VRage.Audio/VRage/Audio/MyXAudio2.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Audio/VRage/Audio/MyXAudio2.cs b/VRage.Audio/VRage/Audio/MyXAudio2.cs
+--- a/VRage.Audio/VRage/Audio/MyXAudio2.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Audio/VRage/Audio/MyXAudio2.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -752,7 +752,7 @@
+ 			}
+ 			else
+ 			{
+-				m_x3dAudio = new X3DAudio(m_channelMask, X3DAudioVersion.Version29);
++				m_x3dAudio = new X3DAudio(m_channelMask, X3DAudioVersion.Default);
+ 			}
+ 			int num = text.IndexOf('\0');
+ 			if (num != -1)
+Index: VRage.EOS/VRage/EOS/MyEOSLobbyList.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.EOS/VRage/EOS/MyEOSLobbyList.cs b/VRage.EOS/VRage/EOS/MyEOSLobbyList.cs
+--- a/VRage.EOS/VRage/EOS/MyEOSLobbyList.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.EOS/VRage/EOS/MyEOSLobbyList.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -12,7 +12,7 @@
+ internal class MyEOSLobbyList<T> where T : class
+ {
+ 	[CompilerGenerated]
+-	private sealed class _003C_003Ec__DisplayClass32_0
++	private class _003C_003Ec__DisplayClass32_0
+ 	{
+ 		public MyEOSLobbyList<T> _003C_003E4__this;
+ 
+@@ -78,7 +78,7 @@
+ 	}
+ 
+ 	[CompilerGenerated]
+-	private sealed class _003C_003Ec__DisplayClass32_1
++	private class _003C_003Ec__DisplayClass32_1: _003C_003Ec__DisplayClass32_0
+ 	{
+ 		public Result x;
+ 
+@@ -431,21 +431,23 @@
+ 		}
+ 		void OnResults(Result result, (string ConnectingString, T Item)[] servers)
+ 		{
+-			if (result != 0)
+-			{
+-				((_003C_003Ec__DisplayClass32_0)this)._003C_003E4__this.m_networking.Error($"Lobby search was not successful: {result}");
+-			}
+-			for (int i = 0; i < servers.Length; i++)
+-			{
+-				if (((_003C_003Ec__DisplayClass32_0)this)._003C_003E4__this.m_networking.VerboseLogging)
+-				{
+-					((_003C_003Ec__DisplayClass32_0)this)._003C_003E4__this.Log("Server [" + servers[i].ConnectingString + "]: " + ((servers[i].Item == null) ? "Not Available" : "Loaded") + ".");
+-				}
+-				if (servers[i].Item != null)
+-				{
+-					((_003C_003Ec__DisplayClass32_0)this).lobbyList.Add(servers[i].Item);
+-				}
+-			}
++			// Disabled due to compile errors
++			//
++			// if (result != 0)
++			// {
++			// 	((_003C_003Ec__DisplayClass32_0)this)._003C_003E4__this.m_networking.Error($"Lobby search was not successful: {result}");
++			// }
++			// for (int i = 0; i < servers.Length; i++)
++			// {
++			// 	if (((_003C_003Ec__DisplayClass32_0)this)._003C_003E4__this.m_networking.VerboseLogging)
++			// 	{
++			// 		((_003C_003Ec__DisplayClass32_0)this)._003C_003E4__this.Log("Server [" + servers[i].ConnectingString + "]: " + ((servers[i].Item == null) ? "Not Available" : "Loaded") + ".");
++			// 	}
++			// 	if (servers[i].Item != null)
++			// 	{
++			// 		((_003C_003Ec__DisplayClass32_0)this).lobbyList.Add(servers[i].Item);
++			// 	}
++			// }
+ 			Deliver();
+ 		}
+ 	}
+Index: VRage.Game/VRage/Game/Entity/MyPhysicalInventoryItem.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Game/VRage/Game/Entity/MyPhysicalInventoryItem.cs b/VRage.Game/VRage/Game/Entity/MyPhysicalInventoryItem.cs
+--- a/VRage.Game/VRage/Game/Entity/MyPhysicalInventoryItem.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Game/VRage/Game/Entity/MyPhysicalInventoryItem.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -74,6 +74,7 @@
+ 		}
+ 	}
+ 
++#if DISABLED_INVALID
+ 	private class VRage_Game_Entity_MyPhysicalInventoryItem_003C_003EVRage_002EGame_002EModAPI_002EIngame_002EIMyInventoryItem_002EAmount_003C_003EAccessor : IMemberAccessor<MyPhysicalInventoryItem, MyFixedPoint>
+ 	{
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+@@ -133,6 +134,7 @@
+ 			value = owner.VRage_002EGame_002EModAPI_002EIngame_002EIMyInventoryItem_002EItemId;
+ 		}
+ 	}
++#endif
+ 
+ 	public MyFixedPoint Amount;
+ 
+Index: VRage.Game/VRage/Game/MyDefinitionId.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Game/VRage/Game/MyDefinitionId.cs b/VRage.Game/VRage/Game/MyDefinitionId.cs
+--- a/VRage.Game/VRage/Game/MyDefinitionId.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Game/VRage/Game/MyDefinitionId.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -83,9 +83,9 @@
+ 
+ 	private static ThreadLocal<StringBuilder> m_reusableStringBuilder = new ThreadLocal<StringBuilder>(() => new StringBuilder());
+ 
+-	public readonly MyObjectBuilderType TypeId;
++	public MyObjectBuilderType TypeId;
+ 
+-	public readonly MyStringHash SubtypeId;
++	public MyStringHash SubtypeId;
+ 
+ 	public static readonly DefinitionIdComparerType Comparer = new DefinitionIdComparerType();
+ 
+Index: VRage.Game/VRage/Game/MyObjectBuilder_GoodAIControlHandTool.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Game/VRage/Game/MyObjectBuilder_GoodAIControlHandTool.cs b/VRage.Game/VRage/Game/MyObjectBuilder_GoodAIControlHandTool.cs
+--- a/VRage.Game/VRage/Game/MyObjectBuilder_GoodAIControlHandTool.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Game/VRage/Game/MyObjectBuilder_GoodAIControlHandTool.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -168,13 +168,13 @@
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+ 		public virtual void Set(ref MyObjectBuilder_GoodAIControlHandTool owner, in MyObjectBuilder_DeviceBase value)
+ 		{
+-			Set(ref Unsafe.As<MyObjectBuilder_GoodAIControlHandTool, MyObjectBuilder_HandToolBase>(ref owner), in value);
++			owner.DeviceBase = (MyObjectBuilder_ToolBase)value;
+ 		}
+ 
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+ 		public virtual void Get(ref MyObjectBuilder_GoodAIControlHandTool owner, out MyObjectBuilder_DeviceBase value)
+ 		{
+-			Get(ref Unsafe.As<MyObjectBuilder_GoodAIControlHandTool, MyObjectBuilder_HandToolBase>(ref owner), out value);
++			value = owner.DeviceBase;
+ 		}
+ 	}
+ 
+@@ -183,13 +183,13 @@
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+ 		public virtual void Set(ref MyObjectBuilder_GoodAIControlHandTool owner, in MyStringHash value)
+ 		{
+-			Set(ref Unsafe.As<MyObjectBuilder_GoodAIControlHandTool, MyObjectBuilder_Base>(ref owner), in value);
++			owner.m_serializableSubtypeId = value;
+ 		}
+ 
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+ 		public virtual void Get(ref MyObjectBuilder_GoodAIControlHandTool owner, out MyStringHash value)
+ 		{
+-			Get(ref Unsafe.As<MyObjectBuilder_GoodAIControlHandTool, MyObjectBuilder_Base>(ref owner), out value);
++			value = owner.m_serializableSubtypeId;
+ 		}
+ 	}
+ 
+Index: VRage.Game/VRage/Game/MyObjectBuilder_HandToolBase.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Game/VRage/Game/MyObjectBuilder_HandToolBase.cs b/VRage.Game/VRage/Game/MyObjectBuilder_HandToolBase.cs
+--- a/VRage.Game/VRage/Game/MyObjectBuilder_HandToolBase.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Game/VRage/Game/MyObjectBuilder_HandToolBase.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -170,13 +170,13 @@
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+ 		public virtual void Set(ref MyObjectBuilder_HandToolBase owner, in MyObjectBuilder_DeviceBase value)
+ 		{
+-			owner.VRage_002EGame_002EObjectBuilders_002EIMyObjectBuilder_GunObject_003CVRage_002EGame_002EMyObjectBuilder_ToolBase_003E_002EDeviceBase = value;
++			owner.DeviceBase = (MyObjectBuilder_ToolBase)value;
+ 		}
+ 
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+ 		public virtual void Get(ref MyObjectBuilder_HandToolBase owner, out MyObjectBuilder_DeviceBase value)
+ 		{
+-			value = owner.VRage_002EGame_002EObjectBuilders_002EIMyObjectBuilder_GunObject_003CVRage_002EGame_002EMyObjectBuilder_ToolBase_003E_002EDeviceBase;
++			value = owner.DeviceBase;
+ 		}
+ 	}
+ 
+Index: VRage.Game/VRage/Game/ObjectBuilders/Animation/MyObjectBuilder_AnimationSMVariable.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Game/VRage/Game/ObjectBuilders/Animation/MyObjectBuilder_AnimationSMVariable.cs b/VRage.Game/VRage/Game/ObjectBuilders/Animation/MyObjectBuilder_AnimationSMVariable.cs
+--- a/VRage.Game/VRage/Game/ObjectBuilders/Animation/MyObjectBuilder_AnimationSMVariable.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Game/VRage/Game/ObjectBuilders/Animation/MyObjectBuilder_AnimationSMVariable.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -102,6 +102,7 @@
+ 		}
+ 	}
+ 
++#if DISABLED_DUPLICATE
+ 	protected class VRage_Game_ObjectBuilders_Animation_MyObjectBuilder_AnimationSMVariable_003C_003ESubtypeName_003C_003EAccessor : VRage_ObjectBuilders_MyObjectBuilder_Base_003C_003ESubtypeName_003C_003EAccessor, IMemberAccessor<MyObjectBuilder_AnimationSMVariable, string>
+ 	{
+ 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+@@ -116,6 +117,7 @@
+ 			Get(ref Unsafe.As<MyObjectBuilder_AnimationSMVariable, MyObjectBuilder_Base>(ref owner), out value);
+ 		}
+ 	}
++#endif
+ 
+ 	private class VRage_Game_ObjectBuilders_Animation_MyObjectBuilder_AnimationSMVariable_003C_003EActor : IActivator, IActivator<MyObjectBuilder_AnimationSMVariable>
+ 	{
+Index: VRage.Game/VRage/Game/ObjectBuilders/Components/MyObjectBuilder_HierarchyComponentBase.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Game/VRage/Game/ObjectBuilders/Components/MyObjectBuilder_HierarchyComponentBase.cs b/VRage.Game/VRage/Game/ObjectBuilders/Components/MyObjectBuilder_HierarchyComponentBase.cs
+--- a/VRage.Game/VRage/Game/ObjectBuilders/Components/MyObjectBuilder_HierarchyComponentBase.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Game/VRage/Game/ObjectBuilders/Components/MyObjectBuilder_HierarchyComponentBase.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -111,7 +111,7 @@
+ 	    MyObjectBuilder_HierarchyComponentBase IActivator<MyObjectBuilder_HierarchyComponentBase>.CreateInstance() => new MyObjectBuilder_HierarchyComponentBase();
+ 	}
+ 
+-	[ProtoMember(1, AsReference = true)]
++	[ProtoMember(1)]
+ 	[DynamicItem(typeof(MyObjectBuilderDynamicSerializer), true)]
+ 	[XmlArrayItem("MyObjectBuilder_EntityBase", Type = typeof(MyAbstractXmlSerializer<MyObjectBuilder_EntityBase>))]
+ 	public List<MyObjectBuilder_EntityBase> Children = new List<MyObjectBuilder_EntityBase>();
+Index: VRage.Game/VRage/Game/ObjectBuilders/MyObjectBuilder_AnimationLayer.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Game/VRage/Game/ObjectBuilders/MyObjectBuilder_AnimationLayer.cs b/VRage.Game/VRage/Game/ObjectBuilders/MyObjectBuilder_AnimationLayer.cs
+--- a/VRage.Game/VRage/Game/ObjectBuilders/MyObjectBuilder_AnimationLayer.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Game/VRage/Game/ObjectBuilders/MyObjectBuilder_AnimationLayer.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -16,12 +16,13 @@
+ 	public enum MyLayerMode
+ 	{
+ 		// error: nested types are not permitted in C#.
++		/*
+ 		private class VRage_Game_ObjectBuilders_MyObjectBuilder_AnimationLayer_003C_003EMyLayerMode_003C_003EActor : IActivator, IActivator<MyLayerMode>
+ 		{
+ 		    object IActivator.CreateInstance() => (object) new MyLayerMode();
+ 		    MyLayerMode IActivator<MyLayerMode>.CreateInstance() => new MyLayerMode();
+ 		}
+-		,
++		,*/
+ 		Replace,
+ 		Add
+ 	}
+Index: VRage.Game/VRage/Game/ObjectBuilders/VisualScripting/MyObjectBuilder_NewListScriptNode.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Game/VRage/Game/ObjectBuilders/VisualScripting/MyObjectBuilder_NewListScriptNode.cs b/VRage.Game/VRage/Game/ObjectBuilders/VisualScripting/MyObjectBuilder_NewListScriptNode.cs
+--- a/VRage.Game/VRage/Game/ObjectBuilders/VisualScripting/MyObjectBuilder_NewListScriptNode.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Game/VRage/Game/ObjectBuilders/VisualScripting/MyObjectBuilder_NewListScriptNode.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -159,8 +159,8 @@
+ 	public string Type = string.Empty;
+ 
+ 	[ProtoMember(5)]
+-	public readonly List<string> DefaultEntries = new List<string>();
++	public List<string> DefaultEntries = new List<string>();
+ 
+ 	[ProtoMember(10)]
+-	public readonly List<MyVariableIdentifier> Connections = new List<MyVariableIdentifier>();
++	public List<MyVariableIdentifier> Connections = new List<MyVariableIdentifier>();
+ }
+Index: VRage.Game/VRage/Game/ObjectBuilders/VisualScripting/MyObjectBuilder_SwitchScriptNode.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Game/VRage/Game/ObjectBuilders/VisualScripting/MyObjectBuilder_SwitchScriptNode.cs b/VRage.Game/VRage/Game/ObjectBuilders/VisualScripting/MyObjectBuilder_SwitchScriptNode.cs
+--- a/VRage.Game/VRage/Game/ObjectBuilders/VisualScripting/MyObjectBuilder_SwitchScriptNode.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Game/VRage/Game/ObjectBuilders/VisualScripting/MyObjectBuilder_SwitchScriptNode.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -238,7 +238,7 @@
+ 	public List<int> SequenceInputs = new List<int>();
+ 
+ 	[ProtoMember(5)]
+-	public readonly List<OptionData> Options = new List<OptionData>();
++	public List<OptionData> Options = new List<OptionData>();
+ 
+ 	[ProtoMember(10)]
+ 	public MyVariableIdentifier ValueInput;
+Index: VRage.Game/VRage/ObjectBuilders/MyObjectBuilder_Base.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Game/VRage/ObjectBuilders/MyObjectBuilder_Base.cs b/VRage.Game/VRage/ObjectBuilders/MyObjectBuilder_Base.cs
+--- a/VRage.Game/VRage/ObjectBuilders/MyObjectBuilder_Base.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Game/VRage/ObjectBuilders/MyObjectBuilder_Base.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -83,7 +83,7 @@
+ 	public MyStringHash SubtypeId => m_subtypeId;
+ 
+ 	[Serialize]
+-	private MyStringHash m_serializableSubtypeId
++	protected MyStringHash m_serializableSubtypeId
+ 	{
+ 		get
+ 		{
+Index: VRage.Game/VRage/ObjectBuilders/MyRuntimeObjectBuilderId.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Game/VRage/ObjectBuilders/MyRuntimeObjectBuilderId.cs b/VRage.Game/VRage/ObjectBuilders/MyRuntimeObjectBuilderId.cs
+--- a/VRage.Game/VRage/ObjectBuilders/MyRuntimeObjectBuilderId.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Game/VRage/ObjectBuilders/MyRuntimeObjectBuilderId.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -31,7 +31,7 @@
+ 	public static readonly MyRuntimeObjectBuilderIdComparer Comparer = new MyRuntimeObjectBuilderIdComparer();
+ 
+ 	[ProtoMember(1)]
+-	public readonly ushort Value;
++	public ushort Value;
+ 
+ 	public bool IsValid => Value != 0;
+ 
+Index: VRage.Game/VRage/ObjectBuilders/Private/MyObjectBuilderSerializerKeen.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Game/VRage/ObjectBuilders/Private/MyObjectBuilderSerializerKeen.cs b/VRage.Game/VRage/ObjectBuilders/Private/MyObjectBuilderSerializerKeen.cs
+--- a/VRage.Game/VRage/ObjectBuilders/Private/MyObjectBuilderSerializerKeen.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Game/VRage/ObjectBuilders/Private/MyObjectBuilderSerializerKeen.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -37,7 +37,11 @@
+ 
+ 	static MyObjectBuilderSerializerKeen()
+ 	{
++#if THIS_CAUSED_CRASHES
++		// Crashed inside protobuf-net code inside calls to MyObjectBuilderSerializerKeen.Clone
+ 		ENABLE_PROTOBUFFERS_CLONING = true;
++#endif
++		
+ 		Dynamic = new MySerializeInfo(MyObjectFlags.Dynamic, MyPrimitiveFlags.None, 0, SerializeDynamic, null, null);
+ 		m_typeModel = MyVRage.Platform?.GetTypeModel();
+ 		Serializer = m_typeModel?.Model;
+Index: VRage.Library/VRage.Library.csproj
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Library/VRage.Library.csproj b/VRage.Library/VRage.Library.csproj
+--- a/VRage.Library/VRage.Library.csproj	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Library/VRage.Library.csproj	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -12,6 +12,7 @@
+   <ItemGroup />
+   <ItemGroup>
+     <ProjectReference Include="..\VRage.Network\VRage.Network.csproj" />
++    <PackageReference Include="protobuf-net" Version="3.0.131" />
+     <PackageReference Include="System.Memory" Version="4.5.5" />
+     <PackageReference Include="protobuf-net.Core" Version="3.0.131" />
+     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+Index: VRage.Library/VRage/Serialization/ProtoSerializer.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Library/VRage/Serialization/ProtoSerializer.cs b/VRage.Library/VRage/Serialization/ProtoSerializer.cs
+--- a/VRage.Library/VRage/Serialization/ProtoSerializer.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Library/VRage/Serialization/ProtoSerializer.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -10,7 +10,7 @@
+ 
+ 	public ProtoSerializer(TypeModel model = null)
+ 	{
+-		Model = model ?? TypeModel.Default;
++		Model = model ?? RuntimeTypeModel.Default;
+ 	}
+ 
+ 	public void Serialize(ByteStream destination, ref T data)
+Index: VRage.Math/VRageMath/BoundingFrustumD.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Math/VRageMath/BoundingFrustumD.cs b/VRage.Math/VRageMath/BoundingFrustumD.cs
+--- a/VRage.Math/VRageMath/BoundingFrustumD.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Math/VRageMath/BoundingFrustumD.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -86,9 +86,9 @@
+ 		}
+ 	}
+ 
+-	private readonly PlaneD[] m_planes = new PlaneD[6];
++	private PlaneD[] m_planes = new PlaneD[6];
+ 
+-	internal readonly Vector3D[] CornerArray = new Vector3D[8];
++	internal Vector3D[] CornerArray = new Vector3D[8];
+ 
+ 	/// <summary>
+ 	/// Specifies the total number of corners (8) in the BoundingFrustumD.
+Index: VRage.Math/VRageMath/Gjk.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Math/VRageMath/Gjk.cs b/VRage.Math/VRageMath/Gjk.cs
+--- a/VRage.Math/VRageMath/Gjk.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Math/VRageMath/Gjk.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -5,7 +5,7 @@
+ namespace VRageMath;
+ 
+ [Serializable]
+-internal class Gjk
++public class Gjk
+ {
+ 	protected class VRageMath_Gjk_003C_003EclosestPoint_003C_003EAccessor : IMemberAccessor<Gjk, Vector3>
+ 	{
+Index: VRage.Math/VRageMath/GjkD.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Math/VRageMath/GjkD.cs b/VRage.Math/VRageMath/GjkD.cs
+--- a/VRage.Math/VRageMath/GjkD.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Math/VRageMath/GjkD.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -5,7 +5,7 @@
+ namespace VRageMath;
+ 
+ [Serializable]
+-internal class GjkD
++public class GjkD
+ {
+ 	protected class VRageMath_GjkD_003C_003EclosestPoint_003C_003EAccessor : IMemberAccessor<GjkD, Vector3D>
+ 	{
+Index: VRage.NativeAftermath/-CrtImplementationDetails-/Progress.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/-CrtImplementationDetails-/Progress.cs b/VRage.NativeAftermath/-CrtImplementationDetails-/Progress.cs
+--- a/VRage.NativeAftermath/-CrtImplementationDetails-/Progress.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/-CrtImplementationDetails-/Progress.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -2,7 +2,6 @@
+ 
+ namespace _003CCrtImplementationDetails_003E;
+ 
+-[NativeCppClass]
+ internal enum Progress
+ {
+ 
+Index: VRage.NativeAftermath/-CrtImplementationDetails-/TriBool.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/-CrtImplementationDetails-/TriBool.cs b/VRage.NativeAftermath/-CrtImplementationDetails-/TriBool.cs
+--- a/VRage.NativeAftermath/-CrtImplementationDetails-/TriBool.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/-CrtImplementationDetails-/TriBool.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -2,7 +2,6 @@
+ 
+ namespace _003CCrtImplementationDetails_003E;
+ 
+-[NativeCppClass]
+ internal enum TriBool
+ {
+ 
+Index: VRage.NativeAftermath/-Module-.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/-Module-.cs b/VRage.NativeAftermath/-Module-.cs
+--- a/VRage.NativeAftermath/-Module-.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/-Module-.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -114,7 +114,7 @@
+ 
+ 	internal static __scrt_native_startup_state __scrt_current_native_startup_state/* Not supported: data() */;
+ 
+-	internal unsafe static void* __scrt_native_startup_lock/* Not supported: data(00 00 00 00 00 00 00 00) */;
++	internal unsafe static IntPtr __scrt_native_startup_lock/* Not supported: data(00 00 00 00 00 00 00 00) */;
+ 
+ 	internal static _0024ArrayType_0024_0024_0024BY0A_0040P6AXXZ __xc_a/* Not supported: data(00) */;
+ 
+@@ -149,6 +149,14 @@
+ 	{
+ 		return new Guid(*(uint*)guid, *(ushort*)((ulong)(nint)guid + 4uL), *(ushort*)((ulong)(nint)guid + 6uL), *(byte*)((ulong)(nint)guid + 8uL), *(byte*)((ulong)(nint)guid + 9uL), *(byte*)((ulong)(nint)guid + 10uL), *(byte*)((ulong)(nint)guid + 11uL), *(byte*)((ulong)(nint)guid + 12uL), *(byte*)((ulong)(nint)guid + 13uL), *(byte*)((ulong)(nint)guid + 14uL), *(byte*)((ulong)(nint)guid + 15uL));
+ 	}
++	
++	// delegate* unmanaged[Cdecl, Cdecl]<IntPtr, IUnknown**, int>
++	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
++	private unsafe delegate int IntPtrIUnknownToIntDelegate(IntPtr ptr, IUnknown** unk);
++	
++	// delegate* unmanaged[Cdecl, Cdecl]<IntPtr, uint>
++	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
++	private delegate uint IntPtrToUintDelegate(IntPtr ptr);
+ 
+ 	[SecurityCritical]
+ 	internal unsafe static int __get_default_appdomain(IUnknown** ppUnk)
+@@ -177,9 +185,12 @@
+ 		goto IL_0055;
+ 		IL_0036:
+ 		long num2 = *(long*)(*(long*)ptr + 104);
+-		num = ((delegate* unmanaged[Cdecl, Cdecl]<IntPtr, IUnknown**, int>)num2)((nint)ptr, ppUnk);
++		var fn1 = Marshal.GetDelegateForFunctionPointer<IntPtrIUnknownToIntDelegate>((IntPtr)num2);
++		num = fn1((nint)ptr, ppUnk);
+ 		ICorRuntimeHost* intPtr = ptr;
+-		((delegate* unmanaged[Cdecl, Cdecl]<IntPtr, uint>)(*(ulong*)(*(long*)intPtr + 16)))((nint)intPtr);
++		var num3 = *(ulong*)(*(long*)intPtr + 16);
++		var fn2 = Marshal.GetDelegateForFunctionPointer<IntPtrToUintDelegate>((IntPtr)num3);
++		fn2((nint)intPtr);
+ 		goto IL_0055;
+ 		IL_0055:
+ 		return num;
+@@ -188,7 +199,9 @@
+ 	internal unsafe static void __release_appdomain(IUnknown* ppUnk)
+ 	{
+ 		//IL_000d: Expected I, but got I8
+-		((delegate* unmanaged[Cdecl, Cdecl]<IntPtr, uint>)(*(ulong*)(*(long*)ppUnk + 16)))((nint)ppUnk);
++		var num = *(ulong*)(*(long*)ppUnk + 16); 
++		var fn = Marshal.GetDelegateForFunctionPointer<IntPtrToUintDelegate>((IntPtr)num);
++		fn((nint)ppUnk);
+ 	}
+ 
+ 	[SecurityCritical]
+@@ -212,9 +225,25 @@
+ 		Marshal.ThrowExceptionForHR(num);
+ 		return null;
+ 	}
++	
++	// delegate* unmanaged[Cdecl, Cdecl]<void>*
++	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
++	internal unsafe delegate void FunctionDelegate(); 
++	
++	// delegate* unmanaged[Cdecl, Cdecl]<int>*
++	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
++	internal unsafe delegate int GetIntDelegate(); 
+ 
++	// delegate* unmanaged[Cdecl, Cdecl]<void *, int>*
++	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
++	internal unsafe delegate int CallbackDelegate(void* p); 
++	
++	// delegate* unmanaged[Cdecl, Cdecl]<IntPtr, uint, delegate* unmanaged[Cdecl, Cdecl]<void*, int>, void*, int>
++	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
++	internal unsafe delegate int IntPtrUintCallbackVoidPtrToInt(IntPtr ptr, uint num, int **callback, void *voidPtr); 
++	
+ 	[SecurityCritical]
+-	internal unsafe static void _003CCrtImplementationDetails_003E_002EDoCallBackInDefaultDomain(delegate* unmanaged[Cdecl, Cdecl]<void*, int> function, void* cookie)
++	internal unsafe static void _003CCrtImplementationDetails_003E_002EDoCallBackInDefaultDomain(int** callbackFunction, void* cookie)
+ 	{
+ 		//IL_005e: Expected I, but got I8
+ 		//IL_0044: Expected I, but got I8
+@@ -224,7 +253,8 @@
+ 		{
+ 			AppDomain appDomain = _003CCrtImplementationDetails_003E_002EGetDefaultDomain();
+ 			long num = *(long*)(*(long*)ptr + 64);
+-			int num2 = ((delegate* unmanaged[Cdecl, Cdecl]<IntPtr, uint, delegate* unmanaged[Cdecl, Cdecl]<void*, int>, void*, int>)num)((nint)ptr, (uint)appDomain.Id, function, cookie);
++			var fn = Marshal.GetDelegateForFunctionPointer<IntPtrUintCallbackVoidPtrToInt>((IntPtr)num);
++			int num2 = fn((nint)ptr, (uint)appDomain.Id, callbackFunction, cookie);
+ 			if (num2 < 0)
+ 			{
+ 				Marshal.ThrowExceptionForHR(num2);
+@@ -232,7 +262,9 @@
+ 		}
+ 		finally
+ 		{
+-			((delegate* unmanaged[Cdecl, Cdecl]<IntPtr, uint>)(*(ulong*)(*(long*)ptr + 16)))((nint)ptr);
++			var num = *(ulong*)(*(long*)ptr + 16);
++			var fn = Marshal.GetDelegateForFunctionPointer<IntPtrToUintDelegate>((IntPtr)num);
++			fn((nint)ptr);
+ 		}
+ 	}
+ 
+@@ -339,7 +371,7 @@
+ 	internal unsafe static void _003CCrtImplementationDetails_003E_002EDefaultDomain_002EInitialize()
+ 	{
+ 		//IL_000c: Expected I, but got I8
+-		_003CCrtImplementationDetails_003E_002EDoCallBackInDefaultDomain((delegate* unmanaged[Cdecl, Cdecl]<void*, int>)__unep_0040_003FDoNothing_0040DefaultDomain_0040_003CCrtImplementationDetails_003E_0040_0040_0024_0024FCAJPEAX_0040Z, null);
++		_003CCrtImplementationDetails_003E_002EDoCallBackInDefaultDomain(__unep_0040_003FDoNothing_0040DefaultDomain_0040_003CCrtImplementationDetails_003E_0040_0040_0024_0024FCAJPEAX_0040Z, null);
+ 	}
+ 
+ 	internal static void _003FA0x6b6762b8_002E_003F_003F__E_003FInitialized_0040CurrentDomain_0040_003CCrtImplementationDetails_003E_0040_0040_0024_0024Q2HA_0040_0040YMXXZ()
+@@ -413,11 +445,11 @@
+ 		{
+ 			_003FInitializedNative_0040CurrentDomain_0040_003CCrtImplementationDetails_003E_0040_0040_0024_0024Q2W4Progress_00402_0040A = (Progress)1;
+ 			__scrt_current_native_startup_state = (__scrt_native_startup_state)1;
+-			if (_initterm_e((delegate* unmanaged[Cdecl, Cdecl]<int>*)System.Runtime.CompilerServices.Unsafe.AsPointer(ref __xi_a), (delegate* unmanaged[Cdecl, Cdecl]<int>*)System.Runtime.CompilerServices.Unsafe.AsPointer(ref __xi_z)) != 0)
++			if (_initterm_e(Unsafe.AsPointer(ref __xi_a), Unsafe.AsPointer(ref __xi_z)) != 0)
+ 			{
+ 				_003CCrtImplementationDetails_003E_002EThrowModuleLoadException(gcroot_003CSystem_003A_003AString_0020_005E_003E_002E_002EPE_0024AAVString_0040System_0040_0040((gcroot_003CSystem_003A_003AString_0020_005E_003E*)P_0));
+ 			}
+-			_initterm((delegate* unmanaged[Cdecl, Cdecl]<void>*)System.Runtime.CompilerServices.Unsafe.AsPointer(ref __xc_a), (delegate* unmanaged[Cdecl, Cdecl]<void>*)System.Runtime.CompilerServices.Unsafe.AsPointer(ref __xc_z));
++			_initterm(Unsafe.AsPointer(ref __xc_a), Unsafe.AsPointer(ref __xc_z));
+ 			__scrt_current_native_startup_state = (__scrt_native_startup_state)2;
+ 			_003FInitializedNativeFromCCTOR_0040DefaultDomain_0040_003CCrtImplementationDetails_003E_0040_00402_NA = true;
+ 			_003FInitializedNative_0040CurrentDomain_0040_003CCrtImplementationDetails_003E_0040_0040_0024_0024Q2W4Progress_00402_0040A = (Progress)2;
+@@ -489,7 +521,7 @@
+ 				}
+ 				finally
+ 				{
+-					void* ptr2 = (void*)Interlocked.CompareExchange(ref System.Runtime.CompilerServices.Unsafe.As<void*, long>(ref __scrt_native_startup_lock), (nint)ptr, 0L);
++					void* ptr2 = (void*)Interlocked.CompareExchange(ref System.Runtime.CompilerServices.Unsafe.As<IntPtr, long>(ref __scrt_native_startup_lock), (nint)ptr, 0L);
+ 					if (ptr2 == null)
+ 					{
+ 						num2 = 1;
+@@ -520,7 +552,7 @@
+ 		{
+ 			if (num == 0)
+ 			{
+-				Interlocked.Exchange(ref System.Runtime.CompilerServices.Unsafe.As<void*, long>(ref __scrt_native_startup_lock), 0L);
++				Interlocked.Exchange(ref System.Runtime.CompilerServices.Unsafe.As<IntPtr, long>(ref __scrt_native_startup_lock), 0L);
+ 			}
+ 		}
+ 		if (num3 != 0)
+@@ -566,7 +598,7 @@
+ 			}
+ 			else
+ 			{
+-				_003CCrtImplementationDetails_003E_002EDoCallBackInDefaultDomain((delegate* unmanaged[Cdecl, Cdecl]<void*, int>)__unep_0040_003F_UninitializeDefaultDomain_0040LanguageSupport_0040_003CCrtImplementationDetails_003E_0040_0040_0024_0024FCAJPEAX_0040Z, null);
++				_003CCrtImplementationDetails_003E_002EDoCallBackInDefaultDomain(__unep_0040_003F_UninitializeDefaultDomain_0040LanguageSupport_0040_003CCrtImplementationDetails_003E_0040_0040_0024_0024FCAJPEAX_0040Z, null);
+ 			}
+ 		}
+ 	}
+@@ -676,7 +708,8 @@
+ 		catch
+ 		{
+ 			//try-fault
+-			___CxxCallUnwindDtor((delegate*<void*, void>)(delegate*<LanguageSupport*, void>)(&_003CCrtImplementationDetails_003E_002ELanguageSupport_002E_007Bdtor_007D), &languageSupport);
++			// See the comment above the commented out ___CxxCallUnwindDtor method
++			// ___CxxCallUnwindDtor((delegate*<void*, void>)(delegate*<LanguageSupport*, void>)(&_003CCrtImplementationDetails_003E_002ELanguageSupport_002E_007Bdtor_007D), &languageSupport);
+ 			throw;
+ 		}
+ 		_003CCrtImplementationDetails_003E_002ELanguageSupport_002E_007Bdtor_007D(&languageSupport);
+@@ -753,7 +786,8 @@
+ 		}
+ 		else
+ 		{
+-			((GCHandle)valueType).Target = value;
++			var gcHandle = (GCHandle)valueType; 
++			gcHandle.Target = value;
+ 		}
+ 	}
+ 
+@@ -981,11 +1015,11 @@
+ 
+ 	[DebuggerStepThrough]
+ 	[SecurityCritical]
+-	internal unsafe static int _initterm_e(delegate* unmanaged[Cdecl, Cdecl]<int>* pfbegin, delegate* unmanaged[Cdecl, Cdecl]<int>* pfend)
++	internal unsafe static int _initterm_e(void* pfbegin, void* pfend)
+ 	{
+-		//IL_001c: Expected I, but got I8
+-		//IL_0015: Expected I, but got I8
+-		int num = 0;
++        //IL_001c: Expected I, but got I8
++        //IL_0015: Expected I, but got I8
++        int num = 0;
+ 		if (pfbegin < pfend)
+ 		{
+ 			while (num == 0)
+@@ -993,9 +1027,9 @@
+ 				ulong num2 = *(ulong*)pfbegin;
+ 				if (num2 != 0L)
+ 				{
+-					num = ((delegate* unmanaged[Cdecl, Cdecl]<int>)num2)();
++					num = Marshal.GetDelegateForFunctionPointer<GetIntDelegate>((IntPtr)num2)();
+ 				}
+-				pfbegin = (delegate* unmanaged[Cdecl, Cdecl]<int>*)((ulong)(nint)pfbegin + 8uL);
++				pfbegin = (byte*)pfbegin + 8uL;
+ 				if (pfbegin >= pfend)
+ 				{
+ 					break;
+@@ -1007,7 +1041,7 @@
+ 
+ 	[DebuggerStepThrough]
+ 	[SecurityCritical]
+-	internal unsafe static void _initterm(delegate* unmanaged[Cdecl, Cdecl]<void>* pfbegin, delegate* unmanaged[Cdecl, Cdecl]<void>* pfend)
++	internal unsafe static void _initterm(void* pfbegin, void* pfend)
+ 	{
+ 		//IL_0016: Expected I, but got I8
+ 		//IL_0010: Expected I, but got I8
+@@ -1020,9 +1054,9 @@
+ 			ulong num = *(ulong*)pfbegin;
+ 			if (num != 0L)
+ 			{
+-				((delegate* unmanaged[Cdecl, Cdecl]<void>)num)();
++				Marshal.GetDelegateForFunctionPointer<FunctionDelegate>((IntPtr)num)();
+ 			}
+-			pfbegin = (delegate* unmanaged[Cdecl, Cdecl]<void>*)((ulong)(nint)pfbegin + 8uL);
++			pfbegin = (void*)((ulong)(nint)pfbegin + 8uL);
+ 		}
+ 		while (pfbegin < pfend);
+ 	}
+@@ -1063,51 +1097,53 @@
+ 		return (delegate*<void*>)_003CCrtImplementationDetails_003E_002EThisModule_002EHandle().ResolveMethodHandle((int)methodToken).GetFunctionPointer().ToPointer();
+ 	}
+ 
+-	[SecurityCritical]
+-	[HandleProcessCorruptedStateExceptions]
+-	[ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+-	[SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
+-	internal unsafe static void ___CxxCallUnwindDtor(delegate*<void*, void> pDtor, void* pThis)
+-	{
+-		try
+-		{
+-			pDtor(pThis);
+-		}
+-		catch when (__FrameUnwindFilter((_EXCEPTION_POINTERS*)Marshal.GetExceptionPointers()) != 0)
+-		{
+-		}
+-	}
++	// Marshal.GetExceptionPointers is not supported anymore
++	//
++	// [SecurityCritical]
++	// [HandleProcessCorruptedStateExceptions]
++	// [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
++	// [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
++	// internal unsafe static void ___CxxCallUnwindDtor(delegate*<void*, void> pDtor, void* pThis)
++	// {
++	// 	try
++	// 	{
++	// 		pDtor(pThis);
++	// 	}
++	// 	catch when (__FrameUnwindFilter((_EXCEPTION_POINTERS*)Marshal.GetExceptionPointers()) != 0)
++	// 	{
++	// 	}
++	// }
+ 
+ 	[MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.PreserveSig, MethodCodeType = MethodCodeType.Native)]
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal unsafe static extern void* new_005B_005D(ulong P_0);
+ 
+-	[DllImport("", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
++	[DllImport("VRage.Native.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+ 	[MethodImpl(MethodImplOptions.Unmanaged, MethodCodeType = MethodCodeType.Native)]
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal unsafe static extern GFSDK_Aftermath_Result GFSDK_Aftermath_DX11_CreateContextHandle(ID3D11DeviceContext* P_0, GFSDK_Aftermath_ContextHandle__** P_1);
+ 
+-	[DllImport("", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
++	[DllImport("VRage.Native.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+ 	[MethodImpl(MethodImplOptions.Unmanaged, MethodCodeType = MethodCodeType.Native)]
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal unsafe static extern GFSDK_Aftermath_Result GFSDK_Aftermath_ReleaseContextHandle(GFSDK_Aftermath_ContextHandle__* P_0);
+ 
+-	[DllImport("", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
++	[DllImport("VRage.Native.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+ 	[MethodImpl(MethodImplOptions.Unmanaged, MethodCodeType = MethodCodeType.Native)]
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal unsafe static extern GFSDK_Aftermath_Result GFSDK_Aftermath_GetDeviceStatus(GFSDK_Aftermath_Device_Status* P_0);
+ 
+-	[DllImport("", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
++	[DllImport("VRage.Native.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+ 	[MethodImpl(MethodImplOptions.Unmanaged, MethodCodeType = MethodCodeType.Native)]
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal unsafe static extern GFSDK_Aftermath_Result GFSDK_Aftermath_GetData(uint P_0, GFSDK_Aftermath_ContextHandle__** P_1, GFSDK_Aftermath_ContextData* P_2);
+ 
+-	[DllImport("", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
++	[DllImport("VRage.Native.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+ 	[MethodImpl(MethodImplOptions.Unmanaged, MethodCodeType = MethodCodeType.Native)]
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal unsafe static extern GFSDK_Aftermath_Result GFSDK_Aftermath_SetEventMarker(GFSDK_Aftermath_ContextHandle__* P_0, void* P_1, uint P_2);
+ 
+-	[DllImport("", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
++	[DllImport("VRage.Native.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+ 	[MethodImpl(MethodImplOptions.Unmanaged, MethodCodeType = MethodCodeType.Native)]
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal unsafe static extern GFSDK_Aftermath_Result GFSDK_Aftermath_DX11_Initialize(GFSDK_Aftermath_Version P_0, GFSDK_Aftermath_FeatureFlags P_1, ID3D11Device* P_2);
+@@ -1120,17 +1156,17 @@
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal unsafe static extern void* _getFiberPtrId();
+ 
+-	[DllImport("", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
++	[DllImport("VRage.Native.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+ 	[MethodImpl(MethodImplOptions.Unmanaged, MethodCodeType = MethodCodeType.Native)]
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal static extern void _cexit();
+ 
+-	[DllImport("", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
++	[DllImport("VRage.Native.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+ 	[MethodImpl(MethodImplOptions.Unmanaged, MethodCodeType = MethodCodeType.Native)]
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal static extern void Sleep(uint P_0);
+ 
+-	[DllImport("", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
++	[DllImport("VRage.Native.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+ 	[MethodImpl(MethodImplOptions.Unmanaged, MethodCodeType = MethodCodeType.Native)]
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal static extern void abort();
+@@ -1139,7 +1175,7 @@
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal static extern void __security_init_cookie();
+ 
+-	[DllImport("", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
++	[DllImport("VRage.Native.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+ 	[MethodImpl(MethodImplOptions.Unmanaged, MethodCodeType = MethodCodeType.Native)]
+ 	[SuppressUnmanagedCodeSecurity]
+ 	internal unsafe static extern int __FrameUnwindFilter(_EXCEPTION_POINTERS* P_0);
+Index: VRage.NativeAftermath/GFSDK_Aftermath_Device_Status.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/GFSDK_Aftermath_Device_Status.cs b/VRage.NativeAftermath/GFSDK_Aftermath_Device_Status.cs
+--- a/VRage.NativeAftermath/GFSDK_Aftermath_Device_Status.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/GFSDK_Aftermath_Device_Status.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1,6 +1,5 @@
+ using System.Runtime.CompilerServices;
+ 
+-[NativeCppClass]
+ internal enum GFSDK_Aftermath_Device_Status
+ {
+ 
+Index: VRage.NativeAftermath/GFSDK_Aftermath_FeatureFlags.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/GFSDK_Aftermath_FeatureFlags.cs b/VRage.NativeAftermath/GFSDK_Aftermath_FeatureFlags.cs
+--- a/VRage.NativeAftermath/GFSDK_Aftermath_FeatureFlags.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/GFSDK_Aftermath_FeatureFlags.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1,6 +1,5 @@
+ using System.Runtime.CompilerServices;
+ 
+-[NativeCppClass]
+ internal enum GFSDK_Aftermath_FeatureFlags
+ {
+ 
+Index: VRage.NativeAftermath/GFSDK_Aftermath_Result.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/GFSDK_Aftermath_Result.cs b/VRage.NativeAftermath/GFSDK_Aftermath_Result.cs
+--- a/VRage.NativeAftermath/GFSDK_Aftermath_Result.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/GFSDK_Aftermath_Result.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1,6 +1,5 @@
+ using System.Runtime.CompilerServices;
+ 
+-[NativeCppClass]
+ internal enum GFSDK_Aftermath_Result
+ {
+ 
+Index: VRage.NativeAftermath/GFSDK_Aftermath_Version.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/GFSDK_Aftermath_Version.cs b/VRage.NativeAftermath/GFSDK_Aftermath_Version.cs
+--- a/VRage.NativeAftermath/GFSDK_Aftermath_Version.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/GFSDK_Aftermath_Version.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1,6 +1,5 @@
+ using System.Runtime.CompilerServices;
+ 
+-[NativeCppClass]
+ internal enum GFSDK_Aftermath_Version
+ {
+ 
+Index: VRage.NativeAftermath/ICLRRuntimeHost.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/ICLRRuntimeHost.cs b/VRage.NativeAftermath/ICLRRuntimeHost.cs
+--- a/VRage.NativeAftermath/ICLRRuntimeHost.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/ICLRRuntimeHost.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -3,7 +3,7 @@
+ 
+ [StructLayout(LayoutKind.Sequential, Size = 8)]
+ [NativeCppClass]
+-internal static struct ICLRRuntimeHost
++internal struct ICLRRuntimeHost
+ {
+ 	private long _003Calignment_0020member_003E;
+ }
+Index: VRage.NativeAftermath/ICorRuntimeHost.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/ICorRuntimeHost.cs b/VRage.NativeAftermath/ICorRuntimeHost.cs
+--- a/VRage.NativeAftermath/ICorRuntimeHost.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/ICorRuntimeHost.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -3,7 +3,7 @@
+ 
+ [StructLayout(LayoutKind.Sequential, Size = 8)]
+ [NativeCppClass]
+-internal static struct ICorRuntimeHost
++internal struct ICorRuntimeHost
+ {
+ 	private long _003Calignment_0020member_003E;
+ }
+Index: VRage.NativeAftermath/ID3D11Device.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/ID3D11Device.cs b/VRage.NativeAftermath/ID3D11Device.cs
+--- a/VRage.NativeAftermath/ID3D11Device.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/ID3D11Device.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -3,7 +3,7 @@
+ 
+ [StructLayout(LayoutKind.Sequential, Size = 8)]
+ [NativeCppClass]
+-internal static struct ID3D11Device
++internal struct ID3D11Device
+ {
+ 	private long _003Calignment_0020member_003E;
+ }
+Index: VRage.NativeAftermath/ID3D11DeviceContext.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/ID3D11DeviceContext.cs b/VRage.NativeAftermath/ID3D11DeviceContext.cs
+--- a/VRage.NativeAftermath/ID3D11DeviceContext.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/ID3D11DeviceContext.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -3,7 +3,7 @@
+ 
+ [StructLayout(LayoutKind.Sequential, Size = 8)]
+ [NativeCppClass]
+-internal static struct ID3D11DeviceContext
++internal struct ID3D11DeviceContext
+ {
+ 	private long _003Calignment_0020member_003E;
+ }
+Index: VRage.NativeAftermath/IUnknown.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/IUnknown.cs b/VRage.NativeAftermath/IUnknown.cs
+--- a/VRage.NativeAftermath/IUnknown.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/IUnknown.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -3,7 +3,7 @@
+ 
+ [StructLayout(LayoutKind.Sequential, Size = 8)]
+ [NativeCppClass]
+-internal static struct IUnknown
++internal struct IUnknown
+ {
+ 	private long _003Calignment_0020member_003E;
+ }
+Index: VRage.NativeAftermath/NativeAftermath/MyAfterMath.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/NativeAftermath/MyAfterMath.cs b/VRage.NativeAftermath/NativeAftermath/MyAfterMath.cs
+--- a/VRage.NativeAftermath/NativeAftermath/MyAfterMath.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/NativeAftermath/MyAfterMath.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -33,7 +33,8 @@
+ 		if (m_initialized)
+ 		{
+ 			IntPtr value = default(IntPtr);
+-			System.Runtime.CompilerServices.Unsafe.SkipInit(out GFSDK_Aftermath_ContextHandle__* ptr);
++			System.Runtime.CompilerServices.Unsafe.SkipInit(out IntPtr tmpPtr);
++			GFSDK_Aftermath_ContextHandle__* ptr = (GFSDK_Aftermath_ContextHandle__*)tmpPtr; 
+ 			if (!m_markerTable.TryGetValue(marker, out value))
+ 			{
+ 				IntPtr intPtr = Marshal.StringToHGlobalAnsi(marker);
+Index: VRage.NativeAftermath/VRage.NativeAftermath.csproj
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/VRage.NativeAftermath.csproj b/VRage.NativeAftermath/VRage.NativeAftermath.csproj
+--- a/VRage.NativeAftermath/VRage.NativeAftermath.csproj	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/VRage.NativeAftermath.csproj	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -12,6 +12,9 @@
+   <PropertyGroup>
+     <ApplicationManifest>app.manifest</ApplicationManifest>
+   </PropertyGroup>
+-  <ItemGroup />
++  <ItemGroup>
++    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
++    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
++  </ItemGroup>
+   <ItemGroup />
+ </Project>
+\ No newline at end of file
+Index: VRage.NativeAftermath/__scrt_native_startup_state.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.NativeAftermath/__scrt_native_startup_state.cs b/VRage.NativeAftermath/__scrt_native_startup_state.cs
+--- a/VRage.NativeAftermath/__scrt_native_startup_state.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.NativeAftermath/__scrt_native_startup_state.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1,6 +1,5 @@
+ using System.Runtime.CompilerServices;
+ 
+-[NativeCppClass]
+ internal enum __scrt_native_startup_state
+ {
+ 
+Index: VRage.Platform.Windows/VRage.Platform.Windows.csproj
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Platform.Windows/VRage.Platform.Windows.csproj b/VRage.Platform.Windows/VRage.Platform.Windows.csproj
+--- a/VRage.Platform.Windows/VRage.Platform.Windows.csproj	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Platform.Windows/VRage.Platform.Windows.csproj	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1,4 +1,4 @@
+-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
++<Project Sdk="Microsoft.NET.Sdk">
+   <PropertyGroup>
+     <AssemblyName>VRage.Platform.Windows</AssemblyName>
+     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+@@ -29,7 +29,7 @@
+     <ProjectReference Include="..\VRage.Math\VRage.Math.csproj" />
+     <ProjectReference Include="..\VRage.Render\VRage.Render.csproj" />
+     <PackageReference Include="SharpDX.XInput" Version="4.2.0" />
+-    <PackageReference Include="RestSharp" Version="112.1.0" />
++    <PackageReference Include="RestSharp" Version="106.6.10" />
+     <PackageReference Include="System.Memory" Version="4.5.5" />
+     <PackageReference Include="SharpDX.Desktop" Version="4.2.0" />
+     <PackageReference Include="DirectShowLib" Version="1.0.0" />
+@@ -40,5 +40,6 @@
+     <ProjectReference Include="..\VRage.Ansel\VRage.Ansel.csproj" />
+     <ProjectReference Include="..\VRage.Input\VRage.Input.csproj" />
+     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
++    <PackageReference Include="System.Management.dll" Version="1.0.0" />
+   </ItemGroup>
+ </Project>
+\ No newline at end of file
+Index: VRage.Platform.Windows/VRage/Platform/Windows/Audio/MyPlatformAudio.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Platform.Windows/VRage/Platform/Windows/Audio/MyPlatformAudio.cs b/VRage.Platform.Windows/VRage/Platform/Windows/Audio/MyPlatformAudio.cs
+--- a/VRage.Platform.Windows/VRage/Platform/Windows/Audio/MyPlatformAudio.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Platform.Windows/VRage/Platform/Windows/Audio/MyPlatformAudio.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -12,7 +12,7 @@
+ 
+ 	public XAudio2 InitAudioEngine()
+ 	{
+-		m_audioEngine = new XAudio2(XAudio2Version.Version29);
++		m_audioEngine = new XAudio2(XAudio2Version.Default);
+ 		return m_audioEngine;
+ 	}
+ 
+Index: VRage.Platform.Windows/VRage/Platform/Windows/MyVRagePlatform.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Platform.Windows/VRage/Platform/Windows/MyVRagePlatform.cs b/VRage.Platform.Windows/VRage/Platform/Windows/MyVRagePlatform.cs
+--- a/VRage.Platform.Windows/VRage/Platform/Windows/MyVRagePlatform.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Platform.Windows/VRage/Platform/Windows/MyVRagePlatform.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -151,7 +151,7 @@
+ 		{
+ 			TimeEndPeriod(1u);
+ 		}
+-		GameAnalytics.EndSession();
++		// GameAnalytics.EndSession();
+ 		if (m_detectLeaks)
+ 		{
+ 			ObjectTracker.FindActiveObjects();
+Index: VRage.Platform.Windows/VRage/Platform/Windows/Render/MyPlatformRender.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Platform.Windows/VRage/Platform/Windows/Render/MyPlatformRender.cs b/VRage.Platform.Windows/VRage/Platform/Windows/Render/MyPlatformRender.cs
+--- a/VRage.Platform.Windows/VRage/Platform/Windows/Render/MyPlatformRender.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Platform.Windows/VRage/Platform/Windows/Render/MyPlatformRender.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -12,6 +12,8 @@
+ 
+ namespace VRage.Platform.Windows.Render;
+ 
++using Factory = SharpDX.DXGI.Factory;
++
+ internal static class MyPlatformRender
+ {
+ 	internal struct MyDriverDetails
+Index: VRage.Platform.Windows/VRage/Platform/Windows/Serialization/DynamicTypeModel.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Platform.Windows/VRage/Platform/Windows/Serialization/DynamicTypeModel.cs b/VRage.Platform.Windows/VRage/Platform/Windows/Serialization/DynamicTypeModel.cs
+--- a/VRage.Platform.Windows/VRage/Platform/Windows/Serialization/DynamicTypeModel.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Platform.Windows/VRage/Platform/Windows/Serialization/DynamicTypeModel.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -20,7 +20,7 @@
+ 
+ 	private void CreateTypeModel()
+ 	{
+-		m_typeModel = RuntimeTypeModel.Create(setDefault: true);
++		m_typeModel = RuntimeTypeModel.Create();
+ 		m_typeModel.AutoAddMissingTypes = true;
+ 		m_typeModel.UseImplicitZeroDefaults = false;
+ 	}
+Index: VRage.Platform.Windows/VRage/Platform/Windows/Sys/MyWindowsSystem.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Platform.Windows/VRage/Platform/Windows/Sys/MyWindowsSystem.cs b/VRage.Platform.Windows/VRage/Platform/Windows/Sys/MyWindowsSystem.cs
+--- a/VRage.Platform.Windows/VRage/Platform/Windows/Sys/MyWindowsSystem.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Platform.Windows/VRage/Platform/Windows/Sys/MyWindowsSystem.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -173,6 +173,10 @@
+ 
+ 	public string GetOsName()
+ 	{
++		// Disabled due to:
++		// System.Runtime.InteropServices.MarshalDirectiveException: Cannot marshal 'parameter #3': Cannot marshal a string by-value with the [Out] attribute.
++		return "Windows";
++		
+ 		string text = "";
+ 		try
+ 		{
+@@ -189,6 +193,7 @@
+ 	{
+ 		if (m_cpuInfo.Name == null)
+ 		{
++#if DISABLED_DO_NOT_WORK
+ 			try
+ 			{
+ 				using ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("select Name, MaxClockSpeed, NumberOfCores from Win32_Processor");
+@@ -206,6 +211,10 @@
+ 				m_cpuInfo.Cores = 0u;
+ 				m_cpuInfo.MaxClock = 0u;
+ 			}
++#endif
++			m_cpuInfo.Cores = (uint)Environment.ProcessorCount;
++			m_cpuInfo.Name = $"Generic with {m_cpuInfo.Cores} cores";
++			m_cpuInfo.MaxClock = 3600u;
+ 		}
+ 		frequency = m_cpuInfo.MaxClock;
+ 		physicalCores = m_cpuInfo.Cores;
+@@ -231,6 +240,9 @@
+ 
+ 	public void LogEnvironmentInformation()
+ 	{
++		// Prevent crash due to broken C API binding
++		return;
++		
+ 		m_log.WriteLine("MyVideoModeManager.LogEnvironmentInformation - START");
+ 		m_log.IncreaseIndent();
+ 		try
+Index: VRage.Render/VRage/Render/Image/MyImage.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Render/VRage/Render/Image/MyImage.cs b/VRage.Render/VRage/Render/Image/MyImage.cs
+--- a/VRage.Render/VRage/Render/Image/MyImage.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Render/VRage/Render/Image/MyImage.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1,13 +1,14 @@
+ using System;
+ using System.Buffers;
+ using System.IO;
++using System.Linq;
+ using System.Runtime.CompilerServices;
+ using System.Runtime.InteropServices;
+ using SixLabors.ImageSharp;
+ using SixLabors.ImageSharp.Advanced;
+ using SixLabors.ImageSharp.Formats.Png;
++using SixLabors.ImageSharp.Memory;
+ using SixLabors.ImageSharp.PixelFormats;
+-using SixLabors.Memory;
+ using VRage.FileSystem;
+ using VRageMath;
+ 
+@@ -29,11 +30,11 @@
+ 
+ 	public static IMyImage Load(Stream stream, bool oneChannel, bool headerOnly = false, string debugName = null)
+ 	{
+-		IImageInfo imageInfo = SixLabors.ImageSharp.Image.Identify(stream);
++		var imageInfo = SixLabors.ImageSharp.Image.Identify(stream);
+ 		stream.Position = 0L;
+ 		if (!oneChannel)
+ 		{
+-			oneChannel = imageInfo.MetaData.GetFormatMetaData(PngFormat.Instance).ColorType == PngColorType.Grayscale;
++			oneChannel = imageInfo.Metadata.GetPngMetadata().ColorType == PngColorType.Grayscale;
+ 		}
+ 		if (headerOnly)
+ 		{
+@@ -44,9 +45,9 @@
+ 			switch ((PngBitDepth)(byte)imageInfo.PixelType.BitsPerPixel)
+ 			{
+ 			case PngBitDepth.Bit8:
+-				return MyImage<byte>.Create<Gray8>(imageInfo);
++				return MyImage<byte>.Create<L8>(imageInfo);
+ 			case PngBitDepth.Bit16:
+-				return MyImage<ushort>.Create<Gray16>(imageInfo);
++				return MyImage<ushort>.Create<L16>(imageInfo);
+ 			}
+ 		}
+ 		else if (oneChannel)
+@@ -54,14 +55,14 @@
+ 			switch ((PngBitDepth)(byte)imageInfo.PixelType.BitsPerPixel)
+ 			{
+ 			case PngBitDepth.Bit8:
+-				return MyImage<byte>.Create<Gray8>(stream);
++				return MyImage<byte>.Create<L8>(stream);
+ 			case PngBitDepth.Bit16:
+-				return MyImage<ushort>.Create<Gray16>(stream);
++				return MyImage<ushort>.Create<L16>(stream);
+ 			}
+ 		}
+ 		else
+ 		{
+-			PngMetaData formatMetaData = imageInfo.MetaData.GetFormatMetaData(PngFormat.Instance);
++			var formatMetaData = imageInfo.Metadata.GetPngMetadata();
+ 			if (formatMetaData.ColorType != 0)
+ 			{
+ 				return MyImage<uint>.Create<Rgba32>(stream);
+@@ -69,9 +70,9 @@
+ 			switch (formatMetaData.BitDepth)
+ 			{
+ 			case PngBitDepth.Bit8:
+-				return MyImage<byte>.Create<Gray8>(stream);
++				return MyImage<byte>.Create<L8>(stream);
+ 			case PngBitDepth.Bit16:
+-				return MyImage<ushort>.Create<Gray16>(stream);
++				return MyImage<ushort>.Create<L16>(stream);
+ 			}
+ 		}
+ 		return null;
+@@ -89,7 +90,7 @@
+ 		return Load(stream, oneChannel, headerOnly: false, path);
+ 	}
+ 
+-	public unsafe static void Save<TPixel>(Stream stream, FileFormat format, IntPtr dataPointer, int srcPitch, Vector2I size, uint bytesPerPixel) where TPixel : struct, IPixel<TPixel>
++	public static unsafe void Save<TPixel>(Stream stream, FileFormat format, IntPtr dataPointer, int srcPitch, Vector2I size, uint bytesPerPixel) where TPixel : unmanaged, IPixel<TPixel>
+ 	{
+ 		TPixel[] array = new TPixel[size.X * size.Y];
+ 		Memory<TPixel> pixelMemory = new Memory<TPixel>(array);
+@@ -134,16 +135,16 @@
+ 
+ 	object IMyImage.Data => Data;
+ 
+-	public static MyImage<TData> Create<TImage>(string path) where TImage : struct, IPixel<TImage>
++	public static MyImage<TData> Create<TImage>(string path) where TImage : unmanaged, IPixel<TImage>
+ 	{
+ 		using Stream stream = MyFileSystem.OpenRead(path);
+ 		return Create<TImage>(stream);
+ 	}
+ 
+-	public static MyImage<TData> Create<TImage>(Stream stream) where TImage : struct, IPixel<TImage>
++	public static MyImage<TData> Create<TImage>(Stream stream) where TImage : unmanaged, IPixel<TImage>
+ 	{
+ 		using Image<TImage> image = SixLabors.ImageSharp.Image.Load<TImage>(stream);
+-		TData[] data = MemoryMarshal.Cast<TImage, TData>(image.GetPixelSpan()).ToArray();
++		TData[] data = MemoryMarshal.Cast<TImage, TData>(image.GetPixelMemoryGroup().Single().Span).ToArray();
+ 		return new MyImage<TData>
+ 		{
+ 			Size = new Vector2I(image.Width, image.Height),
+@@ -152,7 +153,7 @@
+ 		};
+ 	}
+ 
+-	public static MyImage<TData> Create<TImage>(IImageInfo image) where TImage : struct, IPixel<TImage>
++	public static MyImage<TData> Create<TImage>(ImageInfo image) where TImage : unmanaged, IPixel<TImage>
+ 	{
+ 		return new MyImage<TData>
+ 		{
+Index: VRage.Render/VRageRender/Animations/MyConstProperty.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Render/VRageRender/Animations/MyConstProperty.cs b/VRage.Render/VRageRender/Animations/MyConstProperty.cs
+--- a/VRage.Render/VRageRender/Animations/MyConstProperty.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Render/VRageRender/Animations/MyConstProperty.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -178,7 +178,7 @@
+ 	public virtual void DeserializeFromObjectBuilder(GenerationProperty property)
+ 	{
+ 		m_name = property.Name;
+-		m_value = (T)(property.Type switch
++		object o = property.Type switch
+ 		{
+ 			"Float" => property.ValueFloat, 
+ 			"Vector3" => property.ValueVector3, 
+@@ -187,7 +187,8 @@
+ 			"String" => property.ValueString, 
+ 			"MyTransparentMaterial" => MyTransparentMaterials.GetMaterial(MyStringId.GetOrCompute(property.ValueString)), 
+ 			_ => property.ValueInt, 
+-		});
++		};
++		m_value = (T)o;
+ 	}
+ 
+ 	public virtual void SerializeValue(XmlWriter writer, object value)
+Index: VRage.Render11/SharpDX/Toolkit/Graphics/ImageSharpHelper.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Render11/SharpDX/Toolkit/Graphics/ImageSharpHelper.cs b/VRage.Render11/SharpDX/Toolkit/Graphics/ImageSharpHelper.cs
+--- a/VRage.Render11/SharpDX/Toolkit/Graphics/ImageSharpHelper.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Render11/SharpDX/Toolkit/Graphics/ImageSharpHelper.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -43,6 +43,7 @@
+ 
+ 	private static bool BuildImageData(IMyImage image, out ImageDescription description, out GCHandle imageData)
+ 	{
++		imageData = new GCHandle();
+ 		if (image == null)
+ 		{
+ 			description = default(ImageDescription);
+Index: VRage.Render11/VRage/Render11/Resources/MyFileTextureImageCache.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Render11/VRage/Render11/Resources/MyFileTextureImageCache.cs b/VRage.Render11/VRage/Render11/Resources/MyFileTextureImageCache.cs
+--- a/VRage.Render11/VRage/Render11/Resources/MyFileTextureImageCache.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Render11/VRage/Render11/Resources/MyFileTextureImageCache.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -112,6 +112,15 @@
+ 	{
+ 		try
+ 		{
++			if (filepath.ToLower().EndsWith(".zip"))
++			{
++				filepath = filepath.Substring(0, filepath.Length - 4) + ".dds";
++				if (!File.Exists(filepath))
++				{
++					throw new Exception($"DDS file extracted from ZIP is missing: {filepath}");
++				}
++			}
++
+ 			using Stream stream = MyFileSystem.OpenRead(filepath);
+ 			if (stream == null)
+ 			{
+Index: VRage.Render11/VRageRender/MyTextureData.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Render11/VRageRender/MyTextureData.cs b/VRage.Render11/VRageRender/MyTextureData.cs
+--- a/VRage.Render11/VRageRender/MyTextureData.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Render11/VRageRender/MyTextureData.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -146,7 +146,7 @@
+ 		case Format.R16_UInt:
+ 		case Format.R16_SNorm:
+ 		case Format.R16_SInt:
+-			MyImage.Save<Gray16>(stream, fileFormat, dataPointer, srcPitch, size, 2u);
++			MyImage.Save<L16>(stream, fileFormat, dataPointer, srcPitch, size, 2u);
+ 			break;
+ 		case Format.B5G6R5_UNorm:
+ 			MyImage.Save<Bgr565>(stream, fileFormat, dataPointer, srcPitch, size, 2u);
+@@ -163,7 +163,7 @@
+ 		case Format.R8_SNorm:
+ 		case Format.R8_SInt:
+ 		case Format.A8_UNorm:
+-			MyImage.Save<Gray8>(stream, fileFormat, dataPointer, srcPitch, size, 1u);
++			MyImage.Save<L8>(stream, fileFormat, dataPointer, srcPitch, size, 1u);
+ 			break;
+ 		}
+ 	}
+Index: VRage.Scripting/VRage/Scripting/MyScriptCompiler.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Scripting/VRage/Scripting/MyScriptCompiler.cs b/VRage.Scripting/VRage/Scripting/MyScriptCompiler.cs
+--- a/VRage.Scripting/VRage/Scripting/MyScriptCompiler.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Scripting/VRage/Scripting/MyScriptCompiler.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -29,7 +29,7 @@
+ 	/// <summary>
+ 	///     Retrieves the default script compiler.
+ 	/// </summary>
+-	public static readonly MyScriptCompiler Static = new MyScriptCompiler();
++	public static MyScriptCompiler Static; // Initialized by MyVRageScriptingInternal.Initialize
+ 
+ 	private readonly List<MetadataReference> m_metadataReferences = new List<MetadataReference>();
+ 
+@@ -102,9 +102,9 @@
+ 	/// </summary>
+ 	public bool EnableDebugInformation { get; set; }
+ 
+-	public MyScriptCompiler()
++	public MyScriptCompiler(string[] assemblyLocations)
+ 	{
+-		AddReferencedAssemblies(GetType().Assembly.Location, typeof(int).Assembly.Location, typeof(XmlEntity).Assembly.Location, typeof(HashSet<>).Assembly.Location, typeof(Dictionary<, >).Assembly.Location, typeof(Uri).Assembly.Location);
++		AddReferencedAssemblies(assemblyLocations);
+ 		AddImplicitIngameNamespacesFromTypes(typeof(object), typeof(StringBuilder), typeof(IEnumerable), typeof(IEnumerable<>), typeof(Enumerable));
+ 		AddImplicitTypeMappings(typeof(INotifyPropertyChanging), typeof(PropertyChangingEventHandler), typeof(PropertyChangingEventArgs), typeof(INotifyPropertyChanged), typeof(PropertyChangedEventHandler), typeof(PropertyChangedEventArgs));
+ 		AddUnblockableIngameExceptions(typeof(ScriptOutOfRangeException));
+@@ -167,7 +167,7 @@
+ 				ImmutableArray<SyntaxTree> syntaxTrees = compilation.SyntaxTrees;
+ 				newSyntaxTrees = ((syntaxTrees.Length != 1) ? (await Task.WhenAll(syntaxTrees.Select((SyntaxTree x) => Task.Run(() => syntaxTreeInjector(compilation, x)))).ConfigureAwait(continueOnCapturedContext: false)) : new SyntaxTree[1] { syntaxTreeInjector(compilation, syntaxTrees[0]) });
+ 			}
+-			catch
++			catch(Exception ex)
+ 			{
+ 				injectionFailed = true;
+ 			}
+Index: VRage.Scripting/VRage/Scripting/MyScriptWhitelist.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Scripting/VRage/Scripting/MyScriptWhitelist.cs b/VRage.Scripting/VRage/Scripting/MyScriptWhitelist.cs
+--- a/VRage.Scripting/VRage/Scripting/MyScriptWhitelist.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Scripting/VRage/Scripting/MyScriptWhitelist.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -438,7 +438,7 @@
+ 		myWhitelistBatch.AllowMembers(MyWhitelistTarget.Both, typeof(ValueType).GetMethod("Equals"), typeof(ValueType).GetMethod("GetHashCode"), typeof(ValueType).GetMethod("ToString"));
+ 		myWhitelistBatch.AllowMembers(MyWhitelistTarget.Both, typeof(Environment).GetProperty("CurrentManagedThreadId", BindingFlags.Static | BindingFlags.Public), typeof(Environment).GetProperty("NewLine", BindingFlags.Static | BindingFlags.Public), typeof(Environment).GetProperty("ProcessorCount", BindingFlags.Static | BindingFlags.Public));
+ 		Type type = typeof(Type).Assembly.GetType("System.RuntimeType");
+-		myWhitelistBatch.AllowMembers(MyWhitelistTarget.Both, type.GetMethod("op_Inequality"), type.GetMethod("GetFields", new Type[1] { typeof(BindingFlags) }));
++		myWhitelistBatch.AllowMembers(MyWhitelistTarget.Both, type.GetMethod("GetFields", new Type[1] { typeof(BindingFlags) }));
+ 		myWhitelistBatch.AllowMembers(MyWhitelistTarget.Both, (from m in AllDeclaredMembers(typeof(Delegate))
+ 			where m.Name != "CreateDelegate"
+ 			select m).ToArray());
+@@ -609,9 +609,11 @@
+ 	private void Register(MyWhitelistTarget target, INamespaceSymbol symbol, Type type)
+ 	{
+ 		string whitelistKey = symbol.GetWhitelistKey(TypeKeyQuantity.AllMembers);
+-		if (m_whitelist.ContainsKey(whitelistKey))
++		if (m_whitelist.TryGetValue(whitelistKey, out var existingTarget))
+ 		{
+-			throw new MyWhitelistException("Duplicate registration of the whitelist key " + whitelistKey + " retrieved from " + type);
++			if (existingTarget == target)
++				return;
++			throw new MyWhitelistException("Duplicate registration of the whitelist key " + whitelistKey + " retrieved from " + type + "for different targets");
+ 		}
+ 		m_whitelist.Add(whitelistKey, target);
+ 	}
+Index: VRage.Scripting/VRage/Scripting/MyVRageScriptingInternal.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Scripting/VRage/Scripting/MyVRageScriptingInternal.cs b/VRage.Scripting/VRage/Scripting/MyVRageScriptingInternal.cs
+--- a/VRage.Scripting/VRage/Scripting/MyVRageScriptingInternal.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Scripting/VRage/Scripting/MyVRageScriptingInternal.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -50,7 +50,7 @@
+ 	public void Initialize(Thread updateThread, IEnumerable<string> referencedAssemblies, Type[] referencedTypes, string[] symbols, string diagnosticsPath, bool enableScriptsPDBs)
+ 	{
+ 		MyModWatchdog.Init(updateThread);
+-		MyScriptCompiler.Static.AddReferencedAssemblies(referencedAssemblies.ToArray());
++		MyScriptCompiler.Static = new MyScriptCompiler(referencedAssemblies.ToArray());
+ 		MyScriptCompiler.Static.AddImplicitIngameNamespacesFromTypes(referencedTypes);
+ 		MyScriptCompiler.Static.AddConditionalCompilationSymbols(symbols);
+ 		if (!string.IsNullOrEmpty(diagnosticsPath))
+Index: VRage.Scripting/VRage/Scripting/Rewriters/PerfCountingRewriter.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Scripting/VRage/Scripting/Rewriters/PerfCountingRewriter.cs b/VRage.Scripting/VRage/Scripting/Rewriters/PerfCountingRewriter.cs
+--- a/VRage.Scripting/VRage/Scripting/Rewriters/PerfCountingRewriter.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Scripting/VRage/Scripting/Rewriters/PerfCountingRewriter.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -300,6 +300,10 @@
+ 
+ 	public static SyntaxTree Rewrite(CSharpCompilation compilation, SyntaxTree syntaxTree, int modId)
+ 	{
++		// Disabled performance counting, otherwise mod compilation fails with repeated diagnostic error messages:
++		// The type or namespace name 'CompilerMethods' does not exist in the namespace 'VRage.Scripting' (are you missing an assembly reference?)
++		return syntaxTree;
++		
+ 		SyntaxNode root = new PerfCountingRewriter(compilation, syntaxTree, modId).Visit(syntaxTree.GetRoot());
+ 		return syntaxTree.WithRootAndOptions(root, syntaxTree.Options);
+ 	}
+Index: VRage.Steam/VRage/Steam/MySteamPeer2Peer.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage.Steam/VRage/Steam/MySteamPeer2Peer.cs b/VRage.Steam/VRage/Steam/MySteamPeer2Peer.cs
+--- a/VRage.Steam/VRage/Steam/MySteamPeer2Peer.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage.Steam/VRage/Steam/MySteamPeer2Peer.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -92,6 +92,7 @@
+ 
+ 	public bool SendPacket(ulong remoteUser, byte[] data, int byteCount, MyP2PMessageEnum msgType, int channel)
+ 	{
++		// LogPacket(@"C:\Temp\SendPacket.net6.log", data, byteCount);
+ 		if (m_server)
+ 		{
+ 			return SteamGameServerNetworking.SendP2PPacket((CSteamID)remoteUser, data, (uint)byteCount, (EP2PSend)msgType, channel);
+@@ -103,6 +104,10 @@
+ 	{
+ 		CSteamID psteamIDRemote;
+ 		bool result = ((!m_server) ? SteamNetworking.ReadP2PPacket(buffer, (uint)buffer.Length, out dataSize, out psteamIDRemote, channel) : SteamGameServerNetworking.ReadP2PPacket(buffer, (uint)buffer.Length, out dataSize, out psteamIDRemote, channel));
++		if (result)
++		{
++			// LogPacket(@"C:\Temp\ReadPacket.net6.log", buffer, (int)dataSize);
++		}
+ 		remoteUser = (ulong)psteamIDRemote;
+ 		return result;
+ 	}
+Index: VRage/VRage.csproj
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage/VRage.csproj b/VRage/VRage.csproj
+--- a/VRage/VRage.csproj	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage/VRage.csproj	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -13,7 +13,14 @@
+   <ItemGroup>
+     <ProjectReference Include="..\VRage.Math\VRage.Math.csproj" />
+     <ProjectReference Include="..\VRage.Library\VRage.Library.csproj" />
++    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+     <PackageReference Include="protobuf-net.Core" Version="3.0.131" />
+     <ProjectReference Include="..\VRage.Network\VRage.Network.csproj" />
+   </ItemGroup>
++  <ItemGroup>
++    <None Remove="ReplicatedTypes.json" />
++    <Content Include="ReplicatedTypes.json">
++      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
++    </Content>
++  </ItemGroup>
+ </Project>
+\ No newline at end of file
+Index: VRage/VRage/CustomRootWriter.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage/VRage/CustomRootWriter.cs b/VRage/VRage/CustomRootWriter.cs
+--- a/VRage/VRage/CustomRootWriter.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage/VRage/CustomRootWriter.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -24,11 +24,14 @@
+ 
+ 	public override WriteState WriteState => m_target.WriteState;
+ 
++	public const string XSD_NS_URL = "http://www.w3.org/2001/XMLSchema";
++	public const string XSI_NS_URL = "http://www.w3.org/2001/XMLSchema-instance";
++
+ 	internal void Init(string customRootType, XmlWriter target)
+ 	{
+ 		m_target = target;
+ 		m_customRootType = customRootType;
+-		m_target.WriteAttributeString("xsi:type", m_customRootType);
++		m_target.WriteAttributeString("xsi", "type", XSI_NS_URL, m_customRootType);
+ 		m_currentDepth = 0;
+ 	}
+ 
+Index: VRage/VRage/GameServices/MyInventoryHelper.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage/VRage/GameServices/MyInventoryHelper.cs b/VRage/VRage/GameServices/MyInventoryHelper.cs
+--- a/VRage/VRage/GameServices/MyInventoryHelper.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage/VRage/GameServices/MyInventoryHelper.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1,3 +1,6 @@
++// See https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide
++#pragma warning disable SYSLIB0011
++
+ using System.Collections.Generic;
+ using System.IO;
+ using System.Runtime.Serialization.Formatters.Binary;
+@@ -32,3 +35,5 @@
+ 		return memoryStream.ToArray();
+ 	}
+ }
++
++#pragma warning restore SYSLIB0011
+Index: VRage/VRage/MyAbstractXmlSerializer.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage/VRage/MyAbstractXmlSerializer.cs b/VRage/VRage/MyAbstractXmlSerializer.cs
+--- a/VRage/VRage/MyAbstractXmlSerializer.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage/VRage/MyAbstractXmlSerializer.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -39,7 +39,7 @@
+ 
+ 	protected virtual string GetTypeAttribute(XmlReader reader)
+ 	{
+-		return reader.GetAttribute("xsi:type");
++		return reader.GetAttribute("type", CustomRootWriter.XSI_NS_URL);
+ 	}
+ 
+ 	public static implicit operator MyAbstractXmlSerializer<TAbstractBase>(TAbstractBase builder)
+Index: VRage/VRage/Network/EndpointId.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage/VRage/Network/EndpointId.cs b/VRage/VRage/Network/EndpointId.cs
+--- a/VRage/VRage/Network/EndpointId.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage/VRage/Network/EndpointId.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -26,7 +26,7 @@
+ 		}
+ 	}
+ 
+-	public readonly ulong Value;
++	public ulong Value;
+ 
+ 	public static EndpointId Null = new EndpointId(0uL);
+ 
+Index: VRage/VRage/Network/EventAttribute.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage/VRage/Network/EventAttribute.cs b/VRage/VRage/Network/EventAttribute.cs
+--- a/VRage/VRage/Network/EventAttribute.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage/VRage/Network/EventAttribute.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -10,7 +10,9 @@
+ 
+ 	public readonly string Serialization;
+ 
+-	public EventAttribute(string serializationMethod = null, [CallerLineNumber] int order = 0)
++	// Keep the original line numbers for compatibility with the official game and server
++	// public EventAttribute(string serializationMethod = null, [CallerLineNumber] int order = 0)
++	public EventAttribute(string serializationMethod = null, int order = 0)
+ 	{
+ 		Order = order;
+ 		Serialization = serializationMethod;
+Index: VRage/VRage/Network/MyEventTable.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage/VRage/Network/MyEventTable.cs b/VRage/VRage/Network/MyEventTable.cs
+--- a/VRage/VRage/Network/MyEventTable.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage/VRage/Network/MyEventTable.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -6,6 +6,8 @@
+ using System.Reflection;
+ using VRage.Library.Collections;
+ using VRage.Serialization;
++using VRage.Utils.Keen;
++using MethodInfoExtensions = System.MethodInfoExtensions;
+ 
+ namespace VRage.Network;
+ 
+@@ -123,10 +125,33 @@
+ 			{
+ 				array[i + 1] = parameters[i].ParameterType;
+ 			}
++
++			// Look up the event tables recorded form the vanilla game
++			var methodSignature = method.GetSignature();
++			Dictionary<string, uint> eventTable;
++			if (method.IsStatic)
++			{
++				eventTable = ReplicatedTypes.StaticEventIdBySignature;
++			}
++			else
++			{
++				var declaringTypeFullName = method.DeclaringType?.FullName ?? "";
++				var typeId = ReplicatedTypes.TypeIdByFullName.GetValueOrDefault(declaringTypeFullName);
++
++				if (!ReplicatedTypes.InstanceEventIdBySignature.TryGetValue(typeId, out eventTable))
++				{
++					throw new Exception($"Cannot find replication event ID table for method: {methodSignature}");
++				}
++			}
++			if (!eventTable.TryGetValue(methodSignature, out var eventId))
++			{
++				throw new Exception($"Cannot find replication event ID for method: {methodSignature}");
++			}
++			
+ 			CallSite callSite = (CallSite)m_createCallSite.MakeGenericMethod(array).Invoke(this, new object[2]
+ 			{
+ 				method,
+-				(uint)m_idToEvent.Count
++				eventId
+ 			});
+ 			if ((callSite.HasBroadcastExceptFlag ? 1 : 0) + (callSite.HasBroadcastFlag ? 1 : 0) + (callSite.HasClientFlag ? 1 : 0) > 1)
+ 			{
+Index: VRage/VRage/Network/MyReplicationClient.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage/VRage/Network/MyReplicationClient.cs b/VRage/VRage/Network/MyReplicationClient.cs
+--- a/VRage/VRage/Network/MyReplicationClient.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage/VRage/Network/MyReplicationClient.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1,6 +1,7 @@
+ using System;
+ using System.Collections.Generic;
+ using System.Diagnostics;
++using System.IO;
+ using System.Runtime.ExceptionServices;
+ using System.Security;
+ using System.Text;
+Index: VRage/VRage/Network/MySynchronizedTypeInfo.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage/VRage/Network/MySynchronizedTypeInfo.cs b/VRage/VRage/Network/MySynchronizedTypeInfo.cs
+--- a/VRage/VRage/Network/MySynchronizedTypeInfo.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage/VRage/Network/MySynchronizedTypeInfo.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -28,7 +28,9 @@
+ 	{
+ 		Type = type;
+ 		TypeId = id;
+-		TypeHash = GetHashFromType(type);
++		// We must use the type hash from the original game, because they are used to reorder the type table
++		// to have the same order as the server's type table while joining a multiplayer game as a client 
++		TypeHash = ReplicatedTypes.TypeHashByTypeId[id]; // GetHashFromType(type);
+ 		TypeName = type.Name;
+ 		FullTypeName = type.FullName;
+ 		BaseType = baseType;
+@@ -36,8 +38,10 @@
+ 		EventTable = new MyEventTable(this);
+ 	}
+ 
++	/* Using the hashes from the original game instead, so this is disabled.
+ 	public static int GetHashFromType(Type type)
+ 	{
+ 		return MyStringHash.GetOrCompute(type.ToString()).GetHashCode();
+ 	}
++	*/
+ }
+Index: VRage/VRage/Network/MyTypeTable.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage/VRage/Network/MyTypeTable.cs b/VRage/VRage/Network/MyTypeTable.cs
+--- a/VRage/VRage/Network/MyTypeTable.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage/VRage/Network/MyTypeTable.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -54,7 +54,13 @@
+ 			bool flag3 = IsSerializableClass(type);
+ 			if (flag || flag2 || flag3)
+ 			{
+-				value = new MySynchronizedTypeInfo(type, new TypeId((uint)m_idToType.Count), mySynchronizedTypeInfo, flag);
++				// Determine the type ID as it was recorded from the original game 
++				if (!ReplicatedTypes.TypeIdByFullName.TryGetValue(type.FullName ?? "N/A", out var typeId))
++				{
++					throw new Exception($"Cannot find replication type ID by full type name: {type.FullName}");
++				}
++				
++				value = new MySynchronizedTypeInfo(type, new TypeId(typeId), mySynchronizedTypeInfo, flag);
+ 				m_idToType.Add(value);
+ 				m_hashLookup.Add(value.TypeHash, value);
+ 				m_typeLookup.Add(type, value);
+@@ -89,6 +95,11 @@
+ 	{
+ 		if ((!type.HasAttribute<SerializableAttribute>() || type.HasAttribute<CompilerGeneratedAttribute>()) && !type.IsEnum)
+ 		{
++			// Compatibility with the original server,
++			// these two items are present in the type table on .NET Framework 4.8
++			if (type.FullName == "System.Delegate" || type.FullName == "System.MulticastDelegate")
++				return true;
++			
+ 			return typeof(MulticastDelegate).IsAssignableFrom(type.BaseType);
+ 		}
+ 		return true;
+@@ -145,22 +156,38 @@
+ 			}
+ 			return;
+ 		}
++		
+ 		int num = (int)stream.ReadUInt32Variant();
+ 		if (m_idToType.Count != num)
+ 		{
+-			MyLog.Default.WriteLine($"Bad number of types from server. Recieved {num}, have {m_idToType.Count}");
++			// This is a fatal error condition, because of m_idToType[j] in the logic below 
++			throw new Exception($"Bad number of types from server. Receieved {num}, have {m_idToType.Count}");
+ 		}
++
++		for (var i = 0; i < num; i++)
++		{
++			m_idToType[i] = null;
++		}
++		
+ 		m_staticEventTable = new MyEventTable(null);
+ 		for (int j = 0; j < num; j++)
+ 		{
+ 			int num2 = stream.ReadInt32();
+ 			if (!m_hashLookup.ContainsKey(num2))
+ 			{
+-				MyLog.Default.WriteLine("Type hash not found! Value: " + num2);
++				throw new Exception("Type hash not found! Value: " + num2);
+ 			}
+ 			MySynchronizedTypeInfo mySynchronizedTypeInfo = m_hashLookup[num2];
+ 			m_idToType[j] = mySynchronizedTypeInfo;
+ 			m_staticEventTable.AddStaticEvents(mySynchronizedTypeInfo.Type);
+ 		}
++		
++		for (var i = 0; i < num; i++)
++		{
++			if (m_idToType[i] == null)
++			{
++				throw new Exception($"Type ID {i} is missing after the reordering based on server response");
++			}
++		}
+ 	}
+ }
+Index: VRage/VRage/Network/ReplicatedTypes.cs
+===================================================================
+diff --git a/VRage/VRage/Network/ReplicatedTypes.cs b/VRage/VRage/Network/ReplicatedTypes.cs
+new file mode 100644
+--- /dev/null	(revision deae3e993f919eff441043c53cd8247974e501d4)
++++ b/VRage/VRage/Network/ReplicatedTypes.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -0,0 +1,69 @@
++using System.Collections.Generic;
++using System.IO;
++using Newtonsoft.Json;
++using VRage.FileSystem;
++
++namespace VRage.Network;
++
++public static class ReplicatedTypes
++{
++    public const uint Static = 0xffffu;
++    
++    public class ReplicationTypeInfo
++    {
++        public uint TypeId { get; set; }
++        public int TypeHash { get; set; }
++        public string FullTypeName { get; set; }
++        public Dictionary<uint, string> Events { get; set; } = new Dictionary<uint, string>();
++
++        public ReplicationTypeInfo(uint typeId, int typeHash, string fullTypeName)
++        {
++            TypeId = typeId;
++            TypeHash = typeHash;
++            FullTypeName = fullTypeName;
++        }
++    }
++
++    public static readonly Dictionary<string, uint> StaticEventIdBySignature = new();
++    public static readonly Dictionary<string, uint> TypeIdByFullName = new();
++    public static readonly Dictionary<uint, int> TypeHashByTypeId = new();
++    public static readonly Dictionary<uint, Dictionary<string, uint>> InstanceEventIdBySignature = new();
++
++    public static bool loaded;
++
++    public static void Load()
++    {
++        if (loaded)
++            return;
++
++        var path = Path.Combine(MyFileSystem.ExePath, "ReplicatedTypes.json");
++        var json = File.ReadAllText(path);
++        var types = JsonConvert.DeserializeObject<List<ReplicationTypeInfo>>(json);
++
++        foreach (var replicationTypeInfo in types)
++        {
++            if (replicationTypeInfo.TypeId == Static)
++            {
++                LoadEvents(StaticEventIdBySignature, replicationTypeInfo.Events);
++                continue;
++            }
++
++            TypeIdByFullName[replicationTypeInfo.FullTypeName] = replicationTypeInfo.TypeId;
++            TypeHashByTypeId[replicationTypeInfo.TypeId] = replicationTypeInfo.TypeHash;
++
++            var eventsBySignature = new Dictionary<string, uint>();
++            LoadEvents(eventsBySignature, replicationTypeInfo.Events);
++            InstanceEventIdBySignature[replicationTypeInfo.TypeId] = eventsBySignature;
++        }
++
++        loaded = true;
++    }
++
++    private static void LoadEvents(Dictionary<string, uint> eventsBySignature, Dictionary<uint, string> jsonEvents)
++    {
++        foreach (var (eventId, signature) in jsonEvents)
++        {
++            eventsBySignature[signature] = eventId;
++        }
++    }
++}
+\ No newline at end of file
+Index: VRage/VRage/Utils/Keen/MethodInfoExtensions.cs
+===================================================================
+diff --git a/VRage/VRage/Utils/Keen/MethodInfoExtensions.cs b/VRage/VRage/Utils/Keen/MethodInfoExtensions.cs
+new file mode 100644
+--- /dev/null	(revision deae3e993f919eff441043c53cd8247974e501d4)
++++ b/VRage/VRage/Utils/Keen/MethodInfoExtensions.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -0,0 +1,15 @@
++using System.Linq;
++using System.Reflection;
++
++namespace VRage.Utils.Keen;
++
++public static class MethodInfoExtensions
++{
++    public static string GetSignature(this MethodInfo methodInfo)
++    {
++        var parameters = string.Join(",", methodInfo.GetParameters()
++            .Select(p => $"{p.ParameterType.Name}"));
++
++        return $"{methodInfo.ReturnType.Name} {methodInfo.DeclaringType?.FullName}.{methodInfo.Name}({parameters})";
++    }
++}
+\ No newline at end of file
+Index: VRage/VRage/Voxels/MyStorageData.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage/VRage/Voxels/MyStorageData.cs b/VRage/VRage/Voxels/MyStorageData.cs
+--- a/VRage/VRage/Voxels/MyStorageData.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ b/VRage/VRage/Voxels/MyStorageData.cs	(revision deae3e993f919eff441043c53cd8247974e501d4)
+@@ -1,3 +1,6 @@
++// See https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide
++#pragma warning disable SYSLIB0011
++
+ using System;
+ using System.Collections;
+ using System.Collections.Generic;
+@@ -654,3 +657,5 @@
+ 		return (MyStorageData)new BinaryFormatter().Deserialize(serializationStream);
+ 	}
+ }
++
++#pragma warning restore SYSLIB0011
+Index: VRage/VRage/Serialization/StaticTypeModel.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/VRage/VRage/Serialization/StaticTypeModel.cs b/VRage/VRage/Serialization/StaticTypeModel.cs
+deleted file mode 100644
+--- a/VRage/VRage/Serialization/StaticTypeModel.cs	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
++++ /dev/null	(revision e3ffdea1ee596328832b7e4cc9f1aff2d8c6e1a3)
+@@ -1,34 +0,0 @@
+-using System;
+-using System.Collections.Generic;
+-using ProtoBuf.Meta;
+-
+-namespace VRage.Serialization;
+-
+-/// <summary>
+-/// A precompiled ProtoBuf type model.
+-/// </summary>
+-public class StaticTypeModel : IProtoTypeModel
+-{
+-	public TypeModel Model { get; }
+-
+-	/// <inheritdoc />
+-	public StaticTypeModel()
+-	{
+-		Model = TypeModel.LoadCompiled("ProtoContracts.dll", "ProtoContracts", setDefault: true);
+-	}
+-
+-	public StaticTypeModel(string assembly, string typeName)
+-	{
+-		Model = TypeModel.LoadCompiled(assembly, typeName, setDefault: true);
+-	}
+-
+-	/// <inheritdoc />
+-	public void RegisterTypes(IEnumerable<Type> types)
+-	{
+-	}
+-
+-	/// <inheritdoc />
+-	public void FlushCaches()
+-	{
+-	}
+-}
+diff --git a/VRage.NativeAftermath/gcroot-System b/VRage.NativeAftermath/gcroot_System.cs
+rename from VRage.NativeAftermath/gcroot-System
+rename to VRage.NativeAftermath/gcroot_System.cs
