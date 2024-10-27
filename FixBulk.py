@@ -6,6 +6,7 @@ import sys
 from contextlib import contextmanager
 from enum import Enum
 from typing import Iterator, ContextManager, Optional, Dict, Iterable, Union, Callable, Set, List
+import xml.etree.ElementTree as ET
 
 RegExp = re.Pattern[str]
 Replacement = Union[str, Callable[[RegExp], str]]
@@ -178,6 +179,39 @@ private class %(activator_type)s : IActivator, IActivator<%(game_type)s>
     object IActivator.CreateInstance() => (object) new %(game_type)s();
     %(game_type)s IActivator<%(game_type)s>.CreateInstance() => new %(game_type)s();
 }'''
+
+
+class ProjectFileProcessors:
+
+    def normalize_element(element: ET.Element) -> str:
+        element_str = ET.tostring(element, encoding='unicode')
+        return re.sub(r'\s+', ' ', element_str).strip()
+
+    def sort_group_children(group: ET.Element) -> None:
+        children = list(group)
+        if not children:
+            return
+
+        for child in list(group):
+            group.remove(child)
+
+        children.sort(key=ProjectFileProcessors.normalize_element)
+
+        for child in children:
+            group.append(child)
+
+    def process_project_file(xml_content: str) -> str:
+        tree = ET.ElementTree(ET.fromstring(xml_content))
+        root = tree.getroot()
+
+        groups = root.findall(".//PropertyGroup") + root.findall(".//ItemGroup")
+        for group in groups:
+            ProjectFileProcessors.sort_group_children(group)
+
+        ET.indent(tree, space="  ")
+
+        result = ET.tostring(root, encoding='unicode')
+        return result
 
 
 class LineProcessor:
@@ -533,6 +567,12 @@ class Project:
     def fix_hint_paths(self):
         self.regex_replace_in_project_file(re.compile(r'<HintPath>(..[\\/])?Bin64[\\/]'), '<HintPath>../Bin64/')
 
+    def sort_project_items(self):
+        """Sorting the project items which can be in any random order after decompilation
+        Sorting them ensures that the diff containing the manual fixes can be applied.
+        """
+        self.project_file = ProjectFileProcessors.process_project_file(self.project_file)
+
 
 def verify_game_version(project_map: Dict[str, Project]):
     project = project_map['SpaceEngineers.Game']
@@ -566,7 +606,7 @@ def fix_project_files_and_code(projects: List[Project]):
                 project.delete_source_blocks(quick_search_text, regex)
 
             project.rewrite_activators()
-
+            project.sort_project_items()
             project.store_project_dependencies(projects)
 
 

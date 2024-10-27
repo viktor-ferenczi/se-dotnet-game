@@ -67,7 +67,7 @@ Make sure these executables are available on `PATH`:
 7. Make the bulk fixes: `python FixBulk.py`
 8. Commit: `git add .` then `git commit -m "Bulk fixes"`
 9. Copy the `ReplicatedTypes.json` file into the `VRage` folder
-10. Apply the code patches: `git apply --whitespace=nowarn Manual_fixes.patch`
+10. Apply the code patches (warnings are normal): `git apply --whitespace=fix Manual_fixes.patch`
 11. Commit: `git add .` then `git commit -m "Manual fixes"`
 12. Open the solution in your IDE
 13. Force a NuGet Restore for the whole solution
