@@ -45,6 +45,7 @@ limited to uploading it to publicly available source code repositories.
 ## Prerequisites
 
 - [.NET 8.0 SDK, Windows x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [.NET 6.0 SDK, Windows x64](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) for the decompilation only
 - [JetBrains Rider](https://www.jetbrains.com/rider/) or Microsoft Visual Studio
 - [ILSpy]() version 8.2.0.7535 - Install by running `SetupILSpy.bat`
 - [Python 3.12](https://python.org) or newer
@@ -111,6 +112,12 @@ powerful way to develop new plugins.
 
 - There is no compatible Plugin Loader, currently
 - Transpiler patches would likely break even if you could load plugins
+
+### Why .NET 6.0 SDK?
+
+The stable version of ILSpy (8.x) can decompile for .NET 6.0. 
+The new 9.x version will be able to decompile for .NET 8.0,
+then we can drop this requirement.
 
 ## Credits
 
