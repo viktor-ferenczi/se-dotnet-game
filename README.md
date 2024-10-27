@@ -119,6 +119,29 @@ The stable version of ILSpy (8.x) can decompile for .NET 6.0.
 The new 9.x version will be able to decompile for .NET 8.0,
 then we can drop this requirement.
 
+### Replication layer
+
+The `ReplicatedTypes.json` file was produced by this client plugin:
+https://github.com/viktor-ferenczi/se-dotnet-dump
+
+This information may change with game updates, therefore has to be
+updated each time a new version of the game gets released.
+
+The file contains the type and event IDs as they are registered at
+runtime by the game. These IDs are used in the game's multiplayer
+replication "wire" protocol to encode the type and call sites.
+They must match the original game exactly, otherwise multiplayer
+fails to connect. The hash values are used to order the types the
+same way (with the same IDs) as the server has them.
+
+You need to start the game and load a multiplayer world 
+(a Friends only one would do) to produce the complete data file. 
+Without loading a multiplayer world it is missing a few items, 
+so don't forget that step.
+
+The data produced by the client and the server are the same, therefore
+it is enough to run it on the client for each new game version.
+
 ## Credits
 
 *In alphabetical order*
