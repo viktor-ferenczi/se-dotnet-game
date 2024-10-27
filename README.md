@@ -142,6 +142,13 @@ so don't forget that step.
 The data produced by the client and the server are the same, therefore
 it is enough to run it on the client for each new game version.
 
+## Troubleshooting
+
+### Dependencies appear to be missing
+
+Make sure you have the `Bin64` folder linked to your solution folder.
+If it is not there, then run `LinkBin64.bat` to restore it.
+
 ## Credits
 
 *In alphabetical order*
@@ -165,11 +172,4 @@ it is enough to run it on the client for each new game version.
 - Raidfire
 
 ### Developers
-- zznty: motivation, slight hints into the right direction
-
-## Troubleshooting
-
-### Dependencies appear to be missing
-
-Make sure you have the `Bin64` folder linked to your solution folder.
-If it is not there, then run `LinkBin64.bat` to restore it.
+- zznty: motivation
