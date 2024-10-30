@@ -55,25 +55,16 @@ Make sure these executables are available on `PATH`:
 
 ## Usage
 
-1. Create a new git repository in an empty folder: `git init`
-2. Copy over all files from this repository (do **not** overwrite `.git`)
-3. Commit: `git add .` then `git commit -m "Initial"`
-4. Edit and run `LinkBin64.bat` to link the game's `Bin64` folder
-5. Decompile the game (10-20 minutes): `Decompile.bat`
-6. Commit: `git add .` then `git commit -m "Game Version"`
-7. Make the bulk fixes: `python FixBulk.py`
-8. Commit: `git add .` then `git commit -m "Bulk fixes"`
-9. Copy the `ReplicatedTypes.json` file into the `VRage` folder
-10. Commit: `git add .` then `git commit -m "Replicated types"`
-11. Apply the code patches (whitespace warnings are normal): `git apply -p1 --whitespace=fix Manual_fixes.patch`
-12. Commit: `git add .` then `git commit -m "Manual fixes"`
-13. Open the solution in your IDE
-14. Force a NuGet Restore for the whole solution
-15. Make a `Debug` build and run it
+Run `Prepare.bat`, it should take about 10-20 minutes to complete.
 
-The above steps have not been automated by a single script in order to 
-give greater control over the process and awareness of the version
-control involved, so you can revert and try again if needed.
+It should print `DONE` at the end. If it prints `FAILED`, then investigate
+the console output and try again. This script is designed to be retryable,
+but it requires reverting the working copy to the latest commit beforehand.
+
+You can then open and built the project in your C# IDE (Rider, Visual Studio).
+
+Alternatively you can build and run a `Release` build from the command line by
+executing the `BuildAndRun.bat` script. It should work without an IDE.
 
 _Enjoy!_
 
@@ -86,11 +77,6 @@ of code optimization, but still usable for development/research.
 Release builds are less debuggable due to code optimization, you
 may not be able to break the code everywhere and some variable
 values may not be observable.
-
-### Running from the command line
-
-You can build and run a `Release` build from the command line by
-executing the `BuildAndRun.bat` script. It should work without an IDE.
 
 ## Expected use cases
 
