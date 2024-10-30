@@ -87,6 +87,9 @@ Release builds are less debuggable due to code optimization, you
 may not be able to break the code everywhere and some variable
 values may not be observable.
 
+You can build and run a `Release` build from the command line by
+executing the `BuildAndRun.bat` script. It should work without an IDE.
+
 ## Expected use cases
 
 **Investigating game bugs and performance issues** directly without 
