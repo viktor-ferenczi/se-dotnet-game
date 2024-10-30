@@ -42,11 +42,14 @@ limited to uploading it to publicly available source code repositories.
 
 ## Prerequisites
 
+- **Space Engineers** installed via Steam
 - [.NET 8.0 SDK, Windows x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 - [JetBrains Rider](https://www.jetbrains.com/rider/) or Microsoft Visual Studio
-- [ILSpy]() version 8.2.0.7535 - Install by running `SetupILSpy.bat`
+- [ILSpy](https://github.com/icsharpcode/ILSpy) version 8.2.0.7535 - Install it by running `SetupILSpy.bat`
 - [Python 3.12](https://python.org) or newer
 - [Git](https://gitforwindows.org/) to create a **local** repository 
+
+If you installed Space Engineers at a custom path, then edit `LinkBin64.bat`.
 
 Make sure these executables are available on `PATH`:
 - `ilspycmd`
