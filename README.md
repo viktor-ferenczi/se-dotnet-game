@@ -4,8 +4,6 @@ For support please [join the SE Mods Discord](https://discord.gg/PYPFPGf3Ca).
 
 **Please consider supporting my work on [Patreon](https://www.patreon.com/semods) or a one time donation via [PayPal](https://www.paypal.com/paypalme/vferenczi/).**
 
-**It took me about 100 hours of hard work to develop these tools and code fixes.**
-
 *Thank you and enjoy!*
 
 ## What's this?
@@ -45,7 +43,6 @@ limited to uploading it to publicly available source code repositories.
 ## Prerequisites
 
 - [.NET 8.0 SDK, Windows x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-- [.NET 6.0 SDK, Windows x64](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) for the decompilation only
 - [JetBrains Rider](https://www.jetbrains.com/rider/) or Microsoft Visual Studio
 - [ILSpy]() version 8.2.0.7535 - Install by running `SetupILSpy.bat`
 - [Python 3.12](https://python.org) or newer
@@ -67,11 +64,12 @@ Make sure these executables are available on `PATH`:
 7. Make the bulk fixes: `python FixBulk.py`
 8. Commit: `git add .` then `git commit -m "Bulk fixes"`
 9. Copy the `ReplicatedTypes.json` file into the `VRage` folder
-10. Apply the code patches (warnings are normal): `git apply --whitespace=fix Manual_fixes.patch`
-11. Commit: `git add .` then `git commit -m "Manual fixes"`
-12. Open the solution in your IDE
-13. Force a NuGet Restore for the whole solution
-14. Make a `Debug` build and run it
+10. Commit: `git add .` then `git commit -m "Replicated types"`
+11. Apply the code patches (whitespace warnings are normal): `git apply -p1 --whitespace=fix Manual_fixes.patch`
+12. Commit: `git add .` then `git commit -m "Manual fixes"`
+13. Open the solution in your IDE
+14. Force a NuGet Restore for the whole solution
+15. Make a `Debug` build and run it
 
 The above steps have not been automated by a single script in order to 
 give greater control over the process and awareness of the version
@@ -113,41 +111,11 @@ powerful way to develop new plugins.
 - There is no compatible Plugin Loader, currently
 - Transpiler patches would likely break even if you could load plugins
 
-### Why .NET 6.0 SDK?
+### How the manual patch was made?
 
-The stable version of ILSpy (8.x) can decompile for .NET 6.0. 
-The new 9.x version will be able to decompile for .NET 8.0,
-then we can drop this requirement.
-
-### Replication layer
-
-The `ReplicatedTypes.json` file was produced by this client plugin:
-https://github.com/viktor-ferenczi/se-dotnet-dump
-
-This information may change with game updates, therefore has to be
-updated each time a new version of the game gets released.
-
-The file contains the type and event IDs as they are registered at
-runtime by the game. These IDs are used in the game's multiplayer
-replication "wire" protocol to encode the type and call sites.
-They must match the original game exactly, otherwise multiplayer
-fails to connect. The hash values are used to order the types the
-same way (with the same IDs) as the server has them.
-
-You need to start the game and load a multiplayer world 
-(a Friends only one would do) to produce the complete data file. 
-Without loading a multiplayer world it is missing a few items, 
-so don't forget that step.
-
-The data produced by the client and the server are the same, therefore
-it is enough to run it on the client for each new game version.
-
-## Troubleshooting
-
-### Dependencies appear to be missing
-
-Make sure you have the `Bin64` folder linked to your solution folder.
-If it is not there, then run `LinkBin64.bat` to restore it.
+```shell
+git format-patch -1 HEAD --stdout >Manual_fixes.patch
+```
 
 ## Credits
 
@@ -172,4 +140,11 @@ If it is not there, then run `LinkBin64.bat` to restore it.
 - Raidfire
 
 ### Developers
-- zznty: motivation
+- zznty: motivation, slight hints into the right direction
+
+## Troubleshooting
+
+### Dependencies appear to be missing
+
+Make sure you have the `Bin64` folder linked to your solution folder.
+If it is not there, then run `LinkBin64.bat` to restore it.

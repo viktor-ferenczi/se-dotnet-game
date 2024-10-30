@@ -39,6 +39,9 @@ NUGET_PACKAGES = {
     'System.Collections.Immutable': (
         '<PackageReference Include="System.Collections.Immutable" Version="8.0.0" />',
     ),
+    'System.Configuration.Install': (
+        '<PackageReference Include="Core.System.Configuration.Install" Version="1.1.0" />',
+    ),
     'ProtoBuf.Net': (
         '<PackageReference Include="protobuf-net" Version="3.0.131" />',
     ),
@@ -91,6 +94,9 @@ NUGET_PACKAGES = {
     ),
     'SixLabors.ImageSharp': (
         '<PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />',
+    ),
+    'Newtonsoft.Json': (
+        '<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />',
     ),
 }
 
@@ -510,6 +516,12 @@ class Project:
     def replace_target_framework(self):
         self.project_file = RX_TARGET_FRAMEWORK.subn(TARGET_FRAMEWORK, self.project_file)[0]
 
+    def fix_obsolete_sdk(self):
+        self.replace_in_project_file(
+            '<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">',
+            '<Project Sdk="Microsoft.NET.Sdk">'
+        )
+
     def delete_source_blocks(self, quick_search_text: str, rx_first_line: RegExp) -> None:
         for path in self.sources:
             source = self.sources[path]
@@ -588,6 +600,7 @@ def fix_project_files_and_code(projects: List[Project]):
         print(f'- {project.name}')
         with project.write():
             project.replace_target_framework()
+            project.fix_obsolete_sdk()
 
             project.fix_hint_paths()
             project.add_project_references(projects)
