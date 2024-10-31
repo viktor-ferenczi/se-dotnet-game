@@ -49,12 +49,14 @@ limited to uploading it to publicly available source code repositories.
 - [Python 3.12](https://python.org) or newer
 - [Git](https://gitforwindows.org/) to create a **local** repository 
 
-If you installed Space Engineers at a custom path, then edit `LinkBin64.bat`.
-
 Make sure these executables are available on `PATH`:
 - `ilspycmd`
 - `python`
 - `git`
+
+Define this environment variable: `SPACE_ENGINEERS_ROOT`
+- Usual value: `C:\Program Files (x86)\Steam\steamapps\common\SpaceEngineers`
+- If you installed the game at a custom path, then use that path.
 
 ## Usage
 
