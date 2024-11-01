@@ -97,15 +97,20 @@ powerful way to develop new plugins.
  
 ## Remarks
 
+### Plugin Loader
+
+You can use the modified [Plugin Loader on .NET 8.0](https://github.com/viktor-ferenczi/se-dotnet-plugin-loader).
+Please see the instructions there.
+
+Please note, that plugins using transpiler patches or verifying the bytecode would likely break.
+Incompatible plugins could be made compatible with the .NET 8.0 build of the game, they just need some work.
+The plugin authors may make them available at their discretion either as an alternate version or by using
+runtime conditions on the IL code.
+
 ### Disabled code
 
 - The game analytics is disabled, because its logging broke. We don't want to confuse Keen's telemetry with our custom builds anyway.
 - The script performance profiling is disabled, because it broke the script compiler. It has not been fixed, because without game analytics it is pointless to have anyway.
-
-### Ceveats
-
-- There is no compatible Plugin Loader, currently
-- Transpiler patches would likely break even if you could load plugins
 
 ### How the manual patch was made?
 
