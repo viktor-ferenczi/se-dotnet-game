@@ -137,8 +137,8 @@ git format-patch -1 HEAD --stdout >Manual_fixes.patch
 - Lazul
 - Lotan
 - mkaito
-- ransomthetoaster
 - Raidfire
+- ransomthetoaster
 
 ### Developers
 - zznty: motivation, slight hints into the right direction
