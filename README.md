@@ -12,6 +12,8 @@ This repository provides a way to decompile the game into C# 11.0 source
 code in several projects, combined into a single solution. It also 
 contains a script and patches to fix the code to run on .NET 8.0.
 
+See also: [Plugin Loader on .NET 8.0](https://github.com/viktor-ferenczi/se-dotnet-plugin-loader)
+
 ## Legal
 
 _Space Engineers is a trademark of Keen Software House s.r.o._
