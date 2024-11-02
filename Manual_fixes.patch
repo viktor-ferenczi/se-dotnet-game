@@ -1,4 +1,4 @@
-From 7a831060364dd56bacc9f64ecf5bbda855d7485d Mon Sep 17 00:00:00 2001
+From 08ed8f95d14f5811a2ae34f6623a69c1b6ef446c Mon Sep 17 00:00:00 2001
 From: Viktor Ferenczi <viktor@ferenczi.eu>
 Date: Wed, 30 Oct 2024 15:36:29 +0100
 Subject: [PATCH] Manual fixes
@@ -16,6 +16,7 @@ Subject: [PATCH] Manual fixes
  .../Game/Entities/Blocks/MyContractBlock.cs   |   8 +-
  .../Entities/Blocks/MyTargetDummyBlock.cs     |  12 +-
  .../Game/Entities/Character/MyCharacter.cs    |   2 +-
+ .../Game/Entities/Cube/MyGridClipboard.cs     |   2 +-
  .../Sandbox/Game/Entities/Cube/MyGridShape.cs |   4 +-
  .../Sandbox/Game/Entities/Cube/MySlimBlock.cs |   8 +-
  .../Sandbox/Game/Entities/MyCubeBuilder.cs    |   6 +-
@@ -122,7 +123,7 @@ Subject: [PATCH] Manual fixes
  VRage/VRage/Serialization/StaticTypeModel.cs  |  34 -----
  .../VRage/Utils/Keen/MethodInfoExtensions.cs  |  15 ++
  VRage/VRage/Voxels/MyStorageData.cs           |   5 +
- 118 files changed, 553 insertions(+), 358 deletions(-)
+ 119 files changed, 554 insertions(+), 359 deletions(-)
  delete mode 100644 Sandbox.Game/app.config
  delete mode 100644 SpaceEngineers/app.config
  create mode 100644 SpaceEngineers/steam_appid.txt
@@ -334,6 +335,19 @@ index d6ba7bc5..297c64b5 100644
  			if (!base.Closed)
  			{
  				RadioReceiver.Clear();
+diff --git a/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridClipboard.cs b/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridClipboard.cs
+index fa23f84c..78683cd5 100644
+--- a/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridClipboard.cs
++++ b/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridClipboard.cs
+@@ -521,7 +521,7 @@ public class MyGridClipboard
+ 		{
+ 			deactivated?.Invoke(this, afterPaste);
+ 		}
+-		if (MyClipboardComponent.Static.Clipboard == this)
++		if (MyClipboardComponent.Static?.Clipboard == this)
+ 		{
+ 			if (MyCoordinateSystem.Static != null)
+ 			{
 diff --git a/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridShape.cs b/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridShape.cs
 index 88251a3c..fddc60d0 100644
 --- a/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridShape.cs
