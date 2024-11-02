@@ -1,5 +1,2 @@
-set SolutionDir=%cd%
-dotnet dotnet build --configuration Release
-if %ERRORLEVEL% NEQ 0 goto :end
-dotnet run --configuration Release --project SpaceEngineers -- -skipintro
-:end
+@set SolutionDir=%cd%
+dotnet run --configuration Release --project SpaceEngineers -- -skipintro >build.log 2>&1

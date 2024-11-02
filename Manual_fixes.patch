@@ -1,4 +1,4 @@
-From 08ed8f95d14f5811a2ae34f6623a69c1b6ef446c Mon Sep 17 00:00:00 2001
+From 4e6e015b93c051edb7fe7ff7360cc2d73dd2452b Mon Sep 17 00:00:00 2001
 From: Viktor Ferenczi <viktor@ferenczi.eu>
 Date: Wed, 30 Oct 2024 15:36:29 +0100
 Subject: [PATCH] Manual fixes
@@ -92,7 +92,7 @@ Subject: [PATCH] Manual fixes
  .../VRage.NativeAftermath.csproj              |   5 +-
  .../__scrt_native_startup_state.cs            |   1 -
  .../{gcroot-System => gcroot_System.cs}       |   0
- .../VRage.Platform.Windows.csproj             |   3 +-
+ .../VRage.Platform.Windows.csproj             |   4 +-
  .../Platform/Windows/Audio/MyPlatformAudio.cs |   2 +-
  .../Windows/Forms/MyMessageBoxCrashForm.cs    |   2 +-
  .../Platform/Windows/MyCrashReporting.cs      |   6 +
@@ -123,7 +123,7 @@ Subject: [PATCH] Manual fixes
  VRage/VRage/Serialization/StaticTypeModel.cs  |  34 -----
  .../VRage/Utils/Keen/MethodInfoExtensions.cs  |  15 ++
  VRage/VRage/Voxels/MyStorageData.cs           |   5 +
- 119 files changed, 554 insertions(+), 359 deletions(-)
+ 119 files changed, 555 insertions(+), 359 deletions(-)
  delete mode 100644 Sandbox.Game/app.config
  delete mode 100644 SpaceEngineers/app.config
  create mode 100644 SpaceEngineers/steam_appid.txt
@@ -2114,19 +2114,20 @@ similarity index 100%
 rename from VRage.NativeAftermath/gcroot-System
 rename to VRage.NativeAftermath/gcroot_System.cs
 diff --git a/VRage.Platform.Windows/VRage.Platform.Windows.csproj b/VRage.Platform.Windows/VRage.Platform.Windows.csproj
-index 6366ff2b..82837bc5 100644
+index 6366ff2b..507d5996 100644
 --- a/VRage.Platform.Windows/VRage.Platform.Windows.csproj
 +++ b/VRage.Platform.Windows/VRage.Platform.Windows.csproj
-@@ -17,7 +17,7 @@
+@@ -17,7 +17,8 @@
    <ItemGroup>
      <PackageReference Include="DirectShowLib" Version="1.0.0" />
      <PackageReference Include="GameAnalytics.Mono.SDK" Version="3.3.5" />
 -    <PackageReference Include="RestSharp" Version="112.1.0" />
++    <PackageReference Include="NLog" Version="5.3.4" />
 +    <PackageReference Include="RestSharp" Version="106.6.10" />
      <PackageReference Include="SharpDX" Version="4.2.0" />
      <PackageReference Include="SharpDX.DXGI" Version="4.2.0" />
      <PackageReference Include="SharpDX.Desktop" Version="4.2.0" />
-@@ -25,6 +25,7 @@
+@@ -25,6 +26,7 @@
      <PackageReference Include="SharpDX.DirectInput" Version="4.2.0" />
      <PackageReference Include="SharpDX.XAudio2" Version="4.2.0" />
      <PackageReference Include="SharpDX.XInput" Version="4.2.0" />

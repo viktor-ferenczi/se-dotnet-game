@@ -401,6 +401,7 @@ FodyWeavers.xsd
 
 # Project
 Bin64
+ProfileOptimization
 *.exe
 *.dll
 **/bin
