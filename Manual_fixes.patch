@@ -1,4 +1,4 @@
-From 2151046e01aeeb1e5cd5fbe16eaac77cea5bb8a8 Mon Sep 17 00:00:00 2001
+From c2b1c34cf539503b9bc09c3e92b2f9db6c419995 Mon Sep 17 00:00:00 2001
 From: Viktor Ferenczi <viktor@ferenczi.eu>
 Date: Wed, 30 Oct 2024 15:36:29 +0100
 Subject: [PATCH] Manual fixes
@@ -14,6 +14,7 @@ Subject: [PATCH] Manual fixes
  Sandbox.Game/Sandbox/Engine/Utils/MyFakes.cs  |   4 +
  .../Game/Components/MyEntityStatComponent.cs  |   2 +-
  .../Game/Entities/Blocks/MyContractBlock.cs   |   8 +-
+ .../Game/Entities/Blocks/MyLightingBlock.cs   |   4 +-
  .../Entities/Blocks/MyTargetDummyBlock.cs     |  12 +-
  .../Game/Entities/Character/MyCharacter.cs    |   2 +-
  .../Game/Entities/Cube/MyGridClipboard.cs     |   2 +-
@@ -35,6 +36,7 @@ Subject: [PATCH] Manual fixes
  .../StateGroups/MyPropertySyncStateGroup.cs   |   2 +-
  .../Sandbox/Game/Screens/MyFilterBool.cs      |   2 -
  .../Game/Screens/MyGuiScreenMainMenuBase.cs   |   3 +-
+ .../Game/Screens/MyGuiScreenSimpleNewGame.cs  |   2 +-
  .../SessionComponents/MyHighlightSystem.cs    |   7 +-
  .../Sandbox/Game/Weapons/MyShipDrill.cs       |  12 +-
  .../Sandbox/Game/World/MyBlockLimits.cs       |   2 +-
@@ -42,12 +44,12 @@ Subject: [PATCH] Manual fixes
  Sandbox.Game/Sandbox/MyInitializer.cs         |  13 +-
  Sandbox.Game/Sandbox/MySandboxGame.cs         |   8 +-
  Sandbox.Game/app.config                       |  27 ----
- .../UserInterface/Generated/MainMenu.cs       |   4 +-
- .../UserInterface/Generated/StoreBlockView.cs |   2 +-
- .../SpaceEngineers.Game.csproj                |   6 +
+ .../MyGuiScreenNewGameScenarioSelection.cs    |   2 +-
+ ...iScreenScenarioSelectionCustomizeScreen.cs |   2 +-
+ .../SpaceEngineers.Game.csproj                |   7 +
  .../Entities/Blocks/MyFlightMovementBlock.cs  |   6 +-
  .../Game/GUI/MyGuiScreenMedicals.cs           |   2 +-
- .../Game/MySpaceGameCustomInitialization.cs   |  52 ++++---
+ .../Game/MySpaceGameCustomInitialization.cs   |  56 +++++---
  .../SpaceEngineers/Game/SpaceEngineersGame.cs |   4 +
  .../Game/World/MySpaceRespawnComponent.cs     |   2 +-
  .../MyObjectBuilder_AutomaticRifle.cs         |   4 +-
@@ -91,7 +93,7 @@ Subject: [PATCH] Manual fixes
  .../NativeAftermath/MyAfterMath.cs            |   3 +-
  .../VRage.NativeAftermath.csproj              |   5 +-
  .../__scrt_native_startup_state.cs            |   1 -
- .../{gcroot-System => gcroot_System.cs}       |   0
+ VRage.NativeAftermath/gcroot_System.cs        |   0
  .../VRage.Platform.Windows.csproj             |   4 +-
  .../Platform/Windows/Audio/MyPlatformAudio.cs |   2 +-
  .../Windows/Forms/MyMessageBoxCrashForm.cs    |   2 +-
@@ -100,12 +102,12 @@ Subject: [PATCH] Manual fixes
  .../Windows/Render/MyPlatformRender.cs        |   2 +
  .../Windows/Serialization/DynamicTypeModel.cs |   2 +-
  .../Platform/Windows/Sys/MyWindowsSystem.cs   |  12 ++
- VRage.Render/VRage/Render/Image/MyImage.cs    |  31 ++--
+ VRage.Render/VRage/Render/Image/MyImage.cs    |  33 ++---
  .../VRageRender/Animations/MyConstProperty.cs |   5 +-
  .../Toolkit/Graphics/ImageSharpHelper.cs      |   1 +
  .../Resources/MyFileTextureImageCache.cs      |   9 ++
  VRage.Render11/VRageRender/MyTextureData.cs   |   4 +-
- .../VRage/Scripting/MyScriptCompiler.cs       |   8 +-
+ .../VRage/Scripting/MyScriptCompiler.cs       |  11 +-
  .../VRage/Scripting/MyScriptWhitelist.cs      |   8 +-
  .../Scripting/MyVRageScriptingInternal.cs     |   2 +-
  .../Rewriters/PerfCountingRewriter.cs         |   4 +
@@ -123,18 +125,18 @@ Subject: [PATCH] Manual fixes
  VRage/VRage/Serialization/StaticTypeModel.cs  |  34 -----
  .../VRage/Utils/Keen/MethodInfoExtensions.cs  |  15 ++
  VRage/VRage/Voxels/MyStorageData.cs           |   5 +
- 119 files changed, 557 insertions(+), 360 deletions(-)
+ 121 files changed, 565 insertions(+), 366 deletions(-)
  delete mode 100644 Sandbox.Game/app.config
  delete mode 100644 SpaceEngineers/app.config
  create mode 100644 SpaceEngineers/steam_appid.txt
  delete mode 100644 VRage.Game/app.config
- rename VRage.NativeAftermath/{gcroot-System => gcroot_System.cs} (100%)
+ create mode 100644 VRage.NativeAftermath/gcroot_System.cs
  create mode 100644 VRage/VRage/Network/ReplicatedTypes.cs
  delete mode 100644 VRage/VRage/Serialization/StaticTypeModel.cs
  create mode 100644 VRage/VRage/Utils/Keen/MethodInfoExtensions.cs
 
 diff --git a/Sandbox.Common/Sandbox/ModAPI/Ingame/MyGridProgram.cs b/Sandbox.Common/Sandbox/ModAPI/Ingame/MyGridProgram.cs
-index 7a0ad8ff..d4d0c9cd 100644
+index 81ad128c..0b22240a 100644
 --- a/Sandbox.Common/Sandbox/ModAPI/Ingame/MyGridProgram.cs
 +++ b/Sandbox.Common/Sandbox/ModAPI/Ingame/MyGridProgram.cs
 @@ -1,5 +1,6 @@
@@ -176,7 +178,7 @@ index e423be04..1ffd034f 100644
      <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
      <PackageReference Include="protobuf-net.Core" Version="3.0.131" />
 diff --git a/Sandbox.Game/Sandbox/Engine/Analytics/MySpaceAnalytics.cs b/Sandbox.Game/Sandbox/Engine/Analytics/MySpaceAnalytics.cs
-index 66d2970a..09a4eea2 100644
+index b2f81802..1d477459 100644
 --- a/Sandbox.Game/Sandbox/Engine/Analytics/MySpaceAnalytics.cs
 +++ b/Sandbox.Game/Sandbox/Engine/Analytics/MySpaceAnalytics.cs
 @@ -403,6 +403,9 @@ public sealed class MySpaceAnalytics : MyAnalyticsManager
@@ -190,7 +192,7 @@ index 66d2970a..09a4eea2 100644
  		{
  			if (m_hashedUserID == null)
 diff --git a/Sandbox.Game/Sandbox/Engine/Multiplayer/MyClientDebugCommands.cs b/Sandbox.Game/Sandbox/Engine/Multiplayer/MyClientDebugCommands.cs
-index 60c43151..439b6d1c 100644
+index a92bd17e..c8777a20 100644
 --- a/Sandbox.Game/Sandbox/Engine/Multiplayer/MyClientDebugCommands.cs
 +++ b/Sandbox.Game/Sandbox/Engine/Multiplayer/MyClientDebugCommands.cs
 @@ -5,6 +5,7 @@ using System.Linq;
@@ -202,7 +204,7 @@ index 60c43151..439b6d1c 100644
  namespace Sandbox.Engine.Multiplayer;
  
 diff --git a/Sandbox.Game/Sandbox/Engine/Multiplayer/MyServerDebugCommands.cs b/Sandbox.Game/Sandbox/Engine/Multiplayer/MyServerDebugCommands.cs
-index cd42a792..153beb62 100644
+index 3cb02c6f..53181d1a 100644
 --- a/Sandbox.Game/Sandbox/Engine/Multiplayer/MyServerDebugCommands.cs
 +++ b/Sandbox.Game/Sandbox/Engine/Multiplayer/MyServerDebugCommands.cs
 @@ -10,6 +10,7 @@ using Sandbox.Game.World;
@@ -214,7 +216,7 @@ index cd42a792..153beb62 100644
  namespace Sandbox.Engine.Multiplayer;
  
 diff --git a/Sandbox.Game/Sandbox/Engine/Utils/MyConfig.cs b/Sandbox.Game/Sandbox/Engine/Utils/MyConfig.cs
-index 6779f18c..30c0269e 100644
+index f6b0b482..ef0d543e 100644
 --- a/Sandbox.Game/Sandbox/Engine/Utils/MyConfig.cs
 +++ b/Sandbox.Game/Sandbox/Engine/Utils/MyConfig.cs
 @@ -1,3 +1,6 @@
@@ -224,7 +226,7 @@ index 6779f18c..30c0269e 100644
  using System;
  using System.Collections.Generic;
  using System.IO;
-@@ -2242,3 +2245,5 @@ public class MyConfig : MyConfigBase, IMyConfig
+@@ -2354,3 +2357,5 @@ public class MyConfig : MyConfigBase, IMyConfig
  		MyNewGameScreenABTestHelper.Instance.ActivateTest();
  	}
  }
@@ -232,10 +234,10 @@ index 6779f18c..30c0269e 100644
 +#pragma warning restore SYSLIB0011
 \ No newline at end of file
 diff --git a/Sandbox.Game/Sandbox/Engine/Utils/MyFakes.cs b/Sandbox.Game/Sandbox/Engine/Utils/MyFakes.cs
-index 521dc284..98387057 100644
+index 9bee0af4..835a6e57 100644
 --- a/Sandbox.Game/Sandbox/Engine/Utils/MyFakes.cs
 +++ b/Sandbox.Game/Sandbox/Engine/Utils/MyFakes.cs
-@@ -1323,7 +1323,11 @@ public static class MyFakes
+@@ -1353,7 +1353,11 @@ public static class MyFakes
  		ENABLE_WAIT_UNTIL_MULTIPLAYER_READY = true;
  		ENABLE_PRELOAD_CHARACTER_ANIMATIONS = true;
  		LOADING_STREAMING_TIMEOUT_ENABLED = true;
@@ -261,7 +263,7 @@ index 49dc633c..da9b33b4 100644
  		private class Sandbox_Game_Components_MyEntityStatComponent_003C_003EStatInfo_003C_003EStatId_003C_003EAccessor : IMemberAccessor<StatInfo, MyStringHash>
  		{
 diff --git a/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyContractBlock.cs b/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyContractBlock.cs
-index 0116b065..f0173402 100644
+index eb27d167..ea14c181 100644
 --- a/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyContractBlock.cs
 +++ b/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyContractBlock.cs
 @@ -143,7 +143,7 @@ public class MyContractBlock : MyFunctionalBlock, IMyConveyorEndpointBlock, IMyM
@@ -300,6 +302,22 @@ index 0116b065..f0173402 100644
  	{
  		private class Sandbox_Game_Entities_Blocks_MyContractBlock_003C_003EMyContractCreationDataWrapper_Repair_003C_003ERewardMoney_003C_003EAccessor : IMemberAccessor<MyContractCreationDataWrapper_Repair, int>
  		{
+diff --git a/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyLightingBlock.cs b/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyLightingBlock.cs
+index 7abaf9d3..7d8af120 100644
+--- a/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyLightingBlock.cs
++++ b/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyLightingBlock.cs
+@@ -490,9 +490,9 @@ public abstract class MyLightingBlock : MyFunctionalBlock, Sandbox.ModAPI.IMyLig
+ 				float? num3 = null;
+ 				List<Sandbox.ModAPI.Ingame.IMyTerminalBlock> list = new List<Sandbox.ModAPI.Ingame.IMyTerminalBlock>();
+ 				item.FetchAllBlocks(list);
+-				foreach (Sandbox.ModAPI.Ingame.IMyTerminalBlock item in list)
++				foreach (Sandbox.ModAPI.Ingame.IMyTerminalBlock myTerminalBlock in list)
+ 				{
+-					if (item is MyLightingBlock myLightingBlock)
++					if (myTerminalBlock is MyLightingBlock myLightingBlock)
+ 					{
+ 						float val = (myLightingBlock.m_lightingLogic.IsReflector ? myLightingBlock.m_lightingLogic.ReflectorRadiusBounds.Min : myLightingBlock.m_lightingLogic.RadiusBounds.Min);
+ 						num = Math.Min(num, val);
 diff --git a/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyTargetDummyBlock.cs b/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyTargetDummyBlock.cs
 index c6e166ab..2a8cf686 100644
 --- a/Sandbox.Game/Sandbox/Game/Entities/Blocks/MyTargetDummyBlock.cs
@@ -323,10 +341,10 @@ index c6e166ab..2a8cf686 100644
 +	[SpecialName] bool IMyInventoryOwner.HasInventory => base.HasInventory;
  }
 diff --git a/Sandbox.Game/Sandbox/Game/Entities/Character/MyCharacter.cs b/Sandbox.Game/Sandbox/Game/Entities/Character/MyCharacter.cs
-index d6ba7bc5..297c64b5 100644
+index 476fafd8..c920b308 100644
 --- a/Sandbox.Game/Sandbox/Game/Entities/Character/MyCharacter.cs
 +++ b/Sandbox.Game/Sandbox/Game/Entities/Character/MyCharacter.cs
-@@ -8093,7 +8093,7 @@ public class MyCharacter : MySkinnedEntity, IMyCameraController, IMyControllable
+@@ -8122,7 +8122,7 @@ public class MyCharacter : MySkinnedEntity, IMyCameraController, IMyControllable
  			{
  				MyGuiScreenGamePlay.ActiveGameplayScreen.CloseScreen();
  			}
@@ -336,12 +354,12 @@ index d6ba7bc5..297c64b5 100644
  			{
  				RadioReceiver.Clear();
 diff --git a/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridClipboard.cs b/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridClipboard.cs
-index fa23f84c..78683cd5 100644
+index 27d8fb6f..c3016485 100644
 --- a/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridClipboard.cs
 +++ b/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridClipboard.cs
-@@ -521,7 +521,7 @@ public class MyGridClipboard
+@@ -520,7 +520,7 @@ public class MyGridClipboard
  		{
- 			deactivated?.Invoke(this, afterPaste);
+ 			action?.Invoke(this, afterPaste);
  		}
 -		if (MyClipboardComponent.Static.Clipboard == this)
 +		if (MyClipboardComponent.Static?.Clipboard == this)
@@ -349,7 +367,7 @@ index fa23f84c..78683cd5 100644
  			if (MyCoordinateSystem.Static != null)
  			{
 diff --git a/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridShape.cs b/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridShape.cs
-index 88251a3c..fddc60d0 100644
+index 5613734c..10ea397f 100644
 --- a/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridShape.cs
 +++ b/Sandbox.Game/Sandbox/Game/Entities/Cube/MyGridShape.cs
 @@ -175,13 +175,15 @@ public class MyGridShape : IDisposable
@@ -370,7 +388,7 @@ index 88251a3c..fddc60d0 100644
  			{
  				span[j] = m_blockCollector.Shapes[num + j];
 diff --git a/Sandbox.Game/Sandbox/Game/Entities/Cube/MySlimBlock.cs b/Sandbox.Game/Sandbox/Game/Entities/Cube/MySlimBlock.cs
-index 48365453..05717c9e 100644
+index de11641b..00038321 100644
 --- a/Sandbox.Game/Sandbox/Game/Entities/Cube/MySlimBlock.cs
 +++ b/Sandbox.Game/Sandbox/Game/Entities/Cube/MySlimBlock.cs
 @@ -778,13 +778,13 @@ public class MySlimBlock : IMyDestroyableObject, IMyDecalProxy, VRage.Game.ModAP
@@ -406,10 +424,10 @@ index 48365453..05717c9e 100644
  	}
  
 diff --git a/Sandbox.Game/Sandbox/Game/Entities/MyCubeBuilder.cs b/Sandbox.Game/Sandbox/Game/Entities/MyCubeBuilder.cs
-index 07ac02e6..0b8927fb 100644
+index ff48ea13..2a4f3153 100644
 --- a/Sandbox.Game/Sandbox/Game/Entities/MyCubeBuilder.cs
 +++ b/Sandbox.Game/Sandbox/Game/Entities/MyCubeBuilder.cs
-@@ -62,7 +62,7 @@ namespace Sandbox.Game.Entities;
+@@ -63,7 +63,7 @@ namespace Sandbox.Game.Entities;
  public class MyCubeBuilder : MyBlockBuilderBase, IMyFocusHolder, IMyCubeBuilder
  {
  	[Serializable]
@@ -418,7 +436,7 @@ index 07ac02e6..0b8927fb 100644
  	{
  		private class Sandbox_Game_Entities_MyCubeBuilder_003C_003EBuildData_003C_003EPosition_003C_003EAccessor : IMemberAccessor<BuildData, Vector3D>
  		{
-@@ -145,7 +145,7 @@ public class MyCubeBuilder : MyBlockBuilderBase, IMyFocusHolder, IMyCubeBuilder
+@@ -146,7 +146,7 @@ public class MyCubeBuilder : MyBlockBuilderBase, IMyFocusHolder, IMyCubeBuilder
  	}
  
  	[Serializable]
@@ -427,7 +445,7 @@ index 07ac02e6..0b8927fb 100644
  	{
  		private class Sandbox_Game_Entities_MyCubeBuilder_003C_003EAuthor_003C_003EEntityId_003C_003EAccessor : IMemberAccessor<Author, long>
  		{
-@@ -189,7 +189,7 @@ public class MyCubeBuilder : MyBlockBuilderBase, IMyFocusHolder, IMyCubeBuilder
+@@ -190,7 +190,7 @@ public class MyCubeBuilder : MyBlockBuilderBase, IMyFocusHolder, IMyCubeBuilder
  	}
  
  	[Serializable]
@@ -437,7 +455,7 @@ index 07ac02e6..0b8927fb 100644
  		private class Sandbox_Game_Entities_MyCubeBuilder_003C_003EGridSpawnRequestData_003C_003EAuthor_003C_003EAccessor : IMemberAccessor<GridSpawnRequestData, Author>
  		{
 diff --git a/Sandbox.Game/Sandbox/Game/Entities/MyCubeGrid.cs b/Sandbox.Game/Sandbox/Game/Entities/MyCubeGrid.cs
-index 30e04ec6..2420bb93 100644
+index 625dee1f..522d5bcc 100644
 --- a/Sandbox.Game/Sandbox/Game/Entities/MyCubeGrid.cs
 +++ b/Sandbox.Game/Sandbox/Game/Entities/MyCubeGrid.cs
 @@ -127,7 +127,7 @@ public class MyCubeGrid : MyEntity, IMyGridConnectivityTest, IMyEventProxy, IMyE
@@ -450,10 +468,10 @@ index 30e04ec6..2420bb93 100644
  		NoReason,
  		GridCopied,
 diff --git a/Sandbox.Game/Sandbox/Game/Entities/MyReactor.cs b/Sandbox.Game/Sandbox/Game/Entities/MyReactor.cs
-index 0d413101..730a52cb 100644
+index 4dddecc1..f6f26a60 100644
 --- a/Sandbox.Game/Sandbox/Game/Entities/MyReactor.cs
 +++ b/Sandbox.Game/Sandbox/Game/Entities/MyReactor.cs
-@@ -410,15 +410,7 @@ public class MyReactor : MyFueledPowerProducer, IMyConveyorEndpointBlock, Sandbo
+@@ -411,15 +411,7 @@ public class MyReactor : MyFueledPowerProducer, IMyConveyorEndpointBlock, Sandbo
  		};
  	}
  
@@ -485,7 +503,7 @@ index c9471037..69f84e6a 100644
  	Vector3D IMyNaturalGravityComponent.Position
  	{
 diff --git a/Sandbox.Game/Sandbox/Game/Entities/MyVoxelBase.cs b/Sandbox.Game/Sandbox/Game/Entities/MyVoxelBase.cs
-index a7cd1329..0c88c9ae 100644
+index 8a1e966b..2cf56ca2 100644
 --- a/Sandbox.Game/Sandbox/Game/Entities/MyVoxelBase.cs
 +++ b/Sandbox.Game/Sandbox/Game/Entities/MyVoxelBase.cs
 @@ -33,7 +33,7 @@ namespace Sandbox.Game.Entities;
@@ -507,7 +525,7 @@ index a7cd1329..0c88c9ae 100644
  		private class Sandbox_Game_Entities_MyVoxelBase_003C_003EMyCapsuleShapeParams_003C_003EA_003C_003EAccessor : IMemberAccessor<MyCapsuleShapeParams, Vector3D>
  		{
 diff --git a/Sandbox.Game/Sandbox/Game/GameSystems/Chat/MyChatCommandSystem.cs b/Sandbox.Game/Sandbox/Game/GameSystems/Chat/MyChatCommandSystem.cs
-index 96e57d3a..bce0d793 100644
+index 5a453076..212bb3ca 100644
 --- a/Sandbox.Game/Sandbox/Game/GameSystems/Chat/MyChatCommandSystem.cs
 +++ b/Sandbox.Game/Sandbox/Game/GameSystems/Chat/MyChatCommandSystem.cs
 @@ -4,6 +4,7 @@ using System.Linq;
@@ -519,7 +537,7 @@ index 96e57d3a..bce0d793 100644
  namespace Sandbox.Game.GameSystems.Chat;
  
 diff --git a/Sandbox.Game/Sandbox/Game/GameSystems/CoordinateSystem/MyCoordinateSystem.cs b/Sandbox.Game/Sandbox/Game/GameSystems/CoordinateSystem/MyCoordinateSystem.cs
-index 1b85014a..a6a898eb 100644
+index 59571c87..cf4c525c 100644
 --- a/Sandbox.Game/Sandbox/Game/GameSystems/CoordinateSystem/MyCoordinateSystem.cs
 +++ b/Sandbox.Game/Sandbox/Game/GameSystems/CoordinateSystem/MyCoordinateSystem.cs
 @@ -25,7 +25,7 @@ public class MyCoordinateSystem : MySessionComponentBase
@@ -547,10 +565,10 @@ index cd2d35d8..a80fb161 100644
  		{
  			counter.TryGetValue(path, out var value);
 diff --git a/Sandbox.Game/Sandbox/Game/GameSystems/MyShipMiningSystem.cs b/Sandbox.Game/Sandbox/Game/GameSystems/MyShipMiningSystem.cs
-index 52187776..df8162a4 100644
+index ee6de9f5..b8dded4b 100644
 --- a/Sandbox.Game/Sandbox/Game/GameSystems/MyShipMiningSystem.cs
 +++ b/Sandbox.Game/Sandbox/Game/GameSystems/MyShipMiningSystem.cs
-@@ -399,7 +399,9 @@ public class MyShipMiningSystem : MyUpdateableGridSystem
+@@ -393,7 +393,9 @@ public class MyShipMiningSystem : MyUpdateableGridSystem
  			IsClient = false;
  			m_storage = target.Storage;
  			m_targetVoxel = target;
@@ -562,10 +580,10 @@ index 52187776..df8162a4 100644
  			Vector3 center = cluster.Bounds.Center;
  			m_storageOffset = Vector3I.Floor(Vector3D.Transform(center, ref result));
 diff --git a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenAdminMenu.cs b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenAdminMenu.cs
-index 5fc367fe..c54abdf2 100644
+index 967cd948..54658380 100644
 --- a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenAdminMenu.cs
 +++ b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenAdminMenu.cs
-@@ -82,7 +82,7 @@ public class MyGuiScreenAdminMenu : MyGuiScreenDebugBase
+@@ -85,7 +85,7 @@ public class MyGuiScreenAdminMenu : MyGuiScreenDebugBase
  	}
  
  	[Serializable]
@@ -575,7 +593,7 @@ index 5fc367fe..c54abdf2 100644
  		private class Sandbox_Game_Gui_MyGuiScreenAdminMenu_003C_003EAdminSettings_003C_003EFlags_003C_003EAccessor : IMemberAccessor<AdminSettings, MyTrashRemovalFlags>
  		{
 diff --git a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugNetwork.cs b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugNetwork.cs
-index 58cd6f5e..e9a339cc 100644
+index 3e28edc5..8c43a067 100644
 --- a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugNetwork.cs
 +++ b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugNetwork.cs
 @@ -58,7 +58,7 @@ internal class MyGuiScreenDebugNetwork : MyGuiScreenDebugBase
@@ -588,7 +606,7 @@ index 58cd6f5e..e9a339cc 100644
  		[Serializable]
  		public struct Entity
 diff --git a/Sandbox.Game/Sandbox/Game/Gui/MyTerminalInfoController.cs b/Sandbox.Game/Sandbox/Game/Gui/MyTerminalInfoController.cs
-index e3bb9f53..d4cb7145 100644
+index f5c6cfac..eb22a1b1 100644
 --- a/Sandbox.Game/Sandbox/Game/Gui/MyTerminalInfoController.cs
 +++ b/Sandbox.Game/Sandbox/Game/Gui/MyTerminalInfoController.cs
 @@ -35,7 +35,7 @@ namespace Sandbox.Game.Gui;
@@ -601,7 +619,7 @@ index e3bb9f53..d4cb7145 100644
  		private class Sandbox_Game_Gui_MyTerminalInfoController_003C_003EGridBuiltByIdInfo_003C_003EGridName_003C_003EAccessor : IMemberAccessor<GridBuiltByIdInfo, string>
  		{
 diff --git a/Sandbox.Game/Sandbox/Game/Multiplayer/MyGpsCollection.cs b/Sandbox.Game/Sandbox/Game/Multiplayer/MyGpsCollection.cs
-index af5c2ea4..f602471a 100644
+index d64ee714..2aa46eb0 100644
 --- a/Sandbox.Game/Sandbox/Game/Multiplayer/MyGpsCollection.cs
 +++ b/Sandbox.Game/Sandbox/Game/Multiplayer/MyGpsCollection.cs
 @@ -30,7 +30,7 @@ namespace Sandbox.Game.Multiplayer;
@@ -623,7 +641,7 @@ index af5c2ea4..f602471a 100644
  		private class Sandbox_Game_Multiplayer_MyGpsCollection_003C_003EModifyMsg_003C_003EIdentityId_003C_003EAccessor : IMemberAccessor<ModifyMsg, long>
  		{
 diff --git a/Sandbox.Game/Sandbox/Game/Replication/StateGroups/MyPropertySyncStateGroup.cs b/Sandbox.Game/Sandbox/Game/Replication/StateGroups/MyPropertySyncStateGroup.cs
-index 04bdce30..89285aeb 100644
+index f8cc3e2d..59482849 100644
 --- a/Sandbox.Game/Sandbox/Game/Replication/StateGroups/MyPropertySyncStateGroup.cs
 +++ b/Sandbox.Game/Sandbox/Game/Replication/StateGroups/MyPropertySyncStateGroup.cs
 @@ -131,7 +131,7 @@ public sealed class MyPropertySyncStateGroup : IMyStateGroup, IMyNetObject, IMyE
@@ -633,7 +651,7 @@ index 04bdce30..89285aeb 100644
 -		if (Sync.IsServer)
 +		if (Sync.IsServer && MyMultiplayer.Static != null)
  		{
- 			for (int i = 0; i < m_properties.Count; i++)
+ 			for (int num = 0; num < m_properties.Count; num++)
  			{
 diff --git a/Sandbox.Game/Sandbox/Game/Screens/MyFilterBool.cs b/Sandbox.Game/Sandbox/Game/Screens/MyFilterBool.cs
 index 820fff26..11092845 100644
@@ -656,7 +674,7 @@ index 820fff26..11092845 100644
  
  	public MyFilterBool(bool? value = null)
 diff --git a/Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenMainMenuBase.cs b/Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenMainMenuBase.cs
-index f0bbcd55..d514a5a9 100644
+index eb1cf985..cbb96da4 100644
 --- a/Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenMainMenuBase.cs
 +++ b/Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenMainMenuBase.cs
 @@ -2,6 +2,7 @@ using System;
@@ -667,7 +685,7 @@ index f0bbcd55..d514a5a9 100644
  using System.Text;
  using Sandbox.Engine.Analytics;
  using Sandbox.Engine.Networking;
-@@ -273,7 +274,7 @@ public abstract class MyGuiScreenMainMenuBase : MyGuiScreenBase
+@@ -265,7 +266,7 @@ public abstract class MyGuiScreenMainMenuBase : MyGuiScreenBase
  			MyGuiManager.DrawString("BuildInfoHighlight", BranchName.ToString(), normalizedCoord, 0.6f, new Color(MyGuiConstants.LABEL_TEXT_COLOR * m_transitionAlpha, 0.6f), MyGuiDrawAlignEnum.HORISONTAL_RIGHT_AND_VERTICAL_BOTTOM);
  			normalizedCoord.X -= zero.X;
  		}
@@ -676,8 +694,21 @@ index f0bbcd55..d514a5a9 100644
  		MyGuiManager.DrawString("BuildInfo", text, normalizedCoord, 0.6f, new Color(MyGuiConstants.LABEL_TEXT_COLOR * m_transitionAlpha, 0.6f), MyGuiDrawAlignEnum.HORISONTAL_RIGHT_AND_VERTICAL_BOTTOM);
  	}
  
+diff --git a/Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenSimpleNewGame.cs b/Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenSimpleNewGame.cs
+index b539e776..b4cf1f87 100644
+--- a/Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenSimpleNewGame.cs
++++ b/Sandbox.Game/Sandbox/Game/Screens/MyGuiScreenSimpleNewGame.cs
+@@ -718,7 +718,7 @@ public sealed class MyGuiScreenSimpleNewGame : MyGuiScreenBase
+ 		MyCampaignManager.Static.SwitchCampaign(scenario.Name, scenario.IsVanilla, scenario.PublishedFileId, scenario.PublishedServiceName, scenario.ModFolderPath, MyPlatformGameSettings.CONSOLE_COMPATIBLE);
+ 		if (!preferOnline || !MyGameService.IsActive)
+ 		{
+-			Run(granted: false);
++			Run(false);
+ 			return;
+ 		}
+ 		bool granted = false;
 diff --git a/Sandbox.Game/Sandbox/Game/SessionComponents/MyHighlightSystem.cs b/Sandbox.Game/Sandbox/Game/SessionComponents/MyHighlightSystem.cs
-index e77974ea..e0b66f2c 100644
+index b4bca5d3..68f3bd6b 100644
 --- a/Sandbox.Game/Sandbox/Game/SessionComponents/MyHighlightSystem.cs
 +++ b/Sandbox.Game/Sandbox/Game/SessionComponents/MyHighlightSystem.cs
 @@ -54,12 +54,15 @@ public class MyHighlightSystem : MySessionComponentBase
@@ -699,10 +730,10 @@ index e77974ea..e0b66f2c 100644
  		private class Sandbox_Game_SessionComponents_MyHighlightSystem_003C_003EHighlightMsg_003C_003EData_003C_003EAccessor : IMemberAccessor<HighlightMsg, MyHighlightData>
  		{
 diff --git a/Sandbox.Game/Sandbox/Game/Weapons/MyShipDrill.cs b/Sandbox.Game/Sandbox/Game/Weapons/MyShipDrill.cs
-index 29b8128f..c776a33a 100644
+index 2b83cede..13b2c83b 100644
 --- a/Sandbox.Game/Sandbox/Game/Weapons/MyShipDrill.cs
 +++ b/Sandbox.Game/Sandbox/Game/Weapons/MyShipDrill.cs
-@@ -935,15 +935,7 @@ public class MyShipDrill : MyFunctionalBlock, IMyGunObject<MyToolBase>, IMyInven
+@@ -974,15 +974,7 @@ public class MyShipDrill : MyFunctionalBlock, IMyGunObject<MyToolBase>, IMyInven
  		return true;
  	}
  
@@ -721,7 +752,7 @@ index 29b8128f..c776a33a 100644
 +	[SpecialName] bool IMyInventoryOwner.HasInventory => base.HasInventory;
  }
 diff --git a/Sandbox.Game/Sandbox/Game/World/MyBlockLimits.cs b/Sandbox.Game/Sandbox/Game/World/MyBlockLimits.cs
-index 636f7c7f..54db7eab 100644
+index 34f04d62..929514b8 100644
 --- a/Sandbox.Game/Sandbox/Game/World/MyBlockLimits.cs
 +++ b/Sandbox.Game/Sandbox/Game/World/MyBlockLimits.cs
 @@ -191,7 +191,7 @@ public class MyBlockLimits
@@ -746,7 +777,7 @@ index bf2515fd..c10c8ebb 100644
  namespace Sandbox;
  
 diff --git a/Sandbox.Game/Sandbox/MyInitializer.cs b/Sandbox.Game/Sandbox/MyInitializer.cs
-index f36a9053..cadcbd57 100644
+index cbba6db0..6ce73887 100644
 --- a/Sandbox.Game/Sandbox/MyInitializer.cs
 +++ b/Sandbox.Game/Sandbox/MyInitializer.cs
 @@ -102,10 +102,7 @@ public static class MyInitializer
@@ -800,10 +831,10 @@ index f36a9053..cadcbd57 100644
  
  	public static void InvokeAfterRun()
 diff --git a/Sandbox.Game/Sandbox/MySandboxGame.cs b/Sandbox.Game/Sandbox/MySandboxGame.cs
-index 59998739..18d45b49 100644
+index ed390a80..bc668c33 100644
 --- a/Sandbox.Game/Sandbox/MySandboxGame.cs
 +++ b/Sandbox.Game/Sandbox/MySandboxGame.cs
-@@ -1792,6 +1792,7 @@ public class MySandboxGame : Sandbox.Engine.Platform.Game, IDisposable
+@@ -1885,6 +1885,7 @@ public class MySandboxGame : Sandbox.Engine.Platform.Game, IDisposable
  	{
  		bool flag = true;
  		Log.WriteLine("MySandboxGame.Initialize() - START");
@@ -811,7 +842,7 @@ index 59998739..18d45b49 100644
  		Log.IncreaseIndent();
  		Log.WriteLine("Installed DLCs: ");
  		Log.IncreaseIndent();
-@@ -2315,24 +2316,29 @@ public class MySandboxGame : Sandbox.Engine.Platform.Game, IDisposable
+@@ -2408,24 +2409,29 @@ public class MySandboxGame : Sandbox.Engine.Platform.Game, IDisposable
  
  	private void InitModAPI()
  	{
@@ -876,46 +907,37 @@ index b42e1b43..00000000
 -  </runtime>
 -</configuration>
 \ No newline at end of file
-diff --git a/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/MainMenu.cs b/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/MainMenu.cs
-index b4266cf3..ae5fb8cb 100644
---- a/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/MainMenu.cs
-+++ b/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/MainMenu.cs
-@@ -102,7 +102,7 @@ public class MainMenu : UIRoot
- 		brushTest.Name = "brushTest";
- 		brushTest.Height = 50f;
- 		brushTest.Width = 100f;
--		EventTrigger eventTrigger = new EventTrigger(UIElement.Loaded, brushTest);
-+		EventTrigger eventTrigger = new EventTrigger(LoadedEvent, brushTest);
- 		brushTest.Triggers.Add(eventTrigger);
- 		BeginStoryboard beginStoryboard = new BeginStoryboard();
- 		beginStoryboard.Name = "brushTest_ET_0_AC_0";
-@@ -163,7 +163,7 @@ public class MainMenu : UIRoot
- 		e_2.Children.Add(progressBar);
- 		progressBar.Name = "progressBar";
- 		progressBar.Height = 30f;
--		EventTrigger eventTrigger2 = new EventTrigger(UIElement.Loaded, progressBar);
-+		EventTrigger eventTrigger2 = new EventTrigger(LoadedEvent, progressBar);
- 		progressBar.Triggers.Add(eventTrigger2);
- 		BeginStoryboard beginStoryboard2 = new BeginStoryboard();
- 		beginStoryboard2.Name = "progressBar_ET_0_AC_0";
-diff --git a/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/StoreBlockView.cs b/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/StoreBlockView.cs
-index 665f32b7..594036c4 100644
---- a/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/StoreBlockView.cs
-+++ b/SpaceEngineers.Game/EmptyKeys/UserInterface/Generated/StoreBlockView.cs
-@@ -1522,7 +1522,7 @@ public class StoreBlockView : UIRoot
- 	{
- 		object obj = elem.Resources[typeof(DataGridRow)];
- 		Style style = new Style(typeof(DataGridRow), obj as Style);
--		EventTrigger eventTrigger = new EventTrigger(Control.MouseDoubleClick);
-+		EventTrigger eventTrigger = new EventTrigger(MouseDoubleClickEvent);
- 		style.Triggers.Add(eventTrigger);
- 		Binding binding = new Binding("ViewModel.OnBuyItemDoubleClickCommand");
- 		binding.Source = new MyStoreBlockViewModelLocator(isDesignMode: false);
+diff --git a/SpaceEngineers.Game/Sandbox/Game/Screens/MyGuiScreenNewGameScenarioSelection.cs b/SpaceEngineers.Game/Sandbox/Game/Screens/MyGuiScreenNewGameScenarioSelection.cs
+index 0d6742de..ec58eee9 100644
+--- a/SpaceEngineers.Game/Sandbox/Game/Screens/MyGuiScreenNewGameScenarioSelection.cs
++++ b/SpaceEngineers.Game/Sandbox/Game/Screens/MyGuiScreenNewGameScenarioSelection.cs
+@@ -1734,7 +1734,7 @@ public sealed class MyGuiScreenNewGameScenarioSelection : MyGuiScreenBase
+ 		MyCampaignManager.Static.SwitchCampaign(scenario.Name, scenario.IsVanilla, scenario.PublishedFileId, scenario.PublishedServiceName, scenario.ModFolderPath, MyPlatformGameSettings.CONSOLE_COMPATIBLE);
+ 		if (!preferOnline || !MyGameService.IsActive)
+ 		{
+-			Run(granted: false);
++			Run(false);
+ 			return;
+ 		}
+ 		bool granted = false;
+diff --git a/SpaceEngineers.Game/Sandbox/Game/Screens/MyGuiScreenScenarioSelectionCustomizeScreen.cs b/SpaceEngineers.Game/Sandbox/Game/Screens/MyGuiScreenScenarioSelectionCustomizeScreen.cs
+index 5e4ae22e..d4e6d919 100644
+--- a/SpaceEngineers.Game/Sandbox/Game/Screens/MyGuiScreenScenarioSelectionCustomizeScreen.cs
++++ b/SpaceEngineers.Game/Sandbox/Game/Screens/MyGuiScreenScenarioSelectionCustomizeScreen.cs
+@@ -1545,7 +1545,7 @@ public class MyGuiScreenScenarioSelectionCustomizeScreen : MyGuiScreenBase
+ 		MyCampaignManager.Static.SwitchCampaign(scenario.Name, scenario.IsVanilla, scenario.PublishedFileId, scenario.PublishedServiceName, scenario.ModFolderPath, MyPlatformGameSettings.CONSOLE_COMPATIBLE);
+ 		if (!preferOnline || !MyGameService.IsActive)
+ 		{
+-			Run(granted: false);
++			Run(false);
+ 			return;
+ 		}
+ 		bool granted = false;
 diff --git a/SpaceEngineers.Game/SpaceEngineers.Game.csproj b/SpaceEngineers.Game/SpaceEngineers.Game.csproj
-index cf005c88..5b8a3491 100644
+index cf005c88..4b572a01 100644
 --- a/SpaceEngineers.Game/SpaceEngineers.Game.csproj
 +++ b/SpaceEngineers.Game/SpaceEngineers.Game.csproj
-@@ -16,16 +16,22 @@
+@@ -16,16 +16,23 @@
      <PackageReference Include="System.Memory" Version="4.5.5" />
      <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
      <ProjectReference Include="..\Sandbox.Common\Sandbox.Common.csproj" />
@@ -934,15 +956,16 @@ index cf005c88..5b8a3491 100644
      <ProjectReference Include="..\VRage.Math\VRage.Math.csproj" />
      <ProjectReference Include="..\VRage.Network\VRage.Network.csproj" />
      <ProjectReference Include="..\VRage.Render\VRage.Render.csproj" />
++    <ProjectReference Include="..\VRage.Scripting\VRage.Scripting.csproj" />
 +    <ProjectReference Include="..\VRage.XmlSerializers\VRage.XmlSerializers.csproj" />
      <ProjectReference Include="..\VRage\VRage.csproj" />
      <Reference Include="EmptyKeys.UserInterface">
        <HintPath>../Bin64/EmptyKeys.UserInterface.dll</HintPath>
 diff --git a/SpaceEngineers.Game/SpaceEngineers/Game/Entities/Blocks/MyFlightMovementBlock.cs b/SpaceEngineers.Game/SpaceEngineers/Game/Entities/Blocks/MyFlightMovementBlock.cs
-index 57167558..6e3523cc 100644
+index 413b8d6e..f19f617f 100644
 --- a/SpaceEngineers.Game/SpaceEngineers/Game/Entities/Blocks/MyFlightMovementBlock.cs
 +++ b/SpaceEngineers.Game/SpaceEngineers/Game/Entities/Blocks/MyFlightMovementBlock.cs
-@@ -1559,9 +1559,5 @@ public sealed class MyFlightMovementBlock : MyFunctionalBlock, IMyComponentOwner
+@@ -1589,9 +1589,5 @@ public sealed class MyFlightMovementBlock : MyFunctionalBlock, IMyComponentOwner
  		UpdateDetailedInfo();
  	}
  
@@ -954,7 +977,7 @@ index 57167558..6e3523cc 100644
 +	[SpecialName] MyCubeGrid IMyShipControl.CubeGrid => base.CubeGrid;
  }
 diff --git a/SpaceEngineers.Game/SpaceEngineers/Game/GUI/MyGuiScreenMedicals.cs b/SpaceEngineers.Game/SpaceEngineers/Game/GUI/MyGuiScreenMedicals.cs
-index 66396eb5..465fb4dd 100644
+index 6187e776..bb64addf 100644
 --- a/SpaceEngineers.Game/SpaceEngineers/Game/GUI/MyGuiScreenMedicals.cs
 +++ b/SpaceEngineers.Game/SpaceEngineers/Game/GUI/MyGuiScreenMedicals.cs
 @@ -44,7 +44,7 @@ namespace SpaceEngineers.Game.GUI;
@@ -967,7 +990,7 @@ index 66396eb5..465fb4dd 100644
  		protected class SpaceEngineers_Game_GUI_MyGuiScreenMedicals_003C_003EMyPlanetInfo_003C_003EPlanetId_003C_003EAccessor : IMemberAccessor<MyPlanetInfo, long>
  		{
 diff --git a/SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameCustomInitialization.cs b/SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameCustomInitialization.cs
-index 904808df..af064410 100644
+index 904808df..6938fc7b 100644
 --- a/SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameCustomInitialization.cs
 +++ b/SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameCustomInitialization.cs
 @@ -4,6 +4,7 @@ using System.Collections.Immutable;
@@ -986,7 +1009,7 @@ index 904808df..af064410 100644
  using SpaceEngineers.Game.ModAPI.Ingame;
  using VRage;
  using VRage.Collections;
-@@ -38,32 +38,33 @@ public class MySpaceGameCustomInitialization : MySandboxGame.IGameCustomInitiali
+@@ -38,32 +38,34 @@ public class MySpaceGameCustomInitialization : MySandboxGame.IGameCustomInitiali
  
  	public void InitIlCompiler()
  	{
@@ -1017,6 +1040,7 @@ index 904808df..af064410 100644
 +		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Game.dll"));
 +		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Render.dll"));
 +		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Input.dll"));
++		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "VRage.Scripting.dll"));
 +		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "SpaceEngineers.ObjectBuilders.dll"));
 +		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "SpaceEngineers.Game.dll"));
 +		assemblyPaths.Add(Path.Combine(MyFileSystem.ExePath, "protobuf-net.Core.dll"));
@@ -1039,12 +1063,15 @@ index 904808df..af064410 100644
  		{
  			typeof(MyTuple),
  			typeof(Vector2),
-@@ -78,7 +79,16 @@ public class MySpaceGameCustomInitialization : MySandboxGame.IGameCustomInitiali
+@@ -77,8 +79,18 @@ public class MySpaceGameCustomInitialization : MySandboxGame.IGameCustomInitiali
+ 			typeof(IMyCubeBlock),
  			typeof(MyIni),
  			typeof(ImmutableArray),
- 			typeof(SpaceEngineers.Game.ModAPI.Ingame.IMyAirVent),
+-			typeof(SpaceEngineers.Game.ModAPI.Ingame.IMyAirVent),
 -			typeof(MySprite)
++			typeof(IMyAirVent),
 +			typeof(MySprite),
++			typeof(VRage.Scripting.MemorySafeTypes.MemorySafeArrayList),
 +
 +			// Items moved from MyScriptCompiler's constructor
 +			GetType(),
@@ -1058,15 +1085,15 @@ index 904808df..af064410 100644
  		{
  			GetPrefixedBranchName(),
 diff --git a/SpaceEngineers.Game/SpaceEngineers/Game/SpaceEngineersGame.cs b/SpaceEngineers.Game/SpaceEngineers/Game/SpaceEngineersGame.cs
-index 5517d8b8..c5ea9736 100644
+index 5631626c..ff86199b 100644
 --- a/SpaceEngineers.Game/SpaceEngineers/Game/SpaceEngineersGame.cs
 +++ b/SpaceEngineers.Game/SpaceEngineers/Game/SpaceEngineersGame.cs
-@@ -595,7 +595,11 @@ public class SpaceEngineersGame : MySandboxGame
+@@ -617,7 +617,11 @@ public class SpaceEngineersGame : MySandboxGame
  	{
  		MyLog.Default.WriteLine("SpaceEngineersGame.SetupAnalytics - START");
  		string projectId = "27bae5ba5219bcd64ddbf83113eabb30:d04e0431f97f90fae73b9d6ea99fc9746695bd11";
 +#if DISABLED_ANALYTICS
- 		IMyAnalytics myAnalytics = MyVRage.Platform.InitAnalytics(projectId, 1205026.ToString());
+ 		IMyAnalytics myAnalytics = MyVRage.Platform.InitAnalytics(projectId, 1206032.ToString());
 +#else
 +        IMyAnalytics myAnalytics = null;
 +#endif
@@ -1074,7 +1101,7 @@ index 5517d8b8..c5ea9736 100644
  		{
  			MySpaceAnalytics.Instance.RegisterAnalyticsTracker(myAnalytics);
 diff --git a/SpaceEngineers.Game/SpaceEngineers/Game/World/MySpaceRespawnComponent.cs b/SpaceEngineers.Game/SpaceEngineers/Game/World/MySpaceRespawnComponent.cs
-index 27e798ba..4157b729 100644
+index b810268b..4201ffe5 100644
 --- a/SpaceEngineers.Game/SpaceEngineers/Game/World/MySpaceRespawnComponent.cs
 +++ b/SpaceEngineers.Game/SpaceEngineers/Game/World/MySpaceRespawnComponent.cs
 @@ -50,7 +50,7 @@ namespace SpaceEngineers.Game.World;
@@ -1202,7 +1229,7 @@ index 00000000..1917b49e
 +244850
 \ No newline at end of file
 diff --git a/VRage.Audio/VRage/Audio/MyXAudio2.cs b/VRage.Audio/VRage/Audio/MyXAudio2.cs
-index 07327f1f..bc9b41ee 100644
+index 4de209f8..f1063cf6 100644
 --- a/VRage.Audio/VRage/Audio/MyXAudio2.cs
 +++ b/VRage.Audio/VRage/Audio/MyXAudio2.cs
 @@ -752,7 +752,7 @@ public class MyXAudio2 : IMyAudio
@@ -1215,7 +1242,7 @@ index 07327f1f..bc9b41ee 100644
  			int num = text.IndexOf('\0');
  			if (num != -1)
 diff --git a/VRage.EOS/VRage/EOS/MyEOSLobbyList.cs b/VRage.EOS/VRage/EOS/MyEOSLobbyList.cs
-index 09ef8d9f..29799575 100644
+index a3d96623..d15223ef 100644
 --- a/VRage.EOS/VRage/EOS/MyEOSLobbyList.cs
 +++ b/VRage.EOS/VRage/EOS/MyEOSLobbyList.cs
 @@ -12,7 +12,7 @@ namespace VRage.EOS;
@@ -1240,7 +1267,7 @@ index 09ef8d9f..29799575 100644
  		}
  		void OnResults(Result result, (string ConnectingString, T Item)[] servers)
  		{
--			if (result != 0)
+-			if (result != Result.Success)
 -			{
 -				((_003C_003Ec__DisplayClass32_0)this)._003C_003E4__this.m_networking.Error($"Lobby search was not successful: {result}");
 -			}
@@ -1255,9 +1282,9 @@ index 09ef8d9f..29799575 100644
 -					((_003C_003Ec__DisplayClass32_0)this).lobbyList.Add(servers[i].Item);
 -				}
 -			}
-+			// Disabled due to compile errors
-+			//
-+			// if (result != 0)
++            // Disabled due to compile errors
++            //
++			// if (result != Result.Success)
 +			// {
 +			// 	((_003C_003Ec__DisplayClass32_0)this)._003C_003E4__this.m_networking.Error($"Lobby search was not successful: {result}");
 +			// }
@@ -1570,7 +1597,7 @@ index b1635720..63ce1f14 100644
  
  	public void Serialize(ByteStream destination, ref T data)
 diff --git a/VRage.Math/VRageMath/BoundingFrustumD.cs b/VRage.Math/VRageMath/BoundingFrustumD.cs
-index 53c844e4..1ee0a3e4 100644
+index e689294e..82a1d7ef 100644
 --- a/VRage.Math/VRageMath/BoundingFrustumD.cs
 +++ b/VRage.Math/VRageMath/BoundingFrustumD.cs
 @@ -86,9 +86,9 @@ public class BoundingFrustumD : IEquatable<BoundingFrustumD>
@@ -2071,7 +2098,7 @@ index d8f27c53..1bedc128 100644
  	private long _003Calignment_0020member_003E;
  }
 diff --git a/VRage.NativeAftermath/NativeAftermath/MyAfterMath.cs b/VRage.NativeAftermath/NativeAftermath/MyAfterMath.cs
-index 52c6d9a7..752c6a3f 100644
+index cb30d6ec..a3344c3b 100644
 --- a/VRage.NativeAftermath/NativeAftermath/MyAfterMath.cs
 +++ b/VRage.NativeAftermath/NativeAftermath/MyAfterMath.cs
 @@ -33,7 +33,8 @@ public class MyAfterMath
@@ -2111,10 +2138,9 @@ index 2884d3dd..66ec4263 100644
  internal enum __scrt_native_startup_state
  {
  
-diff --git a/VRage.NativeAftermath/gcroot-System b/VRage.NativeAftermath/gcroot_System.cs
-similarity index 100%
-rename from VRage.NativeAftermath/gcroot-System
-rename to VRage.NativeAftermath/gcroot_System.cs
+diff --git a/VRage.NativeAftermath/gcroot_System.cs b/VRage.NativeAftermath/gcroot_System.cs
+new file mode 100644
+index 00000000..e69de29b
 diff --git a/VRage.Platform.Windows/VRage.Platform.Windows.csproj b/VRage.Platform.Windows/VRage.Platform.Windows.csproj
 index 6366ff2b..507d5996 100644
 --- a/VRage.Platform.Windows/VRage.Platform.Windows.csproj
@@ -2199,10 +2225,10 @@ index 12aa79f4..d635d443 100644
  		info = default(CrashInfo);
  		isUnsupportedGpu = false;
 diff --git a/VRage.Platform.Windows/VRage/Platform/Windows/MyVRagePlatform.cs b/VRage.Platform.Windows/VRage/Platform/Windows/MyVRagePlatform.cs
-index b889da8c..6c00e616 100644
+index ddd7c8f8..89a27263 100644
 --- a/VRage.Platform.Windows/VRage/Platform/Windows/MyVRagePlatform.cs
 +++ b/VRage.Platform.Windows/VRage/Platform/Windows/MyVRagePlatform.cs
-@@ -151,7 +151,7 @@ internal sealed class MyVRagePlatform : IVRagePlatform
+@@ -149,7 +149,7 @@ internal sealed class MyVRagePlatform : IVRagePlatform
  		{
  			TimeEndPeriod(1u);
  		}
@@ -2212,7 +2238,7 @@ index b889da8c..6c00e616 100644
  		{
  			ObjectTracker.FindActiveObjects();
 diff --git a/VRage.Platform.Windows/VRage/Platform/Windows/Render/MyPlatformRender.cs b/VRage.Platform.Windows/VRage/Platform/Windows/Render/MyPlatformRender.cs
-index c60d68cc..37280729 100644
+index 585beb54..16b10f77 100644
 --- a/VRage.Platform.Windows/VRage/Platform/Windows/Render/MyPlatformRender.cs
 +++ b/VRage.Platform.Windows/VRage/Platform/Windows/Render/MyPlatformRender.cs
 @@ -12,6 +12,8 @@ using VRageRender;
@@ -2282,7 +2308,7 @@ index ee236e11..33e451d8 100644
  		m_log.IncreaseIndent();
  		try
 diff --git a/VRage.Render/VRage/Render/Image/MyImage.cs b/VRage.Render/VRage/Render/Image/MyImage.cs
-index b7815bb0..0eee05da 100644
+index 96899d5b..0eee05da 100644
 --- a/VRage.Render/VRage/Render/Image/MyImage.cs
 +++ b/VRage.Render/VRage/Render/Image/MyImage.cs
 @@ -1,13 +1,14 @@
@@ -2327,7 +2353,7 @@ index b7815bb0..0eee05da 100644
  			}
  		}
  		else if (oneChannel)
-@@ -54,14 +55,14 @@ public static class MyImage
+@@ -54,24 +55,24 @@ public static class MyImage
  			switch ((PngBitDepth)(byte)imageInfo.PixelType.BitsPerPixel)
  			{
  			case PngBitDepth.Bit8:
@@ -2341,11 +2367,12 @@ index b7815bb0..0eee05da 100644
  		else
  		{
 -			PngMetaData formatMetaData = imageInfo.MetaData.GetFormatMetaData(PngFormat.Instance);
+-			if (formatMetaData.ColorType != PngColorType.Grayscale)
 +			var formatMetaData = imageInfo.Metadata.GetPngMetadata();
- 			if (formatMetaData.ColorType != 0)
++			if (formatMetaData.ColorType != 0)
  			{
  				return MyImage<uint>.Create<Rgba32>(stream);
-@@ -69,9 +70,9 @@ public static class MyImage
+ 			}
  			switch (formatMetaData.BitDepth)
  			{
  			case PngBitDepth.Bit8:
@@ -2473,44 +2500,61 @@ index d0583e86..006195b3 100644
  		}
  	}
 diff --git a/VRage.Scripting/VRage/Scripting/MyScriptCompiler.cs b/VRage.Scripting/VRage/Scripting/MyScriptCompiler.cs
-index 5b06508a..a75d9335 100644
+index 0615dfd0..4f2cd89e 100644
 --- a/VRage.Scripting/VRage/Scripting/MyScriptCompiler.cs
 +++ b/VRage.Scripting/VRage/Scripting/MyScriptCompiler.cs
-@@ -29,7 +29,7 @@ public class MyScriptCompiler
- 	/// <summary>
- 	///     Retrieves the default script compiler.
- 	/// </summary>
+@@ -8,7 +8,6 @@ using System.Linq;
+ using System.Reflection;
+ using System.Text;
+ using System.Threading.Tasks;
+-using System.Xml;
+ using Microsoft.CodeAnalysis;
+ using Microsoft.CodeAnalysis.CSharp;
+ using Microsoft.CodeAnalysis.Diagnostics;
+@@ -26,7 +25,7 @@ namespace VRage.Scripting;
+ /// </summary>
+ public class MyScriptCompiler
+ {
 -	public static readonly MyScriptCompiler Static = new MyScriptCompiler();
 +	public static MyScriptCompiler Static; // Initialized by MyVRageScriptingInternal.Initialize
  
  	private readonly List<MetadataReference> m_metadataReferences = new List<MetadataReference>();
  
-@@ -102,9 +102,9 @@ public class MyScriptCompiler
+@@ -67,9 +66,9 @@ public class MyScriptCompiler
  	/// </summary>
  	public bool EnableDebugInformation { get; set; }
  
--	public MyScriptCompiler()
+-	private MyScriptCompiler()
 +	public MyScriptCompiler(string[] assemblyLocations)
  	{
 -		AddReferencedAssemblies(GetType().Assembly.Location, typeof(int).Assembly.Location, typeof(XmlEntity).Assembly.Location, typeof(HashSet<>).Assembly.Location, typeof(Dictionary<, >).Assembly.Location, typeof(Uri).Assembly.Location);
 +		AddReferencedAssemblies(assemblyLocations);
- 		AddImplicitIngameNamespacesFromTypes(typeof(object), typeof(StringBuilder), typeof(IEnumerable), typeof(IEnumerable<>), typeof(Enumerable));
+ 		AddImplicitInGameNamespacesFromTypes(typeof(object), typeof(StringBuilder), typeof(IEnumerable), typeof(IEnumerable<>), typeof(Enumerable));
  		AddImplicitTypeMappings(typeof(INotifyPropertyChanging), typeof(PropertyChangingEventHandler), typeof(PropertyChangingEventArgs), typeof(INotifyPropertyChanged), typeof(PropertyChangedEventHandler), typeof(PropertyChangedEventArgs));
- 		AddUnblockableIngameExceptions(typeof(ScriptOutOfRangeException));
-@@ -167,7 +167,7 @@ public class MyScriptCompiler
+ 		AddUnblockableInGameExceptions(typeof(ScriptOutOfRangeException));
+@@ -126,7 +125,7 @@ public class MyScriptCompiler
  				ImmutableArray<SyntaxTree> syntaxTrees = compilation.SyntaxTrees;
- 				newSyntaxTrees = ((syntaxTrees.Length != 1) ? (await Task.WhenAll(syntaxTrees.Select((SyntaxTree x) => Task.Run(() => syntaxTreeInjector(compilation, x)))).ConfigureAwait(continueOnCapturedContext: false)) : new SyntaxTree[1] { syntaxTreeInjector(compilation, syntaxTrees[0]) });
+ 				newSyntaxTrees = ((syntaxTrees.Length != 1) ? (await Task.WhenAll(syntaxTrees.Select((SyntaxTree x) => Task.Run(() => syntaxTreeInjector(compilation, x, trackMemoryUsage)))).ConfigureAwait(continueOnCapturedContext: false)) : new SyntaxTree[1] { syntaxTreeInjector(compilation, syntaxTrees[0], trackMemoryUsage) });
  			}
 -			catch
 +			catch(Exception ex)
  			{
  				injectionFailed = true;
  			}
+@@ -320,7 +319,7 @@ public class MyScriptCompiler
+ 		return CSharpCompilation.Create(MakeAssemblyName(assemblyFileName), syntaxTrees, m_metadataReferences, options);
+ 	}
+ 
+-	public void AddReferencedAssemblies(params string[] assemblyLocations)
++	public void AddReferencedAssemblies(string[] assemblyLocations)
+ 	{
+ 		foreach (string text in assemblyLocations)
+ 		{
 diff --git a/VRage.Scripting/VRage/Scripting/MyScriptWhitelist.cs b/VRage.Scripting/VRage/Scripting/MyScriptWhitelist.cs
-index 2e96dec8..9593175b 100644
+index 95c3f51e..53f3c16a 100644
 --- a/VRage.Scripting/VRage/Scripting/MyScriptWhitelist.cs
 +++ b/VRage.Scripting/VRage/Scripting/MyScriptWhitelist.cs
-@@ -438,7 +438,7 @@ public class MyScriptWhitelist : IMyScriptBlacklist
+@@ -439,7 +439,7 @@ public class MyScriptWhitelist : IMyScriptBlacklist
  		myWhitelistBatch.AllowMembers(MyWhitelistTarget.Both, typeof(ValueType).GetMethod("Equals"), typeof(ValueType).GetMethod("GetHashCode"), typeof(ValueType).GetMethod("ToString"));
  		myWhitelistBatch.AllowMembers(MyWhitelistTarget.Both, typeof(Environment).GetProperty("CurrentManagedThreadId", BindingFlags.Static | BindingFlags.Public), typeof(Environment).GetProperty("NewLine", BindingFlags.Static | BindingFlags.Public), typeof(Environment).GetProperty("ProcessorCount", BindingFlags.Static | BindingFlags.Public));
  		Type type = typeof(Type).Assembly.GetType("System.RuntimeType");
@@ -2519,7 +2563,7 @@ index 2e96dec8..9593175b 100644
  		myWhitelistBatch.AllowMembers(MyWhitelistTarget.Both, (from m in AllDeclaredMembers(typeof(Delegate))
  			where m.Name != "CreateDelegate"
  			select m).ToArray());
-@@ -609,9 +609,11 @@ public class MyScriptWhitelist : IMyScriptBlacklist
+@@ -611,9 +611,11 @@ public class MyScriptWhitelist : IMyScriptBlacklist
  	private void Register(MyWhitelistTarget target, INamespaceSymbol symbol, Type type)
  	{
  		string whitelistKey = symbol.GetWhitelistKey(TypeKeyQuantity.AllMembers);
@@ -2534,16 +2578,16 @@ index 2e96dec8..9593175b 100644
  		m_whitelist.Add(whitelistKey, target);
  	}
 diff --git a/VRage.Scripting/VRage/Scripting/MyVRageScriptingInternal.cs b/VRage.Scripting/VRage/Scripting/MyVRageScriptingInternal.cs
-index f0078080..83a19dc9 100644
+index 3b8eae96..f0abbe99 100644
 --- a/VRage.Scripting/VRage/Scripting/MyVRageScriptingInternal.cs
 +++ b/VRage.Scripting/VRage/Scripting/MyVRageScriptingInternal.cs
-@@ -50,7 +50,7 @@ internal class MyVRageScriptingInternal : IVRageScripting
+@@ -49,7 +49,7 @@ internal class MyVRageScriptingInternal : IVRageScripting
  	public void Initialize(Thread updateThread, IEnumerable<string> referencedAssemblies, Type[] referencedTypes, string[] symbols, string diagnosticsPath, bool enableScriptsPDBs)
  	{
  		MyModWatchdog.Init(updateThread);
 -		MyScriptCompiler.Static.AddReferencedAssemblies(referencedAssemblies.ToArray());
 +		MyScriptCompiler.Static = new MyScriptCompiler(referencedAssemblies.ToArray());
- 		MyScriptCompiler.Static.AddImplicitIngameNamespacesFromTypes(referencedTypes);
+ 		MyScriptCompiler.Static.AddImplicitInGameNamespacesFromTypes(referencedTypes);
  		MyScriptCompiler.Static.AddConditionalCompilationSymbols(symbols);
  		if (!string.IsNullOrEmpty(diagnosticsPath))
 diff --git a/VRage.Scripting/VRage/Scripting/Rewriters/PerfCountingRewriter.cs b/VRage.Scripting/VRage/Scripting/Rewriters/PerfCountingRewriter.cs
@@ -2562,7 +2606,7 @@ index 8b559bb4..9e08dcc3 100644
  		return syntaxTree.WithRootAndOptions(root, syntaxTree.Options);
  	}
 diff --git a/VRage/VRage.csproj b/VRage/VRage.csproj
-index 1660b161..dc8ea6f5 100644
+index 1660b161..fa301af1 100644
 --- a/VRage/VRage.csproj
 +++ b/VRage/VRage.csproj
 @@ -11,9 +11,16 @@
@@ -2576,10 +2620,10 @@ index 1660b161..dc8ea6f5 100644
      <ProjectReference Include="..\VRage.Network\VRage.Network.csproj" />
    </ItemGroup>
 +  <ItemGroup>
-+    <Content Include="ReplicatedTypes.json">
++    <Content Include="..\ReplicatedTypes.json">
++      <Link>ReplicatedTypes.json</Link>
 +      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 +    </Content>
-+    <None Remove="ReplicatedTypes.json" />
 +  </ItemGroup>
  </Project>
 \ No newline at end of file
@@ -2662,7 +2706,7 @@ index 5f8c1b69..28ec7acd 100644
  		Order = order;
  		Serialization = serializationMethod;
 diff --git a/VRage/VRage/Network/MyEventTable.cs b/VRage/VRage/Network/MyEventTable.cs
-index 1f1f2561..6b7563cc 100644
+index 90bd2a18..021bc771 100644
 --- a/VRage/VRage/Network/MyEventTable.cs
 +++ b/VRage/VRage/Network/MyEventTable.cs
 @@ -6,6 +6,8 @@ using System.Linq.Expressions;
@@ -2676,7 +2720,7 @@ index 1f1f2561..6b7563cc 100644
  
 @@ -123,10 +125,33 @@ public class MyEventTable
  			{
- 				array[i + 1] = parameters[i].ParameterType;
+ 				array[num + 1] = parameters[num].ParameterType;
  			}
 +
 +			// Look up the event tables recorded form the vanilla game
@@ -2982,5 +3026,5 @@ index a6911381..724b5ab3 100644
 +
 +#pragma warning restore SYSLIB0011
 -- 
-2.46.2.windows.1
+2.47.1.windows.2
 
