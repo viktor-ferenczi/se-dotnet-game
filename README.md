@@ -90,16 +90,21 @@ values may not be observable.
 **Investigating game bugs and performance issues** directly without 
 continuously waiting on the decompiler. Being able to quickly navigate 
 the code and even change it at runtime. You can see all variable values 
-and can break the code anywhere if you run a `Debug` build.
+and can put breakpoints anywhere in the code if you run a `Debug` build.
 
 **Prototyping plugins** by directly changing the game's source code. Once it
-works and tested, it can be turned into a plugin usable on Plugin Loader. 
-Combined with publicizer support (yet to be accepted to PL) it can be a 
-powerful way to develop new plugins.
- 
+works and tested, it can be turned into a plugin to publish on Pulsar. 
+Combined with publicizer support it is a powerful way to develop plugins.
+
 ## Remarks
 
-### Plugin Loader
+### Pulsar
+
+TBD: Pulsar support for .NET 8/9
+
+`(((`
+
+_Outdated documentation which applied to Plugin Loader_
 
 You can use the modified [Plugin Loader on .NET 8.0](https://github.com/viktor-ferenczi/se-dotnet-plugin-loader).
 Please see the instructions there.
@@ -109,16 +114,55 @@ Incompatible plugins could be made compatible with the .NET 8.0 build of the gam
 The plugin authors may make them available at their discretion either as an alternate version or by using
 runtime conditions on the IL code.
 
+`)))`
+
 ### Disabled code
 
 - The game analytics is disabled, because its logging broke. We don't want to confuse Keen's telemetry with our custom builds anyway.
 - The script performance profiling is disabled, because it broke the script compiler. It has not been fixed, because without game analytics it is pointless to have anyway.
+
+### How to follow major game updates?
+
+This is how I update this repository after major (and sometimes minor) game updates. 
+
+- Always keep a **local** Git repository with `Prepare.bat` fully applied on the most recent game version supported by this repository. (You can always choose an older game version on Steam and install that one temporarily to build your local repository, should your game has already been updated since.)
+- Always keep a branch for each game version, for example: `ver/1.207.022`
+- Switch back to the `main` branch.
+- Create a new branch for the new game version. Base it on the `Initial` commit of the previous game version's branch.
+- Use the [DotNet Dump](https://github.com/viktor-ferenczi/se-dotnet-dump) client plugin to export a new `ReplicatedTypes.json` from the game. It will be written to the `%AppData%\SpaceEngineers\DotNetDump` folder. You need to build this client plugin from sources, it is not listed on Pulsar, since it is useless for players.
+- Overwrite `ReplicatedTypes.json` in your local repository with the file exported by the client plugin.
+- Update the `EXPECTED_GAME_VERSION` in the `FixBulk.py` script to the current game version, keep the same number formatting.
+- Commit your changes to your branch.
+- Run `Prepare.bat`, it should decompile the game without errors and apply the bulk fixes (Python script). It will likely fail to apply `Manual_fixes.patch`, which is normal due to the game code changes.
+- If the patch failed, then you need to fix the game code: 
+  - Cherry-pick the `Manual fixes` commit from the previous version's branch of your local repo.
+  - Fix any merge conflicts. There should not be too many changes. Mostly due to ordering, renamed symbols and minor changes to the game code.
+  - Run a NuGet Force Restore.
+  - Make a `Debug` build and smoke test the game. Fix the code as needed until it builds and works.
+  - Test a `Release` build, just to be on the safe side. It should run faster than a `Debug` build.
+  - Commit your changes and squash them into a single `Manual fixes` commit. This will be the basis for a new patch and any future updates.
+  - Re-generate the `Manual_fixes.patch` file: `git format-patch -1 HEAD --stdout >Manual_fixes.patch`
+  - Commit the updated `Manual_fixes.patch` file
+  - Squash all your changes back into the "Initial" commit, so they are at a single place for the next update
 
 ### How the manual patch was made?
 
 ```shell
 git format-patch -1 HEAD --stdout >Manual_fixes.patch
 ```
+
+### Why not upgrading to .NET 9?
+
+Enabling `BinaryFormatter` does not work on .Net 9
+
+See: https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide
+
+You can find the relevant code by searching for:
+```
+using System.Runtime.Serialization.Formatters.Binary;
+```
+
+If you know a solution for this, please create a ticket or ping me on the SE Mods Discord. Thanks!
 
 ## Credits
 
@@ -127,6 +171,7 @@ git format-patch -1 HEAD --stdout >Manual_fixes.patch
 ### Patreon
 
 #### Admiral level supporters
+
 - BetaMark
 - Bishbash777
 - Casinost
@@ -134,6 +179,7 @@ git format-patch -1 HEAD --stdout >Manual_fixes.patch
 - wafoxxx
 
 #### Captain level supporters
+
 - DontFollowOrders
 - Gabor
 - Lazul
@@ -143,6 +189,7 @@ git format-patch -1 HEAD --stdout >Manual_fixes.patch
 - ransomthetoaster
 
 ### Developers
+
 - zznty: motivation, slight hints into the right direction
 
 ## Troubleshooting
