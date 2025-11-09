@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 RegExp = re.Pattern[str]
 Replacement = Union[str, Callable[[RegExp], str]]
 
-EXPECTED_GAME_VERSION = 1206032
+EXPECTED_GAME_VERSION = 1207022
 GAME_VERSION_STRING = f'SE_VERSION = {EXPECTED_GAME_VERSION}'
 
 RX_TARGET_FRAMEWORK = re.compile(r'<TargetFramework>.*?</TargetFramework>')
@@ -85,7 +85,7 @@ NUGET_PACKAGES = {
         '<PackageReference Include="GameAnalytics.Mono.SDK" Version="3.3.5" />',
     ),
     'RestSharp': (
-        '<PackageReference Include="RestSharp" Version="112.1.0" />',
+        '<PackageReference Include="RestSharp" Version="106.6.10" />',
     ),
     'Steamworks.NET': (
         '<PackageReference Include="Steamworks.NET" Version="20.1.0" />',

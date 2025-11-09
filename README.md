@@ -128,11 +128,12 @@ This is how I update this repository after major (and sometimes minor) game upda
 - Always keep a **local** Git repository with `Prepare.bat` fully applied on the most recent game version supported by this repository. (You can always choose an older game version on Steam and install that one temporarily to build your local repository, should your game has already been updated since.)
 - Always keep a branch for each game version, for example: `ver/1.207.022`
 - Switch back to the `main` branch.
-- Create a new branch for the new game version. Base it on the `Initial` commit of the previous game version's branch.
+- Create a new branch for the new game version. Base it on the `Git ignore` commit of the previous game version's branch.
+- Cherry-pick the `Initial` commit from the previous game version's branch.
 - Use the [DotNet Dump](https://github.com/viktor-ferenczi/se-dotnet-dump) client plugin to export a new `ReplicatedTypes.json` from the game. It will be written to the `%AppData%\SpaceEngineers\DotNetDump` folder. You need to build this client plugin from sources, it is not listed on Pulsar, since it is useless for players.
-- Overwrite `ReplicatedTypes.json` in your local repository with the file exported by the client plugin.
+- Overwrite `ReplicatedTypes.json` in your working copy with the file exported by the client plugin.
 - Update the `EXPECTED_GAME_VERSION` in the `FixBulk.py` script to the current game version, keep the same number formatting.
-- Commit your changes to your branch.
+- Commit your changes with comment "Initial" into your branch.
 - Run `Prepare.bat`, it should decompile the game without errors and apply the bulk fixes (Python script). It will likely fail to apply `Manual_fixes.patch`, which is normal due to the game code changes.
 - If the patch failed, then you need to fix the game code: 
   - Cherry-pick the `Manual fixes` commit from the previous version's branch of your local repo.
@@ -141,28 +142,21 @@ This is how I update this repository after major (and sometimes minor) game upda
   - Make a `Debug` build and smoke test the game. Fix the code as needed until it builds and works.
   - Test a `Release` build, just to be on the safe side. It should run faster than a `Debug` build.
   - Commit your changes and squash them into a single `Manual fixes` commit. This will be the basis for a new patch and any future updates.
-  - Re-generate the `Manual_fixes.patch` file: `git format-patch -1 HEAD --stdout >Manual_fixes.patch`
+  - Re-generate the `Manual_fixes.patch` file as described in the next section below
   - Commit the updated `Manual_fixes.patch` file
   - Squash all your changes back into the "Initial" commit, so they are at a single place for the next update
 
 ### How the manual patch was made?
 
+It was made from the very last commit, which contained all the code changes made manually.
+
 ```shell
-git format-patch -1 HEAD --stdout >Manual_fixes.patch
+git diff --binary HEAD~1..HEAD >Manual_fixes.patch
 ```
 
-### Why not upgrading to .NET 9?
+The file generated should be UTF-8 encoded without a BOM. Otherwise, it won't work on patching by command line git.
 
-Enabling `BinaryFormatter` does not work on .Net 9
-
-See: https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide
-
-You can find the relevant code by searching for:
-```
-using System.Runtime.Serialization.Formatters.Binary;
-```
-
-If you know a solution for this, please create a ticket or ping me on the SE Mods Discord. Thanks!
+If it generates an UCS-16 file with a BOM, then open a new classic `cmd` window and run the command from there.
 
 ## Credits
 
@@ -198,3 +192,11 @@ If you know a solution for this, please create a ticket or ping me on the SE Mod
 
 Make sure you have the `Bin64` folder linked to your solution folder.
 If it is not there, then run `LinkBin64.bat` to restore it.
+
+### Patch application fails
+
+It may happen that applying `Manual_fixes.patch` fails.
+
+In this case just revert all files which may have changed, then apply the patch manually.
+Once resolved, commit the changes with comment `Manual fixes`, run a NuGet Force Restore
+and build the project for testing. (No need to rerun `Prepare.bat`.)

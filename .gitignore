@@ -406,3 +406,4 @@ ProfileOptimization
 *.dll
 **/bin
 **/obj
+*_applied.txt
