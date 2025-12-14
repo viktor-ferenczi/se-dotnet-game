@@ -133,7 +133,7 @@ This is how I update this repository after major (and sometimes minor) game upda
 - Use the [DotNet Dump](https://github.com/viktor-ferenczi/se-dotnet-dump) client plugin to export a new `ReplicatedTypes.json` from the game. It will be written to the `%AppData%\SpaceEngineers\DotNetDump` folder. You need to build this client plugin from sources, it is not listed on Pulsar, since it is useless for players.
 - Overwrite `ReplicatedTypes.json` in your working copy with the file exported by the client plugin.
 - Update the `EXPECTED_GAME_VERSION` in the `FixBulk.py` script to the current game version, keep the same number formatting.
-- Commit your changes with comment "Initial" into your branch.
+- Commit your changes with the comment "Initial" into your branch.
 - Run `Prepare.bat`, it should decompile the game without errors and apply the bulk fixes (Python script). It will likely fail to apply `Manual_fixes.patch`, which is normal due to the game code changes.
 - If the patch failed, then you need to fix the game code: 
   - Cherry-pick the `Manual fixes` commit from the previous version's branch of your local repo.
