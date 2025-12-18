@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 RegExp = re.Pattern[str]
 Replacement = Union[str, Callable[[RegExp], str]]
 
-EXPECTED_GAME_VERSION = 1207022
+EXPECTED_GAME_VERSION = 1208015
 GAME_VERSION_STRING = f'SE_VERSION = {EXPECTED_GAME_VERSION}'
 
 RX_TARGET_FRAMEWORK = re.compile(r'<TargetFramework>.*?</TargetFramework>')
