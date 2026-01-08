@@ -482,6 +482,41 @@ index 4d1576ae..42856201 100644
  	{
  		private class Sandbox_Game_Gui_MyGuiScreenAdminMenu_003C_003EAdminSettings_003C_003EFlags_003C_003EAccessor : IMemberAccessor<AdminSettings, MyTrashRemovalFlags>
  		{
+diff --git a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugBase.cs b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugBase.cs
+index 524638fb..2ba007f4 100644
+--- a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugBase.cs
++++ b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugBase.cs
+@@ -605,7 +605,7 @@ public abstract class MyGuiScreenDebugBase : MyGuiScreenBase
+ 		{
+ 			flag = true;
+ 		}
+-		string path = Path.Combine(MyFileSystem.RootPath, "..\\..\\..\\Content\\Data\\DebugMenuSearchCache.sbc");
++		string path = Path.Combine(MyFileSystem.RootPath2, "..\\..\\..\\Content\\Data\\DebugMenuSearchCache.sbc");
+ 		if (flag && File.Exists(path))
+ 		{
+ 			MyGuiControlButton control = new MyGuiControlButton(new Vector2(0f, -0.48f), MyGuiControlButtonStyleEnum.DebugNew, null, m_defaultColor, MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_CENTER, null, MyTexts.Get(MySpaceTexts.DebugScreenSearchStringCache_UpdateCache), 0.8f * MyGuiConstants.DEBUG_BUTTON_TEXT_SCALE * m_scale, MyGuiDrawAlignEnum.HORISONTAL_CENTER_AND_VERTICAL_CENTER, MyGuiControlHighlightType.WHEN_CURSOR_OVER, OnClickCache);
+@@ -688,7 +688,7 @@ public abstract class MyGuiScreenDebugBase : MyGuiScreenBase
+ 			myObjectBuilder_DebugScreenSearchCacheDefinition.CachedStrings = item2.Value.ToArray();
+ 			list.Add(myObjectBuilder_DebugScreenSearchCacheDefinition);
+ 		}
+-		string rootPath = MyFileSystem.RootPath;
++		string rootPath = MyFileSystem.RootPath2;
+ 		string path = "..\\..\\..\\Content\\Data\\DebugMenuSearchCache.sbc";
+ 		string path2 = Path.Combine(rootPath, path);
+ 		if (File.Exists(path2))
+diff --git a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugDeveloper.cs b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugDeveloper.cs
+index 86b6f7dd..1a409020 100644
+--- a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugDeveloper.cs
++++ b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugDeveloper.cs
+@@ -481,7 +481,7 @@ public class MyGuiScreenDebugDeveloper : MyGuiScreenDebugBase
+ 				}
+ 			}
+ 		}
+-		string rootPath = MyFileSystem.RootPath;
++		string rootPath = MyFileSystem.RootPath2;
+ 		string path = "..\\..\\..\\Content\\Data\\DebugMenuSearchCache.sbc";
+ 		MyObjectBuilder_Definitions myObjectBuilder_Definitions = new MyObjectBuilder_Definitions();
+ 		List<MyObjectBuilder_DebugScreenSearchCacheDefinition> list = new List<MyObjectBuilder_DebugScreenSearchCacheDefinition>();
 diff --git a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugEconomy.cs b/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugEconomy.cs
 index b7fbae34..a4f3e868 100644
 --- a/Sandbox.Game/Sandbox/Game/Gui/MyGuiScreenDebugEconomy.cs
@@ -723,7 +758,7 @@ index 8fa9690a..9348156d 100644
  namespace Sandbox;
  
 diff --git a/Sandbox.Game/Sandbox/MyInitializer.cs b/Sandbox.Game/Sandbox/MyInitializer.cs
-index cbba6db0..6ce73887 100644
+index cbba6db0..17c202e5 100644
 --- a/Sandbox.Game/Sandbox/MyInitializer.cs
 +++ b/Sandbox.Game/Sandbox/MyInitializer.cs
 @@ -102,10 +102,7 @@ public static class MyInitializer
@@ -738,6 +773,24 @@ index cbba6db0..6ce73887 100644
  		InitFileSystem(userDataPath, modsCachePath);
  		MyLog log = MySandboxGame.Log;
  		if (log is MyLogKeen myLogKeen)
+@@ -118,7 +115,7 @@ public static class MyInitializer
+ 		}
+ 		MyLog.Default = MySandboxGame.Log;
+ 		InitExceptionHandling();
+-		bool flag = SteamHelpers.IsSteamPath(string.IsNullOrEmpty(rootPath) ? MyFileSystem.RootPath : rootPath);
++		bool flag = SteamHelpers.IsSteamPath(string.IsNullOrEmpty(rootPath) ? MyFileSystem.RootPath2 : rootPath);
+ 		bool flag2 = SteamHelpers.IsAppManifestPresent(rootPath, appId);
+ 		Sandbox.Engine.Platform.Game.IsPirated = !flag && !flag2;
+ 		MySandboxGame.Log.WriteLineAndConsole(string.Format("Is official: {0} {1}{2}{3}", true, MyObfuscation.Enabled ? "[O]" : "[NO]", flag ? "[IS]" : "[NIS]", flag2 ? "[AMP]" : "[NAMP]"));
+@@ -147,7 +144,7 @@ public static class MyInitializer
+ 
+ 	public static void InitFileSystem(string userDataPath, string modsCachePath = null)
+ 	{
+-		MyFileSystem.Init(Path.Combine(MyFileSystem.RootPath, "Content"), userDataPath, "Mods", null, modsCachePath);
++		MyFileSystem.Init(Path.Combine(MyFileSystem.RootPath2, "Content"), userDataPath, "Mods", null, modsCachePath);
+ 	}
+ 
+ 	public static void InitExceptionHandling()
 @@ -157,6 +154,8 @@ public static class MyInitializer
  		{
  			Thread.CurrentThread.Name = "Main thread";
@@ -931,9 +984,18 @@ index 6187e776..bb64addf 100644
  		protected class SpaceEngineers_Game_GUI_MyGuiScreenMedicals_003C_003EMyPlanetInfo_003C_003EPlanetId_003C_003EAccessor : IMemberAccessor<MyPlanetInfo, long>
  		{
 diff --git a/SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameDefaultIlChecker.cs b/SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameDefaultIlChecker.cs
-index 3fe099d4..ad5eabeb 100644
+index 3fe099d4..e1a6acc4 100644
 --- a/SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameDefaultIlChecker.cs
 +++ b/SpaceEngineers.Game/SpaceEngineers/Game/MySpaceGameDefaultIlChecker.cs
+@@ -101,7 +101,7 @@ public class MySpaceGameDefaultIlChecker : MySandboxGame.IGameCustomIlChecker
+ 	private static void AllowDefaultNamespaces(IMyWhitelistBatch handle)
+ 	{
+ 		handle.AllowNamespaceOfTypes(MyWhitelistTarget.Both, typeof(IEnumerator), typeof(HashSet<>), typeof(LinkedList<>), typeof(IEnumerator<>), typeof(StringBuilder), typeof(Regex), typeof(Calendar));
+-		handle.AllowNamespaceOfTypes(MyWhitelistTarget.ModApi, typeof(Enumerable), typeof(ConcurrentBag<>), typeof(ConcurrentDictionary<, >));
++		handle.AllowNamespaceOfTypes(MyWhitelistTarget.ModApi, typeof(Enumerable), typeof(ConcurrentBag<>), typeof(ConcurrentDictionary<, >), typeof(ConcurrentQueue<>));
+ 		handle.AllowTypes(MyWhitelistTarget.Ingame, (from x in typeof(Enumerable).Assembly.GetTypes()
+ 			where x.Namespace == "System.Linq"
+ 			where !System.StringExtensions.Contains(x.Name, "parallel", StringComparison.InvariantCultureIgnoreCase)
 @@ -115,7 +115,7 @@ public class MySpaceGameDefaultIlChecker : MySandboxGame.IGameCustomIlChecker
  		handle.AllowMembers(MyWhitelistTarget.Both, typeof(ValueType).GetMethod("Equals"), typeof(ValueType).GetMethod("GetHashCode"), typeof(ValueType).GetMethod("ToString"));
  		handle.AllowMembers(MyWhitelistTarget.Both, typeof(Environment).GetProperty("CurrentManagedThreadId", BindingFlags.Static | BindingFlags.Public), typeof(Environment).GetProperty("NewLine", BindingFlags.Static | BindingFlags.Public), typeof(Environment).GetProperty("ProcessorCount", BindingFlags.Static | BindingFlags.Public));
@@ -1073,7 +1135,7 @@ index 46a46714..226dea99 100644
  </Project>
 \ No newline at end of file
 diff --git a/SpaceEngineers/SpaceEngineers/MyProgram.cs b/SpaceEngineers/SpaceEngineers/MyProgram.cs
-index b87b99ba..bbc2b4cf 100644
+index b87b99ba..1431da98 100644
 --- a/SpaceEngineers/SpaceEngineers/MyProgram.cs
 +++ b/SpaceEngineers/SpaceEngineers/MyProgram.cs
 @@ -27,6 +27,10 @@ using VRage.UserInterface;
@@ -1112,6 +1174,15 @@ index b87b99ba..bbc2b4cf 100644
  		finally
  		{
  			spaceEngineersGame.Dispose();
+@@ -168,7 +178,7 @@ public static class MyProgram
+ 
+ 	private static void InitTexts()
+ 	{
+-		string rootDirectory = Path.Combine(MyFileSystem.RootPath, "Content\\Data\\Localization\\CoreTexts");
++		string rootDirectory = Path.Combine(MyFileSystem.RootPath2, "Content\\Data\\Localization\\CoreTexts");
+ 		HashSet<MyLanguagesEnum> outSupportedLanguages = new HashSet<MyLanguagesEnum>();
+ 		MyTexts.LoadSupportedLanguages(rootDirectory, outSupportedLanguages);
+ 		MyLanguagesEnum osLanguageCurrentOfficial = MyLanguage.Instance.GetOsLanguageCurrentOfficial();
 diff --git a/SpaceEngineers/app.config b/SpaceEngineers/app.config
 deleted file mode 100644
 index 0c4cf034..00000000
@@ -1526,19 +1597,23 @@ index defe55eb..b7adab89 100644
      <ProjectReference Include="..\VRage.Network\VRage.Network.csproj" />
    </ItemGroup>
 diff --git a/VRage.Library/VRage/Filesystem/MyFileSystem.cs b/VRage.Library/VRage/Filesystem/MyFileSystem.cs
-index 2e351a5d..42c1ae06 100644
+index 2e351a5d..f58fbb45 100644
 --- a/VRage.Library/VRage/Filesystem/MyFileSystem.cs
 +++ b/VRage.Library/VRage/Filesystem/MyFileSystem.cs
-@@ -15,7 +15,12 @@ public static class MyFileSystem
+@@ -15,7 +15,16 @@ public static class MyFileSystem
  
  	public static string ExePath = new FileInfo(m_mainAssembly.Location).DirectoryName;
  
 -	public static string RootPath = new FileInfo(ExePath).Directory?.FullName ?? Path.GetFullPath(ExePath);
++	// Kept the original RootPath for Pulsar Interim compatibility
++	public static string RootPath = null;
++	
++	// Renamed to RootPath2 to avoid conflict with Pulsar Interim
 +	// During development use the data files of the Space Engineers installation.
 +	// Define the SPACE_ENGINEERS_ROOT environment variable to point to there.
 +	// Usual value: C:\Program Files (x86)\Steam\steamapps\common\SpaceEngineers
 +	private static string rootPath;
-+	public static string RootPath => rootPath ??= Environment.GetEnvironmentVariable("SPACE_ENGINEERS_ROOT") ?? 
++	public static string RootPath2 => rootPath ??= Environment.GetEnvironmentVariable("SPACE_ENGINEERS_ROOT") ?? 
 +	                                              (new FileInfo(ExePath).Directory?.FullName ?? Path.GetFullPath(ExePath));
  
  	private static string m_shadersBasePath;
@@ -2124,7 +2199,7 @@ index 102290de..2d8ed08a 100644
  	}
  
 diff --git a/VRage.Platform.Windows/VRage/Platform/Windows/Forms/MyGameWindow.cs b/VRage.Platform.Windows/VRage/Platform/Windows/Forms/MyGameWindow.cs
-index c6d5d7d5..bd340517 100644
+index c6d5d7d5..4c69320a 100644
 --- a/VRage.Platform.Windows/VRage/Platform/Windows/Forms/MyGameWindow.cs
 +++ b/VRage.Platform.Windows/VRage/Platform/Windows/Forms/MyGameWindow.cs
 @@ -107,7 +107,7 @@ internal sealed class MyGameWindow : MyGameForm, IVRageWindow
@@ -2132,12 +2207,12 @@ index c6d5d7d5..bd340517 100644
  		try
  		{
 -			base.Icon = new Icon(Path.Combine(MyFileSystem.ExePath, gameIcon));
-+			base.Icon = new Icon(Path.Combine(MyFileSystem.RootPath, "Bin64", gameIcon));
++			base.Icon = new Icon(Path.Combine(MyFileSystem.RootPath2, "Bin64", gameIcon));
  		}
  		catch (FileNotFoundException)
  		{
 diff --git a/VRage.Platform.Windows/VRage/Platform/Windows/Forms/MyMessageBoxCrashForm.cs b/VRage.Platform.Windows/VRage/Platform/Windows/Forms/MyMessageBoxCrashForm.cs
-index 7f7501fc..41417833 100644
+index 7f7501fc..05b19e97 100644
 --- a/VRage.Platform.Windows/VRage/Platform/Windows/Forms/MyMessageBoxCrashForm.cs
 +++ b/VRage.Platform.Windows/VRage/Platform/Windows/Forms/MyMessageBoxCrashForm.cs
 @@ -45,7 +45,7 @@ internal class MyMessageBoxCrashForm : Form
@@ -2145,12 +2220,12 @@ index 7f7501fc..41417833 100644
  		linklblLog.Text = texts.LogName;
  		linklblLog.Links.Add(0, texts.LogName.Length, texts.LogName);
 -		if (!Directory.Exists(Path.Combine(new FileInfo(MyFileSystem.ExePath).Directory.FullName, "Content")))
-+		if (!Directory.Exists(Path.Combine(MyFileSystem.RootPath, "Content")))
++		if (!Directory.Exists(Path.Combine(MyFileSystem.RootPath2, "Content")))
  		{
  			MessageBox.Show("The content folder \"Content\" containing game assets is completely missing. Please verify integrity of game files using Steam. \n\n That is most likely the reason of the crash. As game cannot run without it.", "Content is missing", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
  		}
 diff --git a/VRage.Platform.Windows/VRage/Platform/Windows/Forms/MySplashScreen.cs b/VRage.Platform.Windows/VRage/Platform/Windows/Forms/MySplashScreen.cs
-index e3721cdb..1b67c8fd 100644
+index e3721cdb..03fb2023 100644
 --- a/VRage.Platform.Windows/VRage/Platform/Windows/Forms/MySplashScreen.cs
 +++ b/VRage.Platform.Windows/VRage/Platform/Windows/Forms/MySplashScreen.cs
 @@ -1,6 +1,8 @@
@@ -2167,7 +2242,7 @@ index e3721cdb..1b67c8fd 100644
  		try
  		{
 -			m_image = Image.FromFile(image);
-+			m_image = Image.FromFile(Path.Combine(MyFileSystem.RootPath, "Bin64", image));
++			m_image = Image.FromFile(Path.Combine(MyFileSystem.RootPath2, "Bin64", image));
  			m_scale = new PointF(scale.X, scale.Y);
  		}
  		catch (Exception)

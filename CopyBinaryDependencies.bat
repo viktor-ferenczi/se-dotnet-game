@@ -2,7 +2,7 @@
 echo Copying binary dependencies...
 
 set BIN64=Bin64
-set TARGET=%1
+set TARGET=%~1
 
 REM Native binary dependencies
 xcopy /Q /D /Y /-I "Bin64\AnselSDK64.dll" "%TARGET%\AnselSDK64.dll"

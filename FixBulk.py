@@ -4,8 +4,7 @@ import os
 import re
 import sys
 from contextlib import contextmanager
-from enum import Enum
-from typing import Iterator, ContextManager, Optional, Dict, Iterable, Union, Callable, Set, List
+from typing import Iterator, Optional, Dict, Iterable, Union, Callable, Set, List
 import xml.etree.ElementTree as ET
 
 RegExp = re.Pattern[str]
@@ -326,101 +325,6 @@ class LineProcessor:
             yield regex.subn(replacement, line)[0]
             ctx.update(line)
 
-    @staticmethod
-    def split_long_if_else(method: str, start: str, lines: Iterable[str]) -> Iterator[str]:
-        class State(Enum):
-            SEARCHING = 'SEARCHING'
-            METHOD_FOUND = 'METHOD_FOUND'
-            IF_ELSE = 'IF_ELSE'
-            ELSE = 'ELSE'
-            IN_CLAUSE = 'IN_CLAUSE'
-            IN_ELSE_CLAUSE = 'IN_ELSE_CLAUSE'
-            END_OF_CLAUSE = 'END_OF_CLAUSE'
-            FINISHED = 'FINISHED'
-
-        state = State.SEARCHING
-
-        begin = ''
-        end = ''
-        indent = ''
-        if_ = ''
-        else_if = ''
-        else_ = ''
-        depth = 0
-        lineno = 0
-
-        for line in lines:
-            lineno += 1
-
-            depth += line.count('{')
-            depth -= line.count('}')
-
-            match state:
-
-                case State.FINISHED:
-                    yield line
-
-                case State.SEARCHING:
-                    if method in line:
-                        state = State.METHOD_FOUND
-                    yield line
-
-                case State.METHOD_FOUND:
-                    if 'BEGIN COMPILER WORKAROUND' in line:
-                        state = State.FINISHED
-                    elif start in line:
-                        state = State.IF_ELSE
-                        assert line.startswith('\t'), repr(line)
-                        indent = '\t' * (len(line) - len(line.lstrip('\t')))
-                        if_ = f'{indent}if'
-                        else_if = f'{indent}else if'
-                        else_ = f'{indent}else'
-                        depth = 0
-                        yield ''
-                        yield f'{indent}do {{ // BEGIN COMPILER WORKAROUND'
-                        yield ''
-                    yield line
-
-                case State.IF_ELSE:
-                    assert depth == 1, (lineno, depth)
-                    if not begin:
-                        assert line.strip() == '{', repr(line)
-                        begin = line
-                        end = line.replace('{', '}')
-                    state = State.IN_CLAUSE
-                    yield line
-
-                case State.ELSE:
-                    assert depth == 0, (lineno, depth)
-                    state = State.IN_ELSE_CLAUSE
-                    yield line
-
-                case State.IN_CLAUSE:
-                    if line == end:
-                        state = State.END_OF_CLAUSE
-                        yield f'{indent}\tbreak;'
-                    yield line
-
-                case State.IN_ELSE_CLAUSE:
-                    yield line
-                    if line == end:
-                        state = State.FINISHED
-                        yield ''
-                        yield f'{indent}}} while(false); // END COMPILER WORKAROUND'
-                        yield ''
-
-                case State.END_OF_CLAUSE:
-                    assert depth == 0, (lineno, depth)
-                    if line.startswith(else_if):
-                        state = State.IN_CLAUSE
-                        yield f'{if_}{line[len(else_if):]}'
-                    elif line.startswith(else_):
-                        state = State.IN_ELSE_CLAUSE
-                        yield line
-                    else:
-                        state = State.FINISHED
-                        yield line
-
 
 class Project:
 
@@ -447,7 +351,7 @@ class Project:
     def project_file_path(self) -> str:
         return f'{self.name}/{self.name}.csproj'
 
-    def iter_sources(self) -> str:
+    def iter_sources(self) -> Iterable[str]:
         for dirpath, dirnames, filenames in os.walk(self.project_dir):
             for filename in filenames:
                 if not filename.endswith('.cs'):
@@ -494,14 +398,14 @@ class Project:
         self.sources_original.clear()
 
     @contextmanager
-    def read(self) -> ContextManager:
+    def read(self):
         assert self.project_file is None
         self.load()
         yield
         self.discard()
 
     @contextmanager
-    def write(self) -> ContextManager:
+    def write(self):
         assert self.project_file is None
         self.load()
         yield
@@ -673,9 +577,6 @@ def main():
     print('Fixing project files and source code:')
     fix_project_files_and_code(projects)
     print()
-
-    print('Fixing long XML serializers')
-    split_long_xml_serializers(project_map)
 
     print('Project dependencies:')
     print_project_dependencies(projects)
